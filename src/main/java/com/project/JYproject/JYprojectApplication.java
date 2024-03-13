@@ -9,5 +9,5 @@ public class JYprojectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(JYprojectApplication.class, args);
 	}
-
+	//이준영 체크용
 }
