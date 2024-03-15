@@ -1,13 +1,13 @@
-package com.project.JYproject;
+package com.JYProject.project;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class JYprojectApplication {
+public class ProjectApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(JYprojectApplication.class, args);
+		SpringApplication.run(ProjectApplication.class, args);
 	}
-	//이준영 체크용
+
 }
