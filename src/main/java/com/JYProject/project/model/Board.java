@@ -9,7 +9,9 @@ import org.hibernate.annotations.Comment;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Entity
@@ -19,38 +21,20 @@ public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Comment("게시글번호")
+    @Comment("게시판번호")
+    @Column(name="board_id")
     private Long id;
 
-    @Column
-    @Comment("작성자")
-    private String  writer;
+    @Comment("게시판의 이름")
+    private String name;
 
-    @Column
-    @Comment("글제목")
-    private String title;
+    @JoinColumn(name="post_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Post post;
 
-    @Column
-    @Comment("글내용")
-    private String content;
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Post> postList = new ArrayList<>();
 
-    @Column
-    @Comment("글등록날짜")
-    private LocalDateTime regData;
-
-    @Column
-    @Comment("수정날짜")
-    private LocalDateTime  updateDate;
-
-    @Column
-    @Comment("삭제날짜")
-    private LocalDateTime  deleteDate;
-
-    @Column
-    @Comment("좋아요")
-    private Long likes;
-
-    @Column
-    @Comment("싫어요")
-    private Long dislikes;
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Category> categories = new ArrayList<>();
 }

@@ -19,6 +19,7 @@ public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Comment("파일번호")
+    @Column(name="file_id")
     private Long id;
 
     @Column
