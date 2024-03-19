@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.JYProject.project.repository.mybatis.MemberMapper">
+
+    <insert id="insertMember" parameterType="MemberDTO">
+        insert into member (loginid,pw,name,nickname,phone,email,zipcode,address,address_detail,member_profile,last_login_date)
+        values (#{loginId},#{pw},#{name},#{nickname},#{phone},#{email},#{zipcode},#{address},#{addressDetail},#{profilePic},#{last_login_date})
+    </insert>
+
+    <select id="selectMemberDetail" parameterType="Integer" resultType="com.JYProject.project.model.dto.MemberDTO">
+        select * from member where id=#{id}
+    </select>
+
+    <update id="updateMember" parameterType="com.JYProject.project.model.dto.MemberDTO">
+        update member
+        set pw=#{pw},
+        nickname=#{nickname},
+        phone = #{phone},
+        email = #{email},
+        zipcode = #{zipcode},
+        address = #{address},
+        address_detail = #{addressDetail},
+        member_profile =#{profilePic}
+        where id=#{id};
+    </update>
+    <delete id="deleteMember" parameterType="Integer">
+    delete from member where id=#{id}
+    </delete>
+
+    <select id="selectMemberList" resultType="com.JYProject.project.model.dto.MemberDTO">
+    select *from member
+    </select>
+    <select id="selectMemberTotalCount" resultType="Integer">
+        select count(*) from member;
+    </select>
+    <select id="validCheckId" resultType="Boolean" parameterType="String">
+        select count(*) from member where loginid= ${loginId};
+    </select>
+    <select id="loginId" resultType="com.JYProject.project.model.dto.MemberDTO" parameterType="com.JYProject.project.model.dto.MemberDTO">
+        select * from member where loginid=#{loginId} and pw=#{pw};
+    </select>
+
+</mapper>
