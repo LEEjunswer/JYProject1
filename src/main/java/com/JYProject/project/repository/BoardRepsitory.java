@@ -3,5 +3,5 @@ package com.JYProject.project.repository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BoardRepsitory extends{
+public interface BoardRepsitory {
 }

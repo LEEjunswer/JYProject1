@@ -1,27 +1,86 @@
 package com.JYProject.project.model;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-@Data
-public class Member {
-    private int memberNo; //멤버번호
-    private String id;   //아이디
-    private String pw;  // 비밀번호
-    private String name;  // 이름
-    private String nickname; // 게시판 작성자나 댓글 활용
-    private String phone; // 핸드폰 번호
-    private String email; // 이메일
-    private String zipcode; // 우편번호
-    private String address; // 주소
-    private String addressDetail; // 집주소 디테일
-    private String member_profile; //유저 프로필 사진
-    private Date regDate;  // 회원가입일자
-    private Date lastLoginDate;  //마지막 로그인일자
-    private Boolean active; // 회원 계정 비활성화 or 활성화 여부
-    private String  Grade; // 유저 등급
-    private int point; // 유저 포인트
+@Getter
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+public class Member extends BaseEntity{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Comment("유저PK")
+    @Column(name="member_id")
+    private Long id;
+
+    @Column(unique = true)
+    @Comment("아이디")
+    private String loginId;
+
+    @Column
+    @Comment("비밀번호")
+    private String pw;
+
+    @Column
+    @Comment("이름")
+    private String name;
+
+    @Column(unique = true)
+    @Comment("닉네임")
+    private String nickname;
+
+    @Column(unique = true)
+    @Comment("핸드폰번호")
+    private String phone;
+
+    @Column(unique = true)
+    @Comment("이메일")
+    private String email;
+
+    @Column
+    @Comment("우편번호")
+    private String zipCode;
+
+    @Column
+    @Comment("주소")
+    private String address;
+
+    @Column
+    @Comment("상세주소")
+    private String addressDetail;
+
+    @Column
+    @Comment("사진")
+    private String profilePic;
+
+    @Column
+    @Comment("로그인일자")
+    private LocalDateTime lastLoginDate;
+
+    @Column
+    @Comment("회원 계정 비활성화 or 활성화 여부")
+    private Boolean active;
+
+    @Column
+    @Comment("등급")
+    private String  Grade;
+
+    @Column
+    @Comment("포인트")
+    private Long point;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
 
 }

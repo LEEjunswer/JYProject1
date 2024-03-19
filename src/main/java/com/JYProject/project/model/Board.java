@@ -1,18 +1,40 @@
 package com.JYProject.project.model;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-@Data
+@Getter
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Board {
-    private int boardNo;  //게시글번호
-    private String  writer;  //작성자
-    private String title;  // 글제목
-    private String content; // 글내용
-    private Date   regdata; // 글등록날짜
-    private Date  updateDate; // 글 수정날짜
-    private Date  deleteDate; // 글 삭제날짜 
-    private int likes; // 좋아요
-    private  int dislikes; //싫어요
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Comment("게시판번호")
+    @Column(name="board_id")
+    private Long id;
+
+    @Comment("게시판의 이름")
+    private String name;
+
+    @JoinColumn(name="post_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Post post;
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Post> postList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Category> categories = new ArrayList<>();
 }
