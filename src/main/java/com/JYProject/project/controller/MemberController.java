@@ -1,0 +1,106 @@
+package com.JYProject.project.controller;
+
+import com.JYProject.project.model.dto.MemberDTO;
+import com.JYProject.project.service.MemberSerivceImpl;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+@Controller
+public class MemberController {
+
+    private final MemberSerivceImpl memberSerivce;
+
+    @Autowired
+    public MemberController(MemberSerivceImpl memberSerivce) {
+        this.memberSerivce = memberSerivce;
+    }
+
+
+    @GetMapping("/members/new")
+    public String join(MemberDTO memberDTO){
+        return"/members/join";
+    }
+
+    //일단 가입만 집어넣음
+    @PostMapping("/members/join")
+    public String create(@ModelAttribute MemberDTO memberDTO){
+        int check = memberSerivce.insertMember(memberDTO);
+
+        return "home";
+
+    }
+
+
+
+    public String login(@ModelAttribute MemberDTO memberDTO,
+                        HttpSession session,
+                        RedirectAttributes redirectAttributes) {
+        // 로그인 로직
+        MemberDTO login = memberSerivce.login(memberDTO);
+
+        if (login != null) {
+            // 로그인이 성공하면 세션에 사용자 정보 저장
+            session.setAttribute("log", login);
+            return "redirect:/home";
+        } else {
+            redirectAttributes.addFlashAttribute("error", "로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
+            return "redirect:/members/loginForm";
+        }
+    }
+
+
+    @GetMapping("/members/update")
+    public String updateForm(@ModelAttribute MemberDTO memberDTO){
+    if(memberDTO.getLoginId()== null){
+        System.out.println("잘못된 접근");
+        return "home";
+    }
+
+        return "/members/update";
+    }
+
+    @PostMapping("/members/update")
+    public String update(@ModelAttribute MemberDTO memberDTO){
+        memberSerivce.updateMember(memberDTO);
+        System.out.println("나중에 변경할것 ");
+        return "home";
+    }
+    @GetMapping("/members/delete")
+    public String deleteForm(@ModelAttribute MemberDTO memberDTO){
+        if(memberDTO.getLoginId() == null){
+            System.out.println("잘못된 접근입니다");
+            return "home";
+
+        }
+        return "members/delete";
+    }
+    @PostMapping("/members/delete")
+    public String delete(@ModelAttribute MemberDTO memberDTO
+    ,RedirectAttributes redirectAttributes
+    ,HttpSession session){
+        MemberDTO member = memberSerivce.login(memberDTO);
+        if(member != null){
+            session.removeAttribute("log");
+          redirectAttributes.addFlashAttribute("suc", member.getLoginId()+"회원탈퇴 성공하셧습니다");
+            return "redirect:/home";
+        }
+        redirectAttributes.addFlashAttribute("error", "아이디와 비밀번호가 일치하지 않습니다 다시 입력해주세요.");
+        return "redirect:/members/delete";
+    }
+
+
+    //나중에 로그인에서 ajax로 받을예정
+    @PostMapping("/validCheck")
+    @ResponseBody
+    public String validIdCheck(@RequestParam String loginId){
+    boolean check = !memberSerivce.validCheckId(loginId);
+        if(check){
+        return "valid";
+        }else{
+        return "invalid";
+        }
+    }
+}
