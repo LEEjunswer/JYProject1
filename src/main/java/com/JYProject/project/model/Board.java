@@ -1,10 +1,7 @@
 package com.JYProject.project.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import java.time.LocalDate;
@@ -17,7 +14,8 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Board {
+@Builder
+public class Board extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,13 +26,38 @@ public class Board {
     @Comment("게시판의 이름")
     private String name;
 
-    @JoinColumn(name="post_id")
+    @Column
+    @Comment("작성자")
+    private String  writer;
+
+    @Column
+    @Comment("글제목")
+    private String title;
+
+    @Column
+    @Comment("글내용")
+    private String content;
+
+    @Column
+    @Comment("삭제날짜")
+    private LocalDateTime  deleteDate;
+
+    @Column
+    @Comment("좋아요")
+    private Long likes;
+
+    @Column
+    @Comment("싫어요")
+    private Long dislikes;
+
+    @JoinColumn(name="member_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Post post;
+    private Member member;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Post> postList = new ArrayList<>();
+    @JoinColumn(name="category_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Category> categories = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<File> FileList = new ArrayList<>();;
 }

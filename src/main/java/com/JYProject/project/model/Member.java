@@ -1,10 +1,7 @@
 package com.JYProject.project.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import java.time.LocalDateTime;
@@ -16,6 +13,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Member extends BaseEntity{
 
     @Id
@@ -60,10 +58,10 @@ public class Member extends BaseEntity{
     @Comment("상세주소")
     private String addressDetail;
 
-    @Column
+   /* @Column
     @Comment("사진")
     private String profilePic;
-
+*/
     @Column
     @Comment("로그인일자")
     private LocalDateTime lastLoginDate;
@@ -81,6 +79,6 @@ public class Member extends BaseEntity{
     private Long point;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Post> posts = new ArrayList<>();
+    private List<Board> boardList = new ArrayList<>();
 
 }

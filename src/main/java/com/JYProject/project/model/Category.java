@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Category {
+public class Category extends BaseEntity{
 
     @Id
     @GeneratedValue
@@ -36,11 +36,7 @@ public class Category {
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
     private List<Category> subCategory = new ArrayList<>();
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<Post> postList = new ArrayList<>();
-
-    @JoinColumn(name = "board_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Board board;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Board> boardList = new ArrayList<>();;
 
 }

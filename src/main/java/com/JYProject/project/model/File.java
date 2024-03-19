@@ -2,19 +2,19 @@ package com.JYProject.project.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class File {
+@Builder
+public class File extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,7 +30,8 @@ public class File {
     @Comment("파일이름")
     private String fileName;
 
-    @Column
-    @Comment("파일등록일자")
-    private LocalDateTime regDate;
+    @JoinColumn(name="board_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Board board;
+
 }
