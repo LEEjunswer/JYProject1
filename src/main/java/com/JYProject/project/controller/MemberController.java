@@ -5,12 +5,16 @@ import com.JYProject.project.service.MemberSerivceImpl;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 public class MemberController {
 
+    // RequestMappnig(/members) 줄 예정 계정 비활성화 및 회원탈퇴 구현예정  테이블 delete_member로 값 전환시킬예정 회원탈퇴 시키고
     private final MemberSerivceImpl memberSerivce;
 
     @Autowired
@@ -32,7 +36,13 @@ public class MemberController {
         return "home";
 
     }
-
+    //모든 회원리스트 가져가기
+    @GetMapping("/members/list")
+    public String list(Model model){
+       List<MemberDTO> list= memberSerivce.MemberAllList();
+       model.addAttribute("list",list);
+       return "/members/list";
+    }
 
 
     public String login(@ModelAttribute MemberDTO memberDTO,
@@ -53,12 +63,14 @@ public class MemberController {
 
 
     @GetMapping("/members/update")
-    public String updateForm(@ModelAttribute MemberDTO memberDTO){
-    if(memberDTO.getLoginId()== null){
+    public String updateForm(HttpSession session
+    ,Model model){
+        MemberDTO log = (MemberDTO) session.getAttribute("log");
+    if(log == null){
         System.out.println("잘못된 접근");
         return "home";
     }
-
+        model.addAttribute( "log" , log);
         return "/members/update";
     }
 
@@ -75,7 +87,7 @@ public class MemberController {
             return "home";
 
         }
-        return "members/delete";
+        return "deleteForm";
     }
     @PostMapping("/members/delete")
     public String delete(@ModelAttribute MemberDTO memberDTO
@@ -84,6 +96,7 @@ public class MemberController {
         MemberDTO member = memberSerivce.login(memberDTO);
         if(member != null){
             session.removeAttribute("log");
+
           redirectAttributes.addFlashAttribute("suc", member.getLoginId()+"회원탈퇴 성공하셧습니다");
             return "redirect:/home";
         }
@@ -92,7 +105,7 @@ public class MemberController {
     }
 
 
-    //나중에 로그인에서 ajax로 받을예정
+    //나중에 회원가입에서 ajax로 받을예정
     @PostMapping("/validCheck")
     @ResponseBody
     public String validIdCheck(@RequestParam String loginId){
@@ -101,6 +114,17 @@ public class MemberController {
         return "valid";
         }else{
         return "invalid";
+        }
+    }
+    //회원탈퇴시 로그인한 아이디와 비밀번호 입력한 값이 같을시에 ajax로 받이서 삭제 예정
+    @PostMapping("/validCheckPassword")
+    @ResponseBody
+    public String validPwCheck(@ModelAttribute MemberDTO memberDTO){
+       boolean check = !memberSerivce.checkIdAndPw(memberDTO);
+        if(check){
+            return"valid";
+        }else{
+            return"invalid";
         }
     }
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.JYProject.project.repository.mybatis.ReplyRepository">
+    <insert id="insertReply" parameterType="com.JYProject.project.model.dto.ReplyDTO">
+       insert into reply (board_id, writer, content,update_date,delete_date) values
+            (#{boardNo},#{writer},#{content},#{updateDate},#{deleteDate})
+    </insert>
+    <select id="selectOneReply" parameterType="Long" resultType="com.JYProject.project.model.dto.ReplyDTO">
+    select  * from reply where reply_id=#{id}
+    </select>
+    <!--댓글 수정 -->
+    <update id="updateReply" parameterType="com.JYProject.project.model.dto.ReplyDTO">
+        update reply
+        set content=#{content},
+            update_date = NOW()
+        where reply_id=#{id};
+    </update>
+    <!--댓글 삭제 -->
+    <update id="deleteReply" parameterType="Long">
+        update reply
+        set  delete_date = NOW()
+        where reply_id=#{id};
+    </update>
+    <select id="replyLikesTotalCount" parameterType="Long" resultType="Integer">
+    select count(*),likes from reply where reply_id=#{id};
+    </select>
+    <select id="replyDisLiesTotalCount" parameterType="Long" resultType="Integer">
+        select count(*),dislikes from reply where  reply_id=#{id};
+    </select>
+</mapper>

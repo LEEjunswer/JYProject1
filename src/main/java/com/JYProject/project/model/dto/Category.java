@@ -33,8 +33,6 @@ public class Category {
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
     private List<Category> subCategory = new ArrayList<>();
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<Post> postList = new ArrayList<>();
 
     @JoinColumn(name = "board_id")
     @ManyToOne(fetch = FetchType.LAZY)

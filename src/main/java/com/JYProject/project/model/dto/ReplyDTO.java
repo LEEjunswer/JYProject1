@@ -11,11 +11,10 @@ import org.hibernate.annotations.Comment;
 import java.time.LocalDateTime;
 
 @Getter
-@Entity
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Reply extends BaseEntity {
+public class ReplyDTO extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,7 +42,5 @@ public class Reply extends BaseEntity {
     @Comment("싫어요")
     private Long dislikes;
 
-    @JoinColumn(name="post_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Post post;
+
 }

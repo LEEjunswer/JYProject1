@@ -13,6 +13,7 @@ public interface MemberSerivce {
     public boolean validCheckId(String loginId);
     int updateMember(MemberDTO memberDTO);
     int deleteMember(Long id);
-    List<MemberDTO> selectMemberList();
+    List<MemberDTO> MemberAllList();
     int selectMemberTotalCount();
+    public boolean checkIdAndPw(MemberDTO memberDTO);
 }

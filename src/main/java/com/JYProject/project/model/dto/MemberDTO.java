@@ -81,7 +81,5 @@ public class MemberDTO extends BaseEntity {
     @Comment("포인트")
     private Long point;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Post> posts = new ArrayList<>();
 
 }

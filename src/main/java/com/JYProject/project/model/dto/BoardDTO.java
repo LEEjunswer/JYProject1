@@ -16,21 +16,30 @@ import java.util.List;
 @AllArgsConstructor
 public class BoardDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Comment("게시판번호")
     private Long id;
 
     @Comment("게시판의 이름")
     private String name;
 
-    @JoinColumn(name="post_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Post post;
+    @Comment("작성자")
+    private String writer;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Post> postList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Category> categories = new ArrayList<>();
+    @Comment("글제목")
+    private String title;
+
+
+    @Comment("글내용")
+    private String content;
+
+    @Comment("조회수")
+    private int viewCnt;
+
+    @Comment("좋아요")
+    private Long likes;
+
+
+    @Comment("싫어요")
+    private Long dislikes;
 }

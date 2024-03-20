@@ -50,15 +50,20 @@ public class MemberSerivceImpl implements  MemberSerivce{
     }
 
     @Override
-    public List<MemberDTO> selectMemberList() {
+    public List<MemberDTO> MemberAllList() {
 
-        return memberMybatisRepository.selectMemberList();
+        return memberMybatisRepository.MemberAllList();
     }
 
     @Override
     public int selectMemberTotalCount() {
 
         return memberMybatisRepository.selectMemberTotalCount();
+    }
+
+    @Override
+    public boolean checkIdAndPw(MemberDTO memberDTO) {
+        return memberMybatisRepository.checkIdAndPw(memberDTO);
     }
 
 }

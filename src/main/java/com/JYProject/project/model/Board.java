@@ -42,6 +42,9 @@ public class Board extends BaseEntity{
     @Comment("삭제날짜")
     private LocalDateTime  deleteDate;
 
+    @Comment("조회수")
+    private int viewCnt;
+
     @Column
     @Comment("좋아요")
     private Long likes;

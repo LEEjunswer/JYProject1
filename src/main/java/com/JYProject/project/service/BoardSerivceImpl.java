@@ -37,8 +37,18 @@ public class BoardSerivceImpl implements BoardSerivce {
     }
 
     @Override
-    public List<BoardDTO> selectBoardList() {
-        return boardMybatisRepository.selectBoardList();
+    public List<BoardDTO> boardAllList() {
+        return boardMybatisRepository.boardAllList();
+    }
+
+    @Override
+    public List<BoardDTO> boardSearchTitleList(String title) {
+        return boardMybatisRepository.boardSearchTitleList(title);
+    }
+
+    @Override
+    public List<BoardDTO> boardSearchContentList(String content) {
+        return boardMybatisRepository.boardSearchContentList(content);
     }
 
     @Override
