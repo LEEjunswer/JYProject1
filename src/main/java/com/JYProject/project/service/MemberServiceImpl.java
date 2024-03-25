@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class MemberSerivceImpl implements  MemberSerivce{
+public class MemberServiceImpl implements  MemberService{
 
     private final MemberMybatisRepository memberMybatisRepository;
 
-    public MemberSerivceImpl(MemberMybatisRepository memberMybatisRepository) {
+    public MemberServiceImpl(MemberMybatisRepository memberMybatisRepository) {
         this.memberMybatisRepository = memberMybatisRepository;
     }
 

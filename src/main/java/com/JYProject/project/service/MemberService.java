@@ -1,11 +1,10 @@
 package com.JYProject.project.service;
 
 import com.JYProject.project.model.dto.MemberDTO;
-import com.JYProject.project.repository.mybatis.MemberMybatisRepository;
 
 import java.util.List;
 
-public interface MemberSerivce {
+public interface MemberService {
     int insertMember(MemberDTO memberDTO);
     MemberDTO selectMemberDetail(Long id);
     MemberDTO login(MemberDTO memberDTO);

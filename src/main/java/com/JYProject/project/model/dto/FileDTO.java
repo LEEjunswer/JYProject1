@@ -10,5 +10,4 @@ public class FileDTO {
     private Long id;
     private Long boardNo;
     private String fileName;
-    private LocalDateTime regDate;
 }

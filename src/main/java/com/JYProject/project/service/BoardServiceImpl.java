@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class BoardSerivceImpl implements BoardSerivce {
+public class BoardServiceImpl implements BoardService {
 
     private  final BoardMybatisRepository boardMybatisRepository;
 
-    public BoardSerivceImpl(BoardMybatisRepository boardMybatisRepository) {
+    public BoardServiceImpl(BoardMybatisRepository boardMybatisRepository) {
         this.boardMybatisRepository = boardMybatisRepository;
     }
 

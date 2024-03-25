@@ -16,5 +16,4 @@ public class CategoryDTO {
     private CategoryDTO parentCategory;
     private List<CategoryDTO> subCategory = new ArrayList<>();
     private BoardDTO boardDTO;
-
 }
