@@ -1,5 +1,6 @@
 package com.JYProject.project.model;
 
+import com.JYProject.project.model.dto.MemberDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -80,5 +81,11 @@ public class Member extends BaseEntity{
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Board> boardList = new ArrayList<>();
-
+    
+    public void updateMemberInfo(MemberDTO memberDTO){
+        loginId = memberDTO.getLoginId();
+        pw = memberDTO.getPw();
+        nickname = memberDTO.getNickname();
+        ///// 알아서
+    }
 }

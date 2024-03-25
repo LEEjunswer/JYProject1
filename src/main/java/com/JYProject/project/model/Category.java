@@ -37,6 +37,6 @@ public class Category extends BaseEntity{
     private List<Category> subCategory = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<Board> boardList = new ArrayList<>();;
+    private List<Board> boardList = new ArrayList<>();
 
 }
