@@ -1,13 +1,11 @@
 package com.JYProject.project.model.dto;
 
-import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Comment;
 
 import java.time.LocalDateTime;
 
 @Data
-public class Filter {
+public class FilterDTO {
 
     private Long id;
     private String word;

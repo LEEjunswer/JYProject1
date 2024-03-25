@@ -24,24 +24,25 @@ public class MemberController {
 
 
     @GetMapping("/members/new")
-    public String join(MemberDTO memberDTO){
-        return"/members/join";
+    public String join(MemberDTO memberDTO) {
+        return "/members/join";
     }
 
     //일단 가입만 집어넣음
     @PostMapping("/members/join")
-    public String create(@ModelAttribute MemberDTO memberDTO){
+    public String create(@ModelAttribute MemberDTO memberDTO) {
         int check = memberSerivce.insertMember(memberDTO);
 
         return "home";
 
     }
+
     //모든 회원리스트 가져가기
     @GetMapping("/members/list")
-    public String list(Model model){
-       List<MemberDTO> list= memberSerivce.MemberAllList();
-       model.addAttribute("list",list);
-       return "/members/list";
+    public String list(Model model) {
+        List<MemberDTO> list = memberSerivce.MemberAllList();
+        model.addAttribute("list", list);
+        return "/members/list";
     }
 
 
@@ -64,40 +65,42 @@ public class MemberController {
 
     @GetMapping("/members/update")
     public String updateForm(HttpSession session
-    ,Model model){
+            , Model model) {
         MemberDTO log = (MemberDTO) session.getAttribute("log");
-    if(log == null){
-        System.out.println("잘못된 접근");
-        return "home";
-    }
-        model.addAttribute( "log" , log);
+        if (log == null) {
+            System.out.println("잘못된 접근");
+            return "home";
+        }
+        model.addAttribute("log", log);
         return "/members/update";
     }
 
     @PostMapping("/members/update")
-    public String update(@ModelAttribute MemberDTO memberDTO){
+    public String update(@ModelAttribute MemberDTO memberDTO) {
         memberSerivce.updateMember(memberDTO);
         System.out.println("나중에 변경할것 ");
         return "home";
     }
+
     @GetMapping("/members/delete")
-    public String deleteForm(@ModelAttribute MemberDTO memberDTO){
-        if(memberDTO.getLoginId() == null){
+    public String deleteForm(@ModelAttribute MemberDTO memberDTO) {
+        if (memberDTO.getLoginId() == null) {
             System.out.println("잘못된 접근입니다");
             return "home";
 
         }
         return "deleteForm";
     }
+
     @PostMapping("/members/delete")
     public String delete(@ModelAttribute MemberDTO memberDTO
-    ,RedirectAttributes redirectAttributes
-    ,HttpSession session){
+            , RedirectAttributes redirectAttributes
+            , HttpSession session) {
         MemberDTO member = memberSerivce.login(memberDTO);
-        if(member != null){
+        if (member != null) {
             session.removeAttribute("log");
 
-          redirectAttributes.addFlashAttribute("suc", member.getLoginId()+"회원탈퇴 성공하셧습니다");
+            redirectAttributes.addFlashAttribute("suc", member.getLoginId() + "회원탈퇴 성공하셧습니다");
             return "redirect:/home";
         }
         redirectAttributes.addFlashAttribute("error", "아이디와 비밀번호가 일치하지 않습니다 다시 입력해주세요.");
@@ -108,23 +111,24 @@ public class MemberController {
     //나중에 회원가입에서 ajax로 받을예정
     @PostMapping("/validCheck")
     @ResponseBody
-    public String validIdCheck(@RequestParam String loginId){
-    boolean check = !memberSerivce.validCheckId(loginId);
-        if(check){
-        return "valid";
-        }else{
-        return "invalid";
+    public String validIdCheck(@RequestParam String loginId) {
+        boolean check = !memberSerivce.validCheckId(loginId);
+        if (check) {
+            return "valid";
+        } else {
+            return "invalid";
         }
     }
+
     //회원탈퇴시 로그인한 아이디와 비밀번호 입력한 값이 같을시에 ajax로 받이서 삭제 예정
     @PostMapping("/validCheckPassword")
     @ResponseBody
-    public String validPwCheck(@ModelAttribute MemberDTO memberDTO){
-       boolean check = !memberSerivce.checkIdAndPw(memberDTO);
-        if(check){
-            return"valid";
-        }else{
-            return"invalid";
+    public String validPwCheck(@ModelAttribute MemberDTO memberDTO) {
+        boolean check = !memberSerivce.checkIdAndPw(memberDTO);
+        if (check) {
+            return "valid";
+        } else {
+            return "invalid";
         }
     }
 }
