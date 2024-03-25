@@ -4,7 +4,7 @@ import com.JYProject.project.model.dto.BoardDTO;
 
 import java.util.List;
 
-public interface BoardSerivce {
+public interface BoardService {
 
     public int insertBoard(BoardDTO boardDTO);
     public BoardDTO selectBoardDetail(Long id);

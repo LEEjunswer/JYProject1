@@ -2,7 +2,7 @@ package com.JYProject.project.service;
 
 import com.JYProject.project.model.dto.ReplyDTO;
 
-public interface ReplySerivce {
+public interface ReplyService {
 
     public int insertReply(ReplyDTO replyDTO);
     public ReplyDTO selectOneReply(Long id);

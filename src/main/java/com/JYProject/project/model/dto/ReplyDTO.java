@@ -14,31 +14,29 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReplyDTO extends BaseEntity {
+public class ReplyDTO  {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Comment("댓글PK")
-    @Column(name="reply_id")
     private Long id;
 
-    @Column
+
     @Comment("게시판")
     private Long boardNo ;
 
-    @Column
     @Comment("댓글작성자")
     private Long writer;
 
-    @Column
+
+    @Comment("등록일자")
+    private LocalDateTime regDate;
+
+
     @Comment("삭제일자")
     private LocalDateTime deletedDate;
 
-    @Column
     @Comment("좋아요")
     private Long likes;
 
-    @Column
     @Comment("싫어요")
     private Long dislikes;
 

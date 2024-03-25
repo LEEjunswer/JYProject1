@@ -2,6 +2,7 @@ package com.JYProject.project.controller;
 
 import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.service.MemberSerivceImpl;
+import com.JYProject.project.service.MemberServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,11 +16,11 @@ import java.util.List;
 public class MemberController {
 
     // RequestMappnig(/members) 줄 예정 계정 비활성화 및 회원탈퇴 구현예정  테이블 delete_member로 값 전환시킬예정 회원탈퇴 시키고
-    private final MemberSerivceImpl memberSerivce;
+    private final MemberServiceImpl memberService;
 
     @Autowired
-    public MemberController(MemberSerivceImpl memberSerivce) {
-        this.memberSerivce = memberSerivce;
+    public MemberController(MemberServiceImpl memberService) {
+        this.memberService = memberService;
     }
 
 
@@ -31,7 +32,7 @@ public class MemberController {
     //일단 가입만 집어넣음
     @PostMapping("/members/join")
     public String create(@ModelAttribute MemberDTO memberDTO){
-        int check = memberSerivce.insertMember(memberDTO);
+        int check = memberService.insertMember(memberDTO);
 
         return "home";
 
@@ -39,7 +40,7 @@ public class MemberController {
     //모든 회원리스트 가져가기
     @GetMapping("/members/list")
     public String list(Model model){
-       List<MemberDTO> list= memberSerivce.MemberAllList();
+       List<MemberDTO> list= memberService.MemberAllList();
        model.addAttribute("list",list);
        return "/members/list";
     }
@@ -49,7 +50,7 @@ public class MemberController {
                         HttpSession session,
                         RedirectAttributes redirectAttributes) {
         // 로그인 로직
-        MemberDTO login = memberSerivce.login(memberDTO);
+        MemberDTO login = memberService.login(memberDTO);
 
         if (login != null) {
             // 로그인이 성공하면 세션에 사용자 정보 저장
@@ -76,7 +77,7 @@ public class MemberController {
 
     @PostMapping("/members/update")
     public String update(@ModelAttribute MemberDTO memberDTO){
-        memberSerivce.updateMember(memberDTO);
+        memberService.updateMember(memberDTO);
         System.out.println("나중에 변경할것 ");
         return "home";
     }
@@ -93,7 +94,7 @@ public class MemberController {
     public String delete(@ModelAttribute MemberDTO memberDTO
     ,RedirectAttributes redirectAttributes
     ,HttpSession session){
-        MemberDTO member = memberSerivce.login(memberDTO);
+        MemberDTO member = memberService.login(memberDTO);
         if(member != null){
             session.removeAttribute("log");
 
@@ -109,7 +110,7 @@ public class MemberController {
     @PostMapping("/validCheck")
     @ResponseBody
     public String validIdCheck(@RequestParam String loginId){
-    boolean check = !memberSerivce.validCheckId(loginId);
+    boolean check = !memberService.validCheckId(loginId);
         if(check){
         return "valid";
         }else{
@@ -120,7 +121,7 @@ public class MemberController {
     @PostMapping("/validCheckPassword")
     @ResponseBody
     public String validPwCheck(@ModelAttribute MemberDTO memberDTO){
-       boolean check = !memberSerivce.checkIdAndPw(memberDTO);
+       boolean check = !memberService.checkIdAndPw(memberDTO);
         if(check){
             return"valid";
         }else{
