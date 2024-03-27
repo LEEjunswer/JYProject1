@@ -1,16 +1,16 @@
 package com.JYProject.project.controller;
 
 import com.JYProject.project.model.dto.BoardDTO;
+import com.JYProject.project.model.dto.FileDTO;
 import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.service.BoardServiceImpl;
+import com.JYProject.project.service.FileServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -20,9 +20,15 @@ public class BoardController {
     // 나중에 Controller 밑에 RequestMapping으로 다 줄일 예정  + 좋아요 싫어요 아직 미구현 나중에 detail로 가져올예정 토탈로 전부 가져올 예정
 
     private  final BoardServiceImpl boardService;
+    private FileServiceImpl fileService;
     @Autowired
     public BoardController(BoardServiceImpl boardService){
         this.boardService=boardService;
+    }
+
+    @Autowired(required = false)
+    public void FileController(FileServiceImpl fileService){
+        this.fileService=fileService;
     }
     //보드 전체 리스트 리턴 나중에 메인으로 옮길 예정
     @GetMapping("/boards/list")
@@ -37,6 +43,7 @@ public class BoardController {
     RedirectAttributes redirectAttributes) {
         Object log = session.getAttribute("log");
         if(log ==null){
+            //log 나중에 필터랑 인터셉터로 아예 조인 못하게 할 예정
             redirectAttributes.addFlashAttribute("error","비로그인시 글을 작성할 수 없습니다");
             return "redirect:/home";
         }else{
@@ -46,8 +53,14 @@ public class BoardController {
     }
     //보드 생성
     @PostMapping("/boards/join")
-    public String create(@ModelAttribute BoardDTO boardDTO){
+    public String create(
+            //파일업로드
+            @RequestParam  MultipartFile  file,
+            @ModelAttribute BoardDTO boardDTO){
         int check = boardService.insertBoard(boardDTO);
+        FileDTO g = new FileDTO();
+        g.setBoardNo(boardDTO.getId());
+
         //나중에 체크 조건 줄 예정
         return "redirect:/boards/list";
     }

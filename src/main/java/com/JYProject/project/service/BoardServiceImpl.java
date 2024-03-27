@@ -1,7 +1,7 @@
 package com.JYProject.project.service;
 
 import com.JYProject.project.model.dto.BoardDTO;
-import com.JYProject.project.repository.mybatis.BoardMybatisRepository;
+import com.JYProject.project.repository.mybatis.BoardMybatisMapperRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,9 +9,9 @@ import java.util.List;
 @Service
 public class BoardServiceImpl implements BoardService {
 
-    private  final BoardMybatisRepository boardMybatisRepository;
+    private  final BoardMybatisMapperRepository boardMybatisRepository;
 
-    public BoardServiceImpl(BoardMybatisRepository boardMybatisRepository) {
+    public BoardServiceImpl(BoardMybatisMapperRepository boardMybatisRepository) {
         this.boardMybatisRepository = boardMybatisRepository;
     }
 

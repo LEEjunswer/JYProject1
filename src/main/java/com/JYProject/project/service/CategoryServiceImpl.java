@@ -1,7 +1,7 @@
 package com.JYProject.project.service;
 
 import com.JYProject.project.model.dto.CategoryDTO;
-import com.JYProject.project.repository.mybatis.CategoryMybatisRepository;
+import com.JYProject.project.repository.mybatis.CategoryMybatisMapperRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,9 +9,9 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements  CategoryService{
 
-    private final CategoryMybatisRepository categoryMybatisRepository;
+    private final CategoryMybatisMapperRepository categoryMybatisRepository;
 
-    public CategoryServiceImpl(CategoryMybatisRepository categoryMybatisRepository){
+    public CategoryServiceImpl(CategoryMybatisMapperRepository categoryMybatisRepository){
         this.categoryMybatisRepository = categoryMybatisRepository;
     }
 

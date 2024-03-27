@@ -4,7 +4,7 @@ import com.JYProject.project.model.dto.ReplyDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface ReplyRepository {
+public interface ReplyMapperRepository {
 
     public int insertReply(ReplyDTO replyDTO);
     public ReplyDTO selectOneReply(Long id);

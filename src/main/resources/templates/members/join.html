@@ -126,7 +126,7 @@
 
 </style>
 <body>
-<form action="members/join" method="POST" class="joinForm">
+<form action="/members/join" method="POST" class="joinForm">
 
     <h2>회원가입</h2>
     <div class="textForm">
@@ -143,11 +143,22 @@
         <input name="name" type="text" class="name" placeholder="이름">
     </div>
     <div class="textForm">
+        <input name="nickname" type="text" class="name" placeholder="닉네임을 입력하세요">
+    </div>
+    <div class="textForm">
         <input name="email" type="text" class="email" placeholder="이메일">
     </div>
     <div class="textForm">
-        <input name="nickname" type="text" class="nickname" placeholder="닉네임">
+        <input name="zipcode" type="text" class="nickname" placeholder="우편번호를 입력하세요">
     </div>
+    <div class="textForm">
+        <input name="address" type="text" class="address" placeholder="집주소를 입력하세요">
+    </div>
+    <div class="textForm">
+        <input name="addressDetail" type="text" class="address" placeholder="동+ 아파트번호를 입력하세요">
+    </div>
+
+
     <div class="textForm">
         <input name="phone" type="number" class="cellphoneNo" placeholder="핸드폰번호입력">
     </div>

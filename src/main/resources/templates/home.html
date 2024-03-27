@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
 <body>
 <div class="container">
     <div>
         <h1>테스용 회원가입 및 업데이트 나중에 Home에서 다 옮길예정</h1>
+        <p>로그인체크 </p>
+<div th:if="${loginId != null}">
+    <p>User ID: <span th:text="${loginId}"></span></p>
+    <p>User Name: <span th:text="${nickname}"></span></p>
+</div>
+        </div>
         <p>회원 기능</p>
         <p>
             <a href="/members/join">회원 가입</a>
-            <a href="/members/memberLIst">회원 목록</a>
+            <a href="/members/list">회원 목록</a>
+            <a href="/members/login">회원 로그인</a>
             <a href="/members/update">회원 수정</a>
             <a href="/members/list">회원 목록</a>
             <a href="/members/delete">회원 탈퇴</a>

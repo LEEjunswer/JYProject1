@@ -1,48 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.JYProject.project.repository.mybatis.MemberRepository">
+<mapper namespace="com.JYProject.project.repository.mybatis.MemberMapperRepository">
+    <resultMap id="memberResultMap" type="com.JYProject.project.model.dto.MemberDTO">
+        <id column="member_id" property="memberId" />
+        <result column="login_id" property="loginId" />
+        <result column="pw" property="pw" />
+        <result column="name" property="name" />
+        <result column="nickname" property="nickname" />
+        <result column="phone" property="phone" />
+        <result column="email" property="email" />
+        <result column="zip_code" property="zipCode" />
+        <result column="address" property="address" />
+        <result column="address_detail" property="addressDetail" />
+        <result column="reg_date" property="regDate" />
+        <result column="last_login_date" property="lastLoginDate" />
+        <result column="active" property="active" />
+        <result column="grade" property="Grade" />
+        <result column="point" property="point" />
+    </resultMap>
 
-    <insert id="insertMember" parameterType="MemberDTO">
-        insert into member (loginid,pw,name,nickname,phone,email,zipcode,address,address_detail,member_profile,last_login_date)
-        values (#{loginId},#{pw},#{name},#{nickname},#{phone},#{email},#{zipcode},#{address},#{addressDetail},#{profilePic},#{last_login_date})
+    <insert id="insertMember" parameterType="com.JYProject.project.model.dto.MemberDTO">
+        insert into member (login_id,pw,name,nickname,phone,email,zip_code,address,address_detail)
+        values (#{loginId},#{pw},#{name},#{nickname},#{phone},#{email},#{zipCode},#{address},#{addressDetail})
     </insert>
 
-    <select id="selectMemberDetail" parameterType="Long" resultType="com.JYProject.project.model.dto.MemberDTO">
-        select * from member where id=#{id}
+    <select id="selectMemberDetail" parameterType="Long" resultMap="memberResultMap">
+        select * from member where member_id=#{id}
     </select>
 
     <update id="updateMember" parameterType="com.JYProject.project.model.dto.MemberDTO">
         update member
         set pw=#{pw},
-        nickname=#{nickname},
-        phone = #{phone},
-        email = #{email},
-        zipcode = #{zipcode},
-        address = #{address},
-        address_detail = #{addressDetail},
-        member_profile =#{profilePic}
-        where id=#{id};
+            nickname=#{nickname},
+            phone = #{phone},
+            email = #{email},
+            zip_code = #{zipCode},
+            address = #{address},
+            address_detail = #{addressDetail}
+        where member_id=#{id};
     </update>
-    <delete id="deleteMember" parameterType="Long">
-    delete from member where id=#{id}
+    <delete id="deleteMember" parameterType="Long" >
+        delete from member where member_id=#{memberId}
     </delete>
 
-    <select id="MemberAllList" resultType="com.JYProject.project.model.dto.MemberDTO">
-    select *from member
+    <select id="MemberAllList" resultMap="memberResultMap">
+        select *from member
     </select>
     <select id="selectMemberTotalCount" resultType="Integer">
         select count(*) from member;
     </select>
     <select id="validCheckId" resultType="Boolean" parameterType="String">
-        select count(*) from member where loginid= ${loginId};
+        select count(*) from member where login_id= ${loginId};
     </select>
-    <select id="loginId" resultType="com.JYProject.project.model.dto.MemberDTO" parameterType="com.JYProject.project.model.dto.MemberDTO">
-        select * from member where loginid=#{loginId} and pw=#{pw};
+    <select id="login"  parameterType="com.JYProject.project.model.dto.MemberDTO" resultMap="memberResultMap">
+        select * from member where login_id=#{loginId} and pw=#{pw};
     </select>
 
     <select id="checkIdAndPw" resultType="Boolean" parameterType="com.JYProject.project.model.dto.MemberDTO">
-        select * from member where loginid=#{loginId} and pw=#{pw};
+        select * from member where login_id=#{loginId} and pw=#{pw};
     </select>
 
 </mapper>

@@ -5,40 +5,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ReplyMybatisRepository implements ReplyRepository {
+public class ReplyMybatisMapperRepository implements ReplyMapperRepository {
 
-    private final ReplyRepository replyRepository;
+    private final ReplyMapperRepository replyMapperRepository;
     @Autowired
-    public ReplyMybatisRepository(ReplyRepository replyRepository){
-       this.replyRepository = replyRepository;
+    public ReplyMybatisMapperRepository(ReplyMapperRepository replyMapperRepository){
+       this.replyMapperRepository = replyMapperRepository;
     }
     @Override
     public int insertReply(ReplyDTO replyDTO) {
-        return replyRepository.insertReply(replyDTO);
+        return replyMapperRepository.insertReply(replyDTO);
     }
 
     @Override
     public ReplyDTO selectOneReply(Long id) {
-        return replyRepository.selectOneReply(id);
+        return replyMapperRepository.selectOneReply(id);
     }
 
     @Override
     public int updateReply(ReplyDTO replyDTO) {
-        return replyRepository.updateReply(replyDTO);
+        return replyMapperRepository.updateReply(replyDTO);
     }
 
     @Override
     public int deleteReply(Long id) {
-        return replyRepository.deleteReply(id);
+        return replyMapperRepository.deleteReply(id);
     }
 
     @Override
     public int replyLikesTotalCount(Long id) {
-        return replyRepository.replyLikesTotalCount(id);
+        return replyMapperRepository.replyLikesTotalCount(id);
     }
 
     @Override
     public int replyDisLikesTotalCount(Long id) {
-        return replyRepository.replyDisLikesTotalCount(id);
+        return replyMapperRepository.replyDisLikesTotalCount(id);
     }
 }

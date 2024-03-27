@@ -1,17 +1,21 @@
 package com.JYProject.project.controller;
 
 import com.JYProject.project.model.dto.MemberDTO;
-import com.JYProject.project.service.MemberSerivceImpl;
 import com.JYProject.project.service.MemberServiceImpl;
+import com.JYProject.project.session.SessionConst;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 public class MemberController {
 
@@ -24,7 +28,7 @@ public class MemberController {
     }
 
 
-    @GetMapping("/members/new")
+    @GetMapping("/members/join")
     public String join(MemberDTO memberDTO){
         return"/members/join";
     }
@@ -32,6 +36,9 @@ public class MemberController {
     //일단 가입만 집어넣음
     @PostMapping("/members/join")
     public String create(@ModelAttribute MemberDTO memberDTO){
+        System.out.println("member =" + memberDTO.toString());
+
+        System.out.println("체크용");
         int check = memberService.insertMember(memberDTO);
 
         return "home";
@@ -45,21 +52,30 @@ public class MemberController {
        return "/members/list";
     }
 
+    @GetMapping("members/login")
+    public String loginForm(){
 
+        return  "/members/loginForm";
+    }
+    @PostMapping("members/login")
     public String login(@ModelAttribute MemberDTO memberDTO,
                         HttpSession session,
                         RedirectAttributes redirectAttributes) {
-        // 로그인 로직
         MemberDTO login = memberService.login(memberDTO);
 
         if (login != null) {
             // 로그인이 성공하면 세션에 사용자 정보 저장
-            session.setAttribute("log", login);
-            return "redirect:/home";
-        } else {
-            redirectAttributes.addFlashAttribute("error", "로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
-            return "redirect:/members/loginForm";
+            System.out.println("login ="+ login.toString());
+            session.setAttribute(SessionConst.USER_ID, login.getLoginId());
+            session.setAttribute(SessionConst.USER_NAME, login.getNickname());
+            String userId = (String) session.getAttribute(SessionConst.USER_ID);
+            System.out.println("userId = "+userId );
+            return "redirect:/";
         }
+            redirectAttributes.addFlashAttribute("error", "로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
+            return "redirect:/members/login";
+
+
     }
 
 
@@ -83,12 +99,8 @@ public class MemberController {
     }
     @GetMapping("/members/delete")
     public String deleteForm(@ModelAttribute MemberDTO memberDTO){
-        if(memberDTO.getLoginId() == null){
-            System.out.println("잘못된 접근입니다");
-            return "home";
 
-        }
-        return "deleteForm";
+        return "members/deleteForm";
     }
     @PostMapping("/members/delete")
     public String delete(@ModelAttribute MemberDTO memberDTO

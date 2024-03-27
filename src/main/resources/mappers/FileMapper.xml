@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.JYProject.project.repository.mybatis.FileRepository">
+<mapper namespace="com.JYProject.project.repository.mybatis.FileMapperRepository">
 <insert id="insertFile" parameterType="com.JYProject.project.model.dto.FileDTO">
 insert into  file (board_id, filename) values (#{boardId},#{fileName});
 </insert>

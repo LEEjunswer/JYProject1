@@ -1,27 +1,20 @@
 package com.JYProject.project.model.dto;
 
-import com.JYProject.project.model.BaseEntity;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.Comment;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-@Getter
-@Setter
-
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberDTO  {
 
 
     @Comment("유저PK")
-    private Long id;
+    private Long memberId;
 
 
     @Comment("아이디")
@@ -47,30 +40,19 @@ public class MemberDTO  {
 
     @Comment("우편번호")
     private String zipCode;
-
-
     @Comment("주소")
     private String address;
-
-
     @Comment("상세주소")
     private String addressDetail;
-
     @Comment("회원가입일자")
     private LocalDateTime regDate;
-
     @Comment("로그인일자")
     private LocalDateTime lastLoginDate;
-
     @Comment("회원 계정 비활성화 or 활성화 여부")
     private Boolean active;
-
-
     @Comment("등급")
     private String  Grade;
-
     @Comment("포인트")
     private Long point;
-
 
 }

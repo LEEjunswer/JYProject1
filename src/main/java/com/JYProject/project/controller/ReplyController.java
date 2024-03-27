@@ -22,7 +22,7 @@ public class ReplyController {
     @PostMapping("/boards/content/{idx}/reply")
     public String create(@PathVariable("idx") Long idx, HttpSession session, @ModelAttribute ReplyDTO replyDTO, RedirectAttributes redirectAttributes){
         MemberDTO m = (MemberDTO)session.getAttribute("log");
-        Long writer =  (Long)m.getId();
+        Long writer =  (Long)m.getMemberId();
         if(writer == null ){
             redirectAttributes.addFlashAttribute("error","로그인상태 아님 잘못된 접근입니다");
             return "redirect:/members/home";
@@ -37,7 +37,7 @@ public class ReplyController {
     @PostMapping("boards/content/{idx}/reply/{delReplyIdx}")
     public String delelteReply(@PathVariable("idx") Long idx, @PathVariable("delReplyIdx") Long replyIdx,HttpSession session){
         MemberDTO m = (MemberDTO)session.getAttribute("log");
-        Long writer = (Long)m.getId();
+        Long writer = (Long)m.getMemberId();
         if(writer== null){
            return  "members/home";
         }

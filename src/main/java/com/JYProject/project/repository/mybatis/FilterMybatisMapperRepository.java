@@ -7,32 +7,32 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class FilterMybatisRepository implements FilterRepository{
+public class FilterMybatisMapperRepository implements FilterMapperRepository {
 
-    private  final FilterRepository filterRepository;
+    private  final FilterMapperRepository filterMapperRepository;
 
     @Autowired
-    public  FilterMybatisRepository(FilterRepository filterRepository){
-        this.filterRepository=filterRepository;
+    public FilterMybatisMapperRepository(FilterMapperRepository filterMapperRepository){
+        this.filterMapperRepository = filterMapperRepository;
     }
 
     @Override
     public int makeFilter(FilterDTO filterDTO) {
-        return filterRepository.makeFilter(filterDTO);
+        return filterMapperRepository.makeFilter(filterDTO);
     }
 
     @Override
     public int deleteFilter(Long id) {
-        return filterRepository.deleteFilter(id);
+        return filterMapperRepository.deleteFilter(id);
     }
 
     @Override
     public List<FilterDTO> getAllFilter() {
-        return filterRepository.getAllFilter();
+        return filterMapperRepository.getAllFilter();
     }
 
     @Override
     public FilterDTO getOneFilter(Long id) {
-        return filterRepository.getOneFilter(id);
+        return filterMapperRepository.getOneFilter(id);
     }
 }

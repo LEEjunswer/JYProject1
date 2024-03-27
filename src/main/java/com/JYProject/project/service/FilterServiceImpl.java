@@ -1,7 +1,7 @@
 package com.JYProject.project.service;
 
 import com.JYProject.project.model.dto.FilterDTO;
-import com.JYProject.project.repository.mybatis.FilterMybatisRepository;
+import com.JYProject.project.repository.mybatis.FilterMybatisMapperRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,9 +9,9 @@ import java.util.List;
 @Service
 public class FilterServiceImpl implements  FilterService{
 
-    private final FilterMybatisRepository filterMybatisRepository;
+    private final FilterMybatisMapperRepository filterMybatisRepository;
 
-    public FilterServiceImpl(FilterMybatisRepository filterMybatisRepository){
+    public FilterServiceImpl(FilterMybatisMapperRepository filterMybatisRepository){
         this.filterMybatisRepository=filterMybatisRepository;
     }
 

@@ -1,7 +1,7 @@
 package com.JYProject.project.service;
 
 import com.JYProject.project.model.dto.MemberDTO;
-import com.JYProject.project.repository.mybatis.MemberMybatisRepository;
+import com.JYProject.project.repository.mybatis.MemberMybatisMapperRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,18 +9,15 @@ import java.util.List;
 @Service
 public class MemberServiceImpl implements  MemberService{
 
-    private final MemberMybatisRepository memberMybatisRepository;
+    private final MemberMybatisMapperRepository memberMybatisRepository;
 
-    public MemberServiceImpl(MemberMybatisRepository memberMybatisRepository) {
+    public MemberServiceImpl(MemberMybatisMapperRepository memberMybatisRepository) {
         this.memberMybatisRepository = memberMybatisRepository;
     }
 
 
     @Override
     public int insertMember(MemberDTO memberDTO) {
-        if (memberMybatisRepository.selectMemberDetail(memberDTO.getId()) != null) {
-            return 0;
-        }
         return memberMybatisRepository.insertMember(memberDTO);
 
     }

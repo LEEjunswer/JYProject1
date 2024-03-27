@@ -1,12 +1,11 @@
 package com.JYProject.project.repository.mybatis;
 
 import com.JYProject.project.model.dto.BoardDTO;
-import com.JYProject.project.model.dto.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 @Mapper
-public interface BoardRepository {
+public interface BoardMapperRepository {
 
     public int insertBoard(BoardDTO boardDTO);
     public BoardDTO selectBoardDetail(Long id);

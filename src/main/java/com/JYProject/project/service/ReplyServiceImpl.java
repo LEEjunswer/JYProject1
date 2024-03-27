@@ -1,17 +1,17 @@
 package com.JYProject.project.service;
 
 import com.JYProject.project.model.dto.ReplyDTO;
-import com.JYProject.project.repository.mybatis.ReplyMybatisRepository;
+import com.JYProject.project.repository.mybatis.ReplyMybatisMapperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ReplyServiceImpl implements ReplySerivce {
+public class ReplyServiceImpl implements ReplyService {
 
-    private final ReplyMybatisRepository replyMybatisRepository;
+    private final ReplyMybatisMapperRepository replyMybatisRepository;
 
     @Autowired
-    public  ReplyServiceImpl(ReplyMybatisRepository replyMybatisRepository){
+    public  ReplyServiceImpl(ReplyMybatisMapperRepository replyMybatisRepository){
         this.replyMybatisRepository=replyMybatisRepository;
     }
 
