@@ -1,24 +1,24 @@
 package com.JYProject.project.model.dto;
 
-import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Comment;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+<<<<<<< HEAD
 @NoArgsConstructor
 @AllArgsConstructor
+=======
+>>>>>>> main
 public class CategoryDTO {
-    
-    @Comment("카테고리번호")
+
     private Long id;
-    @Comment("카테고리이름 1.자유 2.정보 3.추천 4.후기 나중에 보고 더 추가할 예정")
-    private String categoryName;
-
-    @Comment("등록일자")
-    private LocalDateTime regDate;
-
+    private String branch;
+    private String code;
+    private String name;
+    private Integer level;
+    private CategoryDTO parentCategory;
+    private List<CategoryDTO> subCategory = new ArrayList<>();
+    private BoardDTO boardDTO;
 }

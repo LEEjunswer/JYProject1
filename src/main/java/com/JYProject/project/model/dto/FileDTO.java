@@ -1,24 +1,22 @@
 package com.JYProject.project.model.dto;
 
 import lombok.*;
+<<<<<<< HEAD
 import org.hibernate.annotations.Comment;
+=======
+>>>>>>> main
 
 import java.time.LocalDateTime;
 
 @Data
+<<<<<<< HEAD
 @NoArgsConstructor
 @AllArgsConstructor
+=======
+>>>>>>> main
 public class FileDTO {
 
-    @Comment("파일번호")
     private Long id;
-
-    @Comment("글번호")
     private Long boardNo;
-
-    @Comment("파일이름")
     private String fileName;
-
-    @Comment("파일등록일자")
-    private LocalDateTime regDate;
 }

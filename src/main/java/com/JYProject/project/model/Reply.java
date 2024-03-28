@@ -1,44 +1,46 @@
-package com.JYProject.project.model.dto;
+package com.JYProject.project.model;
 
-import com.JYProject.project.model.BaseEntity;
-<<<<<<< HEAD
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
-=======
-import lombok.*;
->>>>>>> main
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
-@Data
-<<<<<<< HEAD
+@Getter
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReplyDTO  {
+@Builder
+public class Reply extends BaseEntity{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Comment("댓글PK")
+    @Column(name="reply_id")
     private Long id;
+
+    @Column
     @Comment("게시판")
     private Long boardNo ;
+
+    @Column
     @Comment("댓글작성자")
     private Long writer;
-    @Comment("등록일자")
-    private LocalDateTime regDate;
+
+    @Column
     @Comment("삭제일자")
     private LocalDateTime deletedDate;
+
+    @Column
     @Comment("좋아요")
     private Long likes;
+
+    @Column
     @Comment("싫어요")
     private Long dislikes;
-=======
-public class ReplyDTO extends BaseEntity {
 
-    private Long id;
-    private Long boardNo ;
-    private Long writer;
-    private LocalDateTime deletedDate;
-    private Long likes;
-
->>>>>>> main
-
+    @JoinColumn(name="board_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Board board;
 }

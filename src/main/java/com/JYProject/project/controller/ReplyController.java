@@ -6,7 +6,6 @@ import com.JYProject.project.model.dto.ReplyDTO;
 import com.JYProject.project.service.ReplyServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -14,12 +13,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ReplyController {
     /*  나중에 apiController 옮기고 수정할 예정  ajax 로 전부 받을 예쩡*/
     private final ReplyServiceImpl replyService;
+
     @Autowired
-    public ReplyController(ReplyServiceImpl replyService){
+    public ReplyController(ReplyServiceImpl replyService) {
         this.replyService = replyService;
     }
 
     @PostMapping("/boards/content/{idx}/reply")
+    public String create(@PathVariable("idx") Long idx, HttpSession session, @ModelAttribute ReplyDTO replyDTO) {
+        MemberDTO m = (MemberDTO) session.getAttribute("log");
+        Long writer = (Long) m.getId();
+        replyDTO.setBoardNo(idx);
+        replyDTO.setWriter(writer);
+        int check = replyService.insertReply(replyDTO);
+        return "redirect:/boards/content/" + idx;
+    }
     public String create(@PathVariable("idx") Long idx, HttpSession session, @ModelAttribute ReplyDTO replyDTO, RedirectAttributes redirectAttributes){
         MemberDTO m = (MemberDTO)session.getAttribute("log");
         Long writer =  (Long)m.getMemberId();

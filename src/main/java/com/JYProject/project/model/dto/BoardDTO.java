@@ -1,5 +1,6 @@
 package com.JYProject.project.model.dto;
 
+<<<<<<< HEAD
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -11,17 +12,23 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+=======
+import lombok.*;
+
+@Data
+>>>>>>> main
 public class BoardDTO {
 
-    @Comment("게시판번호")
     private Long id;
+<<<<<<< HEAD
 
     @Comment("작성자")
+=======
+    private String name;
+>>>>>>> main
     private String writer;
-
-
-    @Comment("글제목")
     private String title;
+<<<<<<< HEAD
 
     @Comment("등록일자")
     private LocalDateTime regDate;
@@ -48,4 +55,6 @@ public class BoardDTO {
 
     @Comment("카레고리번호")
     private int categoryId;
+=======
+>>>>>>> main
 }

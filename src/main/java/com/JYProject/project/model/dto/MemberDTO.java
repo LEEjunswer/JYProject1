@@ -1,5 +1,6 @@
 package com.JYProject.project.model.dto;
 
+<<<<<<< HEAD
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,28 +19,26 @@ public class MemberDTO  {
 
 
     @Comment("아이디")
+=======
+import com.JYProject.project.model.BaseEntity;
+import com.JYProject.project.model.Member;
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Data
+public class MemberDTO extends BaseEntity {
+
+    private Long id;
+>>>>>>> main
     private String loginId;
-
-    @Comment("비밀번호")
     private String pw;
-
-
-    @Comment("이름")
     private String name;
-
-
-    @Comment("닉네임")
     private String nickname;
-
-
-    @Comment("핸드폰번호")
     private String phone;
-
-    @Comment("이메일")
     private String email;
-
-    @Comment("우편번호")
     private String zipCode;
+<<<<<<< HEAD
     @Comment("주소")
     private String address;
     @Comment("상세주소")
@@ -54,5 +53,28 @@ public class MemberDTO  {
     private String  Grade;
     @Comment("포인트")
     private Long point;
+=======
+    private String address;
+    private String addressDetail;
+    // private String profilePic;
+    private LocalDateTime lastLoginDate;
+    private Boolean active;
+    private String Grade;
+
+    public Member builder() {
+        return Member.builder()
+                .loginId(loginId)
+                .pw(pw)
+                .name(name)
+                .nickname(nickname)
+                .phone(phone)
+                .email(email)
+                .zipCode(zipCode)
+                .address(address)
+                .addressDetail(addressDetail)
+                .point(0L)
+                .build();
+    }
+>>>>>>> main
 
 }
