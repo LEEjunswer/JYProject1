@@ -25,23 +25,25 @@
         values (#{loginId},#{pw},#{name},#{nickname},#{phone},#{email},#{zipCode},#{address},#{addressDetail})
     </insert>
 
-    <select id="selectMemberDetail" parameterType="Long" resultMap="memberResultMap">
-        select * from member where member_id=#{id}
+    <select id="selectMemberDetail" parameterType="String" resultMap="memberResultMap">
+        select * from member where login_id=#{loginId}
     </select>
 
     <update id="updateMember" parameterType="com.JYProject.project.model.dto.MemberDTO">
         update member
-        set pw=#{pw},
+        set    <if test="pw != null and pw != ''">
+        pw = #{pw},
+    </if>
             nickname=#{nickname},
             phone = #{phone},
             email = #{email},
             zip_code = #{zipCode},
             address = #{address},
             address_detail = #{addressDetail}
-        where member_id=#{id};
+        where member_id=#{memberId};
     </update>
     <delete id="deleteMember" parameterType="Long" >
-        delete from member where member_id=#{memberId}
+        delete from member where member_id=#{Id}
     </delete>
 
     <select id="MemberAllList" resultMap="memberResultMap">
@@ -50,15 +52,15 @@
     <select id="selectMemberTotalCount" resultType="Integer">
         select count(*) from member;
     </select>
-    <select id="validCheckId" resultType="Boolean" parameterType="String">
-        select count(*) from member where login_id= ${loginId};
+    <select id="validCheckId" resultType="boolean" parameterType="String">
+        SELECT COUNT(*) > 0 FROM member WHERE login_id=#{loginId} AND pw=#{pw}
     </select>
     <select id="login"  parameterType="com.JYProject.project.model.dto.MemberDTO" resultMap="memberResultMap">
         select * from member where login_id=#{loginId} and pw=#{pw};
     </select>
 
-    <select id="checkIdAndPw" resultType="Boolean" parameterType="com.JYProject.project.model.dto.MemberDTO">
-        select * from member where login_id=#{loginId} and pw=#{pw};
+    <select id="checkIdAndPw"  resultType="boolean" parameterType="com.JYProject.project.model.dto.MemberDTO">
+        SELECT COUNT(*) > 0 FROM member WHERE login_id=#{loginId} AND pw=#{pw}
     </select>
 
 </mapper>

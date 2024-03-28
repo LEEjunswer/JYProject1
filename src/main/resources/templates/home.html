@@ -12,19 +12,27 @@
 </div>
         </div>
         <p>회원 기능</p>
-        <p>
-            <a href="/members/join">회원 가입</a>
-            <a href="/members/list">회원 목록</a>
-            <a href="/members/login">회원 로그인</a>
-            <a href="/members/update">회원 수정</a>
-            <a href="/members/list">회원 목록</a>
-            <a href="/members/delete">회원 탈퇴</a>
-        </p>
+            <a href="/members/join">회원 가입 (기능구현) 미구현(중복체크)</a>
+            <a href="/members/list">회원 목록 (기능구현)</a>
+            <a href="/members/login">회원 로그인 (기능구현) </a>
+            <a href="/members/update">회원 수정 (기능구현) 미구현(중복체크)</a>
+            <a href="/members/active">회원 비활성하기 미구현</a>
+            <a href="/members/list">(어드민)회원 목록</a>
+            <a href="/members/delete">회월탈퇴 구현 완료</a>
+
         <p>보드 기능</p>
         <a href="boards/list">게시판 글모음</a>
         <a href="boards/join">게시글 생성하기</a>
     </div>
 </div> <!-- /container -->
 
+
+<script th:inline="javascript">
+    var updateMessage = [[${update}]];
+    if (updateMessage) {
+        alert(updateMessage);
+    }
+    /*]]>*/
+</script>
 </body>
 </html>

@@ -62,22 +62,44 @@
 <body>
 <div class="container">
     <div class="login-header">
-        <h2>회원수정하기</h2>
+        <h2 th:text=" ${m.loginId} + ' -  회원수정 '"></h2>
     </div>
-    <form action="/members/update" method="post">
-        <!-- Hidden input field to submit loginId -->
-        <input type="hidden" th:value="${loginId}" name="loginId">
+    <form action="/members/updateForm" method="post">
+        <input type="hidden" th:value="${m.memberId}" name="memberId">
+        <input type="hidden" th:value="${m.loginId}" name="loginId">
         <div class="form-group">
             <label for="loginId">아이디</label>
             <!-- Disabled input field to display loginId -->
-            <input type="text" th:value="${loginId}" id="loginId" size="15" disabled>
+            <input type="text" th:value="${m.loginId}" id="loginId" size="15" disabled>
         </div>
         <div class="form-group">
-            <label for="pw">패스워드</label>
+            <label for="pw">변경 하실 비밀번호</label>
             <input type="password" id="pw" name="pw" size="15">
         </div>
-        <div th:if="${error != null}" class="field-error">
-            <p th:text="${error}">입력된 정보의 형식이 올바르지 않습니다.</p>
+        <div class="form-group">
+            <!--닉네임 나중에 중복체크할 예정-->
+            <label for="nickname">변경 하실 닉네임</label>
+            <input type="text" th:value="${m.nickname}" id="nickname" name="nickname" size="15">
+        </div>
+        <div class="form-group">
+            <label for="phone">변경 하실 휴대폰번호</label>
+            <input type="text" th:value="${m.phone}" id="phone" name="phone" size="15">
+        </div>
+        <div class="form-group">
+            <label for="email">변경 하실 이메일</label>
+            <input type="text" th:value="${m.email}" id="email" name="email" size="15">
+        </div>
+        <div class="form-group">
+            <label for="zipCode">변경 하실 우편번호</label>
+            <input type="text" th:value="${m.zipCode}" id="zipCode" name="zipCode" size="15">
+        </div>
+        <div class="form-group">
+            <label for="address">변경 하실 주소</label>
+            <input type="text" th:value="${m.address}" id="address" name="address" size="15">
+        </div>
+        <div class="form-group">
+            <label for="addressDetail">변경 하실 상세주소</label>
+            <input type="text" th:value="${m.addressDetail}" id="addressDetail" name="addressDetail" size="15">
         </div>
         <div class="form-group">
             <input type="submit" value="수정하기">

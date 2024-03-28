@@ -32,8 +32,8 @@ public class MemberServiceImpl implements  MemberService{
     }
 
     @Override
-    public MemberDTO selectMemberDetail(Long id) {
-        return memberMybatisRepository.selectMemberDetail(id);
+    public MemberDTO selectMemberDetail(String loginId) {
+        return memberMybatisRepository.selectMemberDetail(loginId);
     }
 
     @Override

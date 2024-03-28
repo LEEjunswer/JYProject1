@@ -23,9 +23,9 @@ public class MemberMybatisMapperRepository implements MemberMapperRepository {
         return memberMapperRepository.login(memberDTO);
 
     }
-    public MemberDTO selectMemberDetail(Long id){
+    public MemberDTO selectMemberDetail(String loginId){
 
-        return memberMapperRepository.selectMemberDetail(id);
+        return memberMapperRepository.selectMemberDetail(loginId);
     }
 
     public int updateMember(MemberDTO memberDTO){

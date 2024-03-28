@@ -10,7 +10,7 @@ public interface MemberMapperRepository {
     public int insertMember(MemberDTO memberDTO);
 
     MemberDTO login(MemberDTO memberDTO);
-    public MemberDTO selectMemberDetail(Long id);
+    public MemberDTO selectMemberDetail(String loginId);
 
     public int updateMember(MemberDTO memberDTO);
 

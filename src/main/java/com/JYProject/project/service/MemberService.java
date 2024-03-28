@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MemberService {
     int insertMember(MemberDTO memberDTO);
-    MemberDTO selectMemberDetail(Long id);
+    MemberDTO selectMemberDetail(String loginId);
     MemberDTO login(MemberDTO memberDTO);
 
     public boolean validCheckId(String loginId);

@@ -1,6 +1,7 @@
 package com.JYProject.project.controller;
 
 import com.JYProject.project.model.dto.MemberDTO;
+import com.JYProject.project.service.MemberService;
 import com.JYProject.project.service.MemberServiceImpl;
 import com.JYProject.project.session.SessionConst;
 import jakarta.servlet.http.HttpSession;
@@ -68,8 +69,6 @@ public class MemberController {
             System.out.println("login ="+ login.toString());
             session.setAttribute(SessionConst.USER_ID, login.getLoginId());
             session.setAttribute(SessionConst.USER_NAME, login.getNickname());
-            String userId = (String) session.getAttribute(SessionConst.USER_ID);
-            System.out.println("userId = "+userId );
             return "redirect:/";
         }
             redirectAttributes.addFlashAttribute("error", "로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
@@ -80,41 +79,61 @@ public class MemberController {
 
 
     @GetMapping("/members/update")
-    public String updateForm(HttpSession session
-    ,Model model){
-        MemberDTO log = (MemberDTO) session.getAttribute("log");
-    if(log == null){
-        System.out.println("잘못된 접근");
-        return "home";
-    }
-        model.addAttribute( "log" , log);
+    public String update(HttpSession session,Model model){
+        String loginId = (String) session.getAttribute(SessionConst.USER_ID);
+        model.addAttribute("loginId",loginId);
         return "/members/update";
     }
-
     @PostMapping("/members/update")
-    public String update(@ModelAttribute MemberDTO memberDTO){
-        memberService.updateMember(memberDTO);
-        System.out.println("나중에 변경할것 ");
-        return "home";
+    public String updateForm(@ModelAttribute MemberDTO memberDTO, Model model, RedirectAttributes redirectAttributes) {
+        boolean check =  memberService.checkIdAndPw(memberDTO);
+        System.out.println("boolean check="+check);
+        if (!check) {
+            redirectAttributes.addFlashAttribute("error", "아이디와 비밀번호가 일치하지 않습니다");
+            return "redirect:/members/update";
+        }
+        // 리다이렉트할 때 GET 요청으로 보내야 함
+        return "redirect:/members/updateForm?loginId=" + memberDTO.getLoginId();
     }
-    @GetMapping("/members/delete")
-    public String deleteForm(@ModelAttribute MemberDTO memberDTO){
 
+    @GetMapping("/members/updateForm")
+    public String updateForm(@RequestParam String loginId, Model model) {
+        MemberDTO member = memberService.selectMemberDetail(loginId);
+        model.addAttribute("m", member);
+        return "members/updateForm";
+    }
+    @PostMapping("/members/updateForm")
+    public String updateForm(@ModelAttribute MemberDTO memberDTO,RedirectAttributes redirectAttributes) {
+        System.out.println(memberDTO.toString());
+        memberService.updateMember(memberDTO);
+        redirectAttributes.addFlashAttribute("update", memberDTO.getLoginId() +"님 성공적으로 회원수정이 완료되었습니다");
+        return "redirect:/";
+    }
+
+
+    @GetMapping("/members/delete")
+    public String deleteForm(HttpSession session,Model model){
+        String loginId = (String) session.getAttribute(SessionConst.USER_ID);
+        model.addAttribute("loginId",loginId);
         return "members/deleteForm";
     }
     @PostMapping("/members/delete")
     public String delete(@ModelAttribute MemberDTO memberDTO
     ,RedirectAttributes redirectAttributes
-    ,HttpSession session){
+    ,HttpSession session
+    ,Model model){
         MemberDTO member = memberService.login(memberDTO);
         if(member != null){
-            session.removeAttribute("log");
-
-          redirectAttributes.addFlashAttribute("suc", member.getLoginId()+"회원탈퇴 성공하셧습니다");
-            return "redirect:/home";
+            memberService.deleteMember(member.getMemberId());
+            session.removeAttribute("loginId");
+            session.removeAttribute("nickname");
+          redirectAttributes.addFlashAttribute("update", member.getLoginId()+"회원탈퇴 성공하셧습니다");
+            return "redirect:/";
         }
+        String loginId = memberDTO.getLoginId();
+        model.addAttribute("loginId",loginId);
         redirectAttributes.addFlashAttribute("error", "아이디와 비밀번호가 일치하지 않습니다 다시 입력해주세요.");
-        return "redirect:/members/delete";
+        return "redirect:/members/deleteForm";
     }
 
 
