@@ -4,7 +4,9 @@ import com.JYProject.project.model.dto.BoardDTO;
 import com.JYProject.project.model.dto.FileDTO;
 import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.service.BoardServiceImpl;
-import com.JYProject.project.service.FileServiceImpl;
+import com.JYProject.project.service.MemberService;
+import com.JYProject.project.service.MemberServiceImpl;
+import com.JYProject.project.session.SessionConst;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,23 +16,19 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+
 @Controller
 public class BoardController {
 
-    // 나중에 Controller 밑에 RequestMapping으로 다 줄일 예정  + 좋아요 싫어요 아직 미구현 나중에 detail로 가져올예정 토탈로 전부 가져올 예정
-
     private  final BoardServiceImpl boardService;
-    private FileServiceImpl fileService;
+    private final MemberServiceImpl memberService;
     @Autowired
-    public BoardController(BoardServiceImpl boardService){
+    public  BoardController(BoardServiceImpl boardService, MemberServiceImpl memberService){
         this.boardService=boardService;
+        this.memberService = memberService;
     }
 
-    @Autowired(required = false)
-    public void FileController(FileServiceImpl fileService){
-        this.fileService=fileService;
-    }
-    //보드 전체 리스트 리턴 나중에 메인으로 옮길 예정
+
     @GetMapping("/boards/list")
     public String list(Model model){
         List<BoardDTO> list = boardService.boardAllList();
@@ -40,71 +38,77 @@ public class BoardController {
     //게시판 만들기 폼
     @GetMapping("/boards/join")
     public String join(HttpSession session,
-    RedirectAttributes redirectAttributes) {
-        Object log = session.getAttribute("log");
-        if(log ==null){
-            //log 나중에 필터랑 인터셉터로 아예 조인 못하게 할 예정
-            redirectAttributes.addFlashAttribute("error","비로그인시 글을 작성할 수 없습니다");
-            return "redirect:/home";
-        }else{
-            return"/boards/join";
-        }
+                       RedirectAttributes redirectAttributes,Model model) {
 
+        /*    redirectAttributes.addFlashAttribute("error","비로그인시 글을 작성할 수 없습니다");
+            return "redirect:/home";*/
+
+        String loginId = (String) session.getAttribute(SessionConst.USER_ID);
+        MemberDTO  m =  memberService.selectMemberDetail(loginId);
+        model.addAttribute("nickname",m.getNickname());
+        model.addAttribute("memberId",m.getMemberId());
+        return"/boards/join";
     }
     //보드 생성
-    @PostMapping("/boards/join")
-    public String create(
-            //파일업로드
-            @RequestParam  MultipartFile  file,
-            @ModelAttribute BoardDTO boardDTO){
-        int check = boardService.insertBoard(boardDTO);
-        FileDTO g = new FileDTO();
-        g.setBoardNo(boardDTO.getId());
+@PostMapping("/boards/join")
+public String create(
+        @ModelAttribute BoardDTO boardDTO,RedirectAttributes redirectAttributes){
+    boardService.insertBoard(boardDTO);
+    redirectAttributes.addFlashAttribute("suc","성공적으로 게시글 등록되었습니다");
+    return "redirect:/boards/list";
+}
+//보드게시판 제목 클릭시 상세하게 보여줄 예정
+@GetMapping("boards/content/{boardId}")
+public String content(@PathVariable("boardId") Long boardId ,Model model,HttpSession session){
+   BoardDTO board = boardService.selectBoardDetail(boardId);
+   String userId = (String) session.getAttribute(SessionConst.USER_ID);
 
-        //나중에 체크 조건 줄 예정
-        return "redirect:/boards/list";
-    }
-    //보드게시판 제목 클릭시 상세하게 보여줄 예정
-    @GetMapping("boards/content/{idx}")
-    public String content(@PathVariable("idx") Long idx, Model model){
-        BoardDTO board = boardService.selectBoardDetail(idx);
-
+    if (userId != null && !userId.equals(board.getMemberId())) {
+        boardService.boardViewCntIncrease(boardId);
         model.addAttribute("board" , board);
-        return "/boards/content" + idx;
+        return "/boards/content";
     }
-        @GetMapping("/boards/update/{idx}")
-        public String updateForm(@PathVariable("idx") Long idx,  Model model
-        , HttpSession session,
-        RedirectAttributes redirectAttributes){
-            MemberDTO log = (MemberDTO)session.getAttribute("log");
-            if(log == null){
-                redirectAttributes.addFlashAttribute("error", "비상적인 접근입니다 로그인부터 해주세요");
-                return "home";
-            }else{
-                BoardDTO board = boardService.selectBoardDetail(idx);
-                model.addAttribute("board" , board);
-             return "boards/update";
-            }
-        }
-        @PostMapping("/boards/update")
-        public String update(@ModelAttribute BoardDTO boardDTO){
-            Long idx = boardDTO.getId();
-            int updateCheck = boardService.updateBoard(boardDTO);
+  model.addAttribute("board" , board);
 
-            return "redirect:/boards/" + idx;
-        }
-    @PostMapping("/boards/delete/{idx}")
-    public String delete(@PathVariable("idx") Long idx, HttpSession session,
+    return "/boards/content";
+}
+
+@GetMapping("/boards/update/{boardId}")
+public String updateForm(@PathVariable("boardId") Long boardId,  Model model
+        , HttpSession session,
                          RedirectAttributes redirectAttributes){
+    MemberDTO log = (MemberDTO)session.getAttribute("log");
+    if(log == null){
+        redirectAttributes.addFlashAttribute("error", "비상적인 접근입니다 로그인부터 해주세요");
+        return "home";
+    }else{
+        BoardDTO board = boardService.selectBoardDetail(boardId);
+        model.addAttribute("board" , board);
+        return "boards/update";
+    }
+}
+@PostMapping("/boards/update")
+public String update(@ModelAttribute BoardDTO boardDTO){
+
+    int updateCheck = boardService.updateBoard(boardDTO);
+
+    return "redirect:/boards/" ;
+}
+@PostMapping("/boards/delete/{boardId}")
+public String delete(@PathVariable("boardId") Long boardId, HttpSession session,
+                     RedirectAttributes redirectAttributes){
     MemberDTO log = (MemberDTO)session.getAttribute("log");
     if(log == null){
         redirectAttributes.addFlashAttribute("error", "잘못된 접근입니다");
         return "home";
     }else{
-        int check =  boardService.deleteBoard(idx);
+        int check =  boardService.deleteBoard(boardId);
         return "redirect:/boards/list";
     }
 
-    }
+}
+
+
+
 
 }

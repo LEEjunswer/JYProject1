@@ -8,18 +8,20 @@ import java.util.List;
 public interface BoardMapperRepository {
 
     public int insertBoard(BoardDTO boardDTO);
-    public BoardDTO selectBoardDetail(Long id);
+    public BoardDTO selectBoardDetail(Long boardId);
     public int updateBoard(BoardDTO boardDTO);
-    public int deleteBoard(Long id);
+    public int deleteBoard(Long boardId);
     public List<BoardDTO> boardAllList();
     public int selectBoardTotalCount();
+
+    public int boardViewCntIncrease(Long boardId);
 
     // 밑에 리스트는 나중에 검색했을때 값 가져올 예정
     public List<BoardDTO> boardSearchTitleList(String title);
 
     public List<BoardDTO> boardSearchContentList(String content);
-    public int getLikesTotalCount(Long id);
+    public int getLikesTotalCount(Long boardId);
 
-    public int getDisLikesTotalCount(Long id);
+    public int getDisLikesTotalCount(Long boardId);
 
 }

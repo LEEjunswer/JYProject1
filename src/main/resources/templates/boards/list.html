@@ -1,34 +1,70 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="<http://www.thymeleaf.org>">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-
-    <title>board</title>
+    <title>게시글 목록</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            width: 80%; /* 컨테이너 너비 */
+        }
+        .board_list {
+            width: 100%; /* 테이블 너비 */
+            border-collapse: collapse;
+            margin: 0 auto; /* 가운데 정렬 */
+        }
+        .board_list th, .board_list td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .board_list th {
+            background-color: #f2f2f2;
+        }
+        .board_list tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr{
+            text-align: center;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
     <h2>게시글 목록</h2>
     <table class="board_list">
         <colgroup>
-            <col width="15%"/>
-            <col width="*"/>
-            <col width="15%"/>
-            <col width="25%"/>
+            <col width="10%"/>
+            <col width="50%"/>
+            <col width="10%"/>
+            <col width="10%"/>
+            <col width="10%"/>
         </colgroup>
         <thead>
         <tr>
             <th scope="col">글번호</th>
             <th scope="col">제목</th>
+            <th scope="col">작성자</th>
             <th scope="col">조회수</th>
             <th scope="col">작성일</th>
         </tr>
         </thead>
         <tbody>
         <tr th:if="${#lists.size(list)} > 0" th:each="list : ${list}">
-            <td th:text="${list.boardIdx}"></td>
-            <td th:text="${list.title}"></td>
-            <td th:text="${list.hitCnt}"></td>
-            <td th:text="${list.createdDatetime}"></td>
+            <td th:text="${list.boardId}"></td>
+            <td th:text="${list.title}" th:onclick="|location.href='/boards/content/' + ${list.boardId}|"></td>
+            <td th:text="${list.getWriter()}"></td>
+            <td th:text="${list.viewCnt}"></td>
+            <td th:text="${#temporals.format(list.getRegDate(), 'yyyy-MM-dd HH:mm:ss')}"></td>
         </tr>
         <tr th:unless="${#lists.size(list)} > 0">
             <td colspan="4">조회된 결과가 없습니다.</td>
@@ -36,5 +72,11 @@
         </tbody>
     </table>
 </div>
+<script th:inline="javascript">
+    var updateMessage = [[${update}]];
+    if (updateMessage) {
+        alert(updateMessage);
+    }
+</script>
 </body>
 </html>

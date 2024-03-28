@@ -7,10 +7,10 @@ import java.util.List;
 public interface BoardService {
 
     public int insertBoard(BoardDTO boardDTO);
-    public BoardDTO selectBoardDetail(Long id);
+    public BoardDTO selectBoardDetail(Long boardId);
 
     public int updateBoard(BoardDTO boardDTO);
-    public int deleteBoard(Long id);
+    public int deleteBoard(Long boardId);
 
     public List<BoardDTO> boardAllList();
 
@@ -19,7 +19,8 @@ public interface BoardService {
     public List<BoardDTO> boardSearchContentList(String content);
     public int selectBoardTotalCount();
 
-    public int getLikesTotalCount(Long id);
+    public int getLikesTotalCount(Long boardId);
 
-    public int getDisLikesTotalCount(Long id);
+    public int boardViewCntIncrease(Long boardId);
+    public int getDisLikesTotalCount(Long boardId);
 }

@@ -19,22 +19,27 @@ public class BoardMybatisMapperRepository implements BoardMapperRepository {
 
                 return boardMapperRepository.insertBoard(boardDTO);
         }
-        public BoardDTO selectBoardDetail(Long id){
-                return boardMapperRepository.selectBoardDetail(id);
+        public BoardDTO selectBoardDetail(Long boardId){
+                return boardMapperRepository.selectBoardDetail(boardId);
         }
         public int updateBoard(BoardDTO boardDTO){
 
                 return boardMapperRepository.updateBoard(boardDTO);
         }
-        public int deleteBoard(Long id){
+        public int deleteBoard(Long boardId){
 
-                return boardMapperRepository.deleteBoard(id);
+                return boardMapperRepository.deleteBoard(boardId);
         }
         public List<BoardDTO> boardAllList(){
                 return boardMapperRepository.boardAllList();
         }
         public int selectBoardTotalCount(){
                 return boardMapperRepository.selectBoardTotalCount();
+        }
+
+        @Override
+        public int boardViewCntIncrease(Long boardId) {
+                return boardMapperRepository.boardViewCntIncrease(boardId);
         }
 
         @Override

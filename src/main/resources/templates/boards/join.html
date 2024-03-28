@@ -1,10 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<style>
+    table {
+        width: 600px;
+    }
+
+    textarea {
+        text-align: center;
+        width: 600px;
+        height: 200px;
+    }
+
+    .Content {
+        text-align: center;
+        border: 0;
+    }
+
+    .input {
+        width: 300px;
+        text-align: center;
+    }
+
+    input.img {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%; /* 동그라미를 만들기 위한 속성 */
+        border: none;
+        background-color: #808080;
+        cursor: pointer;
+    }
+    td{
+        text-align: center;
+        align-items: center;
+    }
+
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 작성하기</title>
+</head>
 <body>
+<h1 align="center">게시글 작성하기</h1>
+<form action="/boards/join" method="post">
+    <table align="center" border=1>
+        <input type="hidden" name="memberId" th:value="${memberId}" >
+        <input type="hidden" name="writer"  th:value="${nickname}">
+        <tr>
+            <td>게시글 제목 : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
+                    class="input" type="text" name="title"></td>
+        </tr>
+        <tr>
+            <td> <label>
+                작성자 : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                <input
+                        class="input" th:value="${nickname}" type="text" name="writer" size="5" disabled>
+            </label></td>
+        </tr>
+
+        <tr>
+            <td>게시판 카테고리 :  <input type="radio"
+                                   name="categoryId" value="1">자유 <input type="radio"
+                                                                         name="categoryId" value="2">정보 <input type="radio"
+                                                                                                               name="categoryId" value="3">추천 <input type="radio"
+                                                                                                                                                     name="categoryId" value="4">후기
+                <input type="radio"
+                       name="categoryId" value="3">추천 <input type="radio"
+                                                             name="categoryId" value="5">기타
+            </td>
+        </tr>
+        <!--   <tr> 나중에 파일업로드 구현시 구현할 예정
+           <td><label for="fileInput">다중 파일(최대3개) 선택:</label> <input
+                   type="file" name="files[]" id="fileInput" accept="image/*" max="3"
+                   onchange="loadFiles(this)" multiple>
+               <br>
+           </td>
+           </tr>-->
+
+        <tr>
+            <td class="Content">게시글 내용
+                <hr>
+            </td>
+        </tr>
+        <tr>
+            <td><label id="">
+                <textarea id="content" name="content" width="400"></textarea>
+            </label></td>
+        </tr>
+        <tr>
+            <td style="text-align: center; padding: 10px;"><!--<input
+                    type="button" value="등록하기" onclick="validCheck(form)"> -->
+                <input type="submit" value="게시글 등록">
+                <input type="button" value="메인으로" th:attr="onclick=|location.href='@{/boards/list}'|">
+        </tr>
+    </table>
+</form>
 
 </body>
 </html>

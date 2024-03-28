@@ -62,6 +62,11 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public int boardViewCntIncrease(Long boardId) {
+        return boardMybatisRepository.boardViewCntIncrease(boardId);
+    }
+
+    @Override
     public int getDisLikesTotalCount(Long id) {
         return boardMybatisRepository.getDisLikesTotalCount(id);
     }

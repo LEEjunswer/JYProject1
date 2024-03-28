@@ -14,7 +14,7 @@ import java.util.List;
 public class BoardDTO {
 
     @Comment("게시판번호")
-    private Long id;
+    private Long boardId;
 
     @Comment("작성자")
     private String writer;
@@ -36,7 +36,7 @@ public class BoardDTO {
     private String content;
 
     @Comment("글작성자 id")
-    private String MemberId;
+    private String memberId;
     @Comment("조회수")
     private int viewCnt;
 
