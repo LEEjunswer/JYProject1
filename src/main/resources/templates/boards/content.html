@@ -45,7 +45,7 @@
     <title>게시글 작성하기</title>
 </head>
 <body>
-<h1 align="center">게시글 작성하기</h1>
+<h1 align="center" th:value="${}"></h1>
 <form action="boards/join" enctype="multipart/form-data"	method="post">
     <table align="center" border=1>
         <input type="hidden" name="memberId" th:value="${m.memberId}" >
