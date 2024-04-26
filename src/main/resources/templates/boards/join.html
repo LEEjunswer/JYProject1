@@ -2,29 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Title</title>'
+
+    <script src="https://cdn.tiny.cloud/1/g77d1at0bpy5p2pwugg66jppd10l79ykiov5mvc6eelw4y97/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 <style>
     table {
         width: 600px;
     }
-
     textarea {
         text-align: center;
         width: 600px;
         height: 200px;
     }
-
     .Content {
         text-align: center;
         border: 0;
     }
-
     .input {
         width: 300px;
         text-align: center;
     }
-
     input.img {
         width: 10px;
         height: 10px;
@@ -39,6 +37,12 @@
     }
 
 </style>
+
+<script>
+    tinymce.init({
+        selector: '#mytextarea'
+    });
+</script>
 
 <head>
     <meta charset="UTF-8">
@@ -61,7 +65,6 @@
                         class="input" th:value="${nickname}" type="text" name="writer" size="5" disabled>
             </label></td>
         </tr>
-
         <tr>
             <td>게시판 카테고리 :  <input type="radio"
                                    name="categoryId" value="1">자유 <input type="radio"
@@ -73,13 +76,6 @@
                                                              name="categoryId" value="5">기타
             </td>
         </tr>
-        <!--   <tr> 나중에 파일업로드 구현시 구현할 예정
-           <td><label for="fileInput">다중 파일(최대3개) 선택:</label> <input
-                   type="file" name="files[]" id="fileInput" accept="image/*" max="3"
-                   onchange="loadFiles(this)" multiple>
-               <br>
-           </td>
-           </tr>-->
 
         <tr>
             <td class="Content">게시글 내용
@@ -87,8 +83,8 @@
             </td>
         </tr>
         <tr>
-            <td><label id="">
-                <textarea id="content" name="content" width="400"></textarea>
+            <td><label id="1">
+                    <textarea id="mytextarea" name="content"></textarea>
             </label></td>
         </tr>
         <tr>

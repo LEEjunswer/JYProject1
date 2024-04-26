@@ -45,7 +45,7 @@ public class MemberController {
         return "home";
 
     }
-    //모든 회원리스트 가져가기
+    //모든 회원리스트 가져가기 어드민 영역 수정예정
     @GetMapping("/members/list")
     public String list(Model model){
        List<MemberDTO> list= memberService.MemberAllList();

@@ -1,100 +1,170 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <title>작성</title>
+
 </head>
 <style>
-    table {
-        width: 600px;
+    body {
+        width: 40%;
+        margin: 0 auto;
     }
+    .container {
+        width: 100%; /* Set width to 100% */
+        /* Height set to 80%, you may adjust this if needed */
+        height: 80vh; /* 80% of the viewport height */
+        margin: 0 auto;
 
-    textarea {
-        text-align: center;
-        width: 600px;
-        height: 200px;
     }
+    .board{
+        border:  1px solid black;
+        width: 100%;
+        }
+    th{
+        border: 1px solid black;
+    }
+    .writer{
+        border:  1px solid red;
+    }
+    .content{
+        border:  1px solid yellow;
+    }
+    .contentLine{
+        border: 2px solid grey;
+        border-radius: 25% 25%;
+    }
+    .likesAndDislikes{
+       display: flex;
+        justify-content: center;
+        text-align: center;
+        height: 60px;
+        width: 100%;
+        border: 1px solid black;
+    }
+    .like, .disLikes {
 
-    .Content {
-        text-align: center;
-        border: 0;
+        margin: 0 10px; /* 양 옆 여백 설정 */
     }
+    #commentParentText{
+        width: 100%;
+        border: 1px solid pink;
+    }
+    .btn-register{
+            border: none;
+            display: inline-block;
+            padding: 10px 10px;
+            border-radius: 15px;
+            font-family: "paybooc-Light", sans-serif;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.25s;
 
-    .input {
-        width: 300px;
-        text-align: center;
-    }
 
-    input.img {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%; /* 동그라미를 만들기 위한 속성 */
-        border: none;
-        background-color: #808080;
-        cursor: pointer;
-    }
-    td{
-        text-align: center;
-        align-items: center;
     }
 
 </style>
-
-<head>
-    <meta charset="UTF-8">
-    <title>게시글 작성하기</title>
-</head>
 <body>
-<h1 align="center" th:value="${}"></h1>
-<form action="boards/join" enctype="multipart/form-data"	method="post">
-    <table align="center" border=1>
-        <input type="hidden" name="memberId" th:value="${m.memberId}" >
-        <input type="hidden" name="writer"  th:value="${m.writer}">
-        <tr>
-            <td>게시글 제목 : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
-                    class="input" type="text" name="title"></td>
-        </tr>
-        <tr>
-            <td> <label>
-                작성자 : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                <input
-                        class="input" type="text" name="writer" size="5" disabled>
-            </label></td>
-        </tr>
 
-        <tr>
-            <td>게시판 카테고리 :  <input type="radio"
-                                                      name="categoryId" value="1">정보 <input type="radio"
-                                                                                           name="categoryId" value="2">자유 <input type="radio"
-                                                                                                                               name="categoryId" value="3">게임 <input type="radio"
-                                                                                                                                                                   name="categoryId" value="4">기타
-            </td>
-        </tr>
-     <!--   <tr> 나중에 파일업로드 구현시 구현할 예정
-        <td><label for="fileInput">다중 파일(최대3개) 선택:</label> <input
-                type="file" name="files[]" id="fileInput" accept="image/*" max="3"
-                onchange="loadFiles(this)" multiple>
-            <br>
-        </td>
-        </tr>-->
+<div class="container">
+    <hr/>
 
-        <tr>
-            <td class="Content">게시글 내용
-                <hr>
-            </td>
-        </tr>
-        <tr>
-            <td><label id="">
-                <textarea id="content" name="content" width="400"></textarea>
-            </label></td>
-        </tr>
-        <tr>
-            <td style="text-align: center; padding: 10px;"><input
-                    type="button" value="등록하기" onclick="validCheck(form)"> <input
-                    type="button" value="메인으로" onclick="location.href='${ctx}/main.do'"></td>
-        </tr>
-    </table>
-</form>
+            <table class="board">
+                <thead>
+                <tr >
+                    <th width="10%">제목</th>
+                    <th width="90%" th:text="${board.title}"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="regDate">작성일
+                    </td>
+                    <td th:text="${#temporals.format(board.getRegDate(),'yyyy-MM-dd HH:mm:ss')}">
+                        yyyy-MM-dd HH:mm:ss
+                    </td>
+                </tr>
+                <tr>
+                    <td class="writer">글쓴이
+                    </td>
+                    <td th:text="${board.writer}">
+                        이준영
+                        <div class="viewCnt" style='float:right'>
+                        <span>조회수 :</span>
+                        <span th:text="${board.viewCnt}" >123</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
 
+                    <td colspan="2" class="content">
+                        <hr class="contentLine"/>
+                        <p th:text="${board.writer}" style="text-align: center">글 내용 </p>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table id="commentTable" class="table table-condensed" style="text-align: center"></table>
+            <table class="table table-condensed">
+                <td>
+                <tr>
+                    <div class="likesAndDislikes">
+                        <div class="like">
+                            <img src="/static/img/like.jpg" alt="like" width="30px">
+                        <div class="likeCount" th:text="${board.likes}">
+                            1
+                        </div>
+                        </div>
+                        <div class="disLikes">
+                            <img src="/static/img/disLike.jpg" alt="disLikes" width="30px">
+                            <div class="disCount" th:text="${board.dislikes}">
+                                1
+                            </div>
+                        </div>
+                    </div>
+
+                                <span class="form-inline" role="form">
+                                    <p>
+                                        <hr class="contentLine">
+                                    <!-- 댓글 등록 RestCnotroller-->
+                                    <form action="/boards/" method="post" >
+                                    <div class="form-group">
+
+                                            <label for="commentParentText"></label><textarea id="commentParentText" name="content" rows="6"></textarea>
+                                            <button type="button" class="btn-register"  onclick="formCheckReply()" style='float:right'>댓글등록</button>
+                                        </div>
+                                    </p>
+                                </form>
+                                </span>
+
+                    </td>
+                </tr>
+            </table>
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <td>
+                                    <span style='float:right'>
+                                        <button type="button" id="list" class="btn btn-default">목록</button>
+                                        <button type="button" id="modify" class="btn btn-default">수정</button>
+                                        <button type="button" id="delete" class="btn btn-default">삭제</button>
+                                        <button type="button" id="write" class="btn btn-default">글쓰기</button>
+                                    </span>
+                    </td>
+                </tr>
+                </thead>
+            </table>
+        </div>
+
+    <hr/>
 </body>
 </html>
+<script th:inline="javascript">
+    var updateMessage = [[${suc}]];
+    if (updateMessage) {
+        alert(updateMessage);
+    }
+    /*]]>*/
+</script>

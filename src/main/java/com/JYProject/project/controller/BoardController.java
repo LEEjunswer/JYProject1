@@ -1,22 +1,20 @@
 package com.JYProject.project.controller;
 
 import com.JYProject.project.model.dto.BoardDTO;
-import com.JYProject.project.model.dto.FileDTO;
 import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.service.BoardServiceImpl;
-import com.JYProject.project.service.MemberService;
 import com.JYProject.project.service.MemberServiceImpl;
 import com.JYProject.project.session.SessionConst;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-
+@Slf4j
 @Controller
 public class BoardController {
 
@@ -49,6 +47,14 @@ public class BoardController {
         model.addAttribute("memberId",m.getMemberId());
         return"/boards/join";
     }
+
+    @GetMapping("/category/{category}")
+    public String choiceCategory(@PathVariable("category") int categoryId,Model model){
+        System.out.println(categoryId);
+      List<BoardDTO> list =  boardService.boardGetCategoryList(categoryId);
+        model.addAttribute("list", list);
+        return "/boards/list";
+    }
     //보드 생성
 @PostMapping("/boards/join")
 public String create(
@@ -66,11 +72,11 @@ public String content(@PathVariable("boardId") Long boardId ,Model model,HttpSes
     if (userId != null && !userId.equals(board.getMemberId())) {
         boardService.boardViewCntIncrease(boardId);
         model.addAttribute("board" , board);
-        return "/boards/content";
+        return "Check";
     }
   model.addAttribute("board" , board);
 
-    return "/boards/content";
+    return "boards/content";
 }
 
 @GetMapping("/boards/update/{boardId}")

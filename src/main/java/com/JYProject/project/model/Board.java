@@ -1,66 +1,50 @@
 package com.JYProject.project.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
-@Getter
-@Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Board extends BaseEntity{
+public class Board {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Comment("게시판번호")
-    @Column(name="board_id")
-    private Long id;
+    private Long boardId;
 
-    @Comment("게시판의 이름")
-    private String name;
-
-    @Column
     @Comment("작성자")
-    private String  writer;
+    private String writer;
 
-    @Column
+
     @Comment("글제목")
     private String title;
 
-    @Column
+    @Comment("등록일자")
+    private LocalDateTime regDate;
+
+    @Comment("수정일자")
+    private LocalDateTime updateDate;
+
+    @Comment("삭제일자 처음에는 Null")
+    private LocalDateTime deletedDate;
+
     @Comment("글내용")
     private String content;
 
-    @Column
-    @Comment("삭제날짜")
-    private LocalDateTime  deleteDate;
-
+    @Comment("글작성자 id")
+    private String memberId;
     @Comment("조회수")
     private int viewCnt;
 
-    @Column
     @Comment("좋아요")
     private Long likes;
 
-    @Column
     @Comment("싫어요")
     private Long dislikes;
 
-    @JoinColumn(name="member_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
-
-    @JoinColumn(name="category_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Category category;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<File> FileList = new ArrayList<>();;
+    @Comment("카레고리번호")
+    private int categoryId;
 }

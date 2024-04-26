@@ -1,14 +1,14 @@
 package com.JYProject.project.service;
 
 import com.JYProject.project.model.dto.FileDTO;
-import com.JYProject.project.repository.mybatis.FileMybaitsMapperRepository;
+import com.JYProject.project.repository.mybatis.FileMapperRepositoryImpl;
 import org.springframework.stereotype.Service;
 
 @Service
 public class FileServiceImpl implements FileService{
-    private final FileMybaitsMapperRepository fileMybaitsRepository;
+    private final FileMapperRepositoryImpl fileMybaitsRepository;
 
-    public FileServiceImpl(FileMybaitsMapperRepository fileMybaitsRepository){
+    public FileServiceImpl(FileMapperRepositoryImpl fileMybaitsRepository){
         this.fileMybaitsRepository=fileMybaitsRepository;
     }
     @Override

@@ -1,34 +1,39 @@
 package com.JYProject.project.service;
 
+import com.JYProject.project.model.Board;
 import com.JYProject.project.model.dto.BoardDTO;
-import com.JYProject.project.repository.mybatis.BoardMybatisMapperRepository;
+import com.JYProject.project.repository.mybatis.BoardMapperRepositoryImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 
-    private  final BoardMybatisMapperRepository boardMybatisRepository;
+    private  final BoardMapperRepositoryImpl boardMybatisRepository;
 
-    public BoardServiceImpl(BoardMybatisMapperRepository boardMybatisRepository) {
+    public BoardServiceImpl(BoardMapperRepositoryImpl boardMybatisRepository) {
         this.boardMybatisRepository = boardMybatisRepository;
     }
 
     @Override
     public int insertBoard(BoardDTO boardDTO) {
-
-        return boardMybatisRepository.insertBoard(boardDTO);
+        Board board =convertToEntity(boardDTO);
+        return boardMybatisRepository.insertBoard(board);
     }
 
     @Override
     public BoardDTO selectBoardDetail(Long id) {
-        return boardMybatisRepository.selectBoardDetail(id);
+  Board board=  boardMybatisRepository.selectBoardDetail(id);
+
+  return convertToDTO(board) ;
     }
 
     @Override
     public int updateBoard(BoardDTO boardDTO) {
-        return boardMybatisRepository.updateBoard(boardDTO);
+        Board board = convertToEntity(boardDTO);
+        return boardMybatisRepository.updateBoard(board);
     }
 
     @Override
@@ -38,17 +43,20 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<BoardDTO> boardAllList() {
-        return boardMybatisRepository.boardAllList();
+            List<Board>  boardList =  boardMybatisRepository.boardAllList();
+        return boardList.stream().map(this :: convertToDTO).collect(Collectors.toList());
     }
 
     @Override
     public List<BoardDTO> boardSearchTitleList(String title) {
-        return boardMybatisRepository.boardSearchTitleList(title);
+        List<Board> boardList = boardMybatisRepository.boardSearchTitleList(title);
+        return boardList.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
     public List<BoardDTO> boardSearchContentList(String content) {
-        return boardMybatisRepository.boardSearchContentList(content);
+        List<Board> boardList=boardMybatisRepository.boardSearchContentList(content);
+        return boardList.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -69,5 +77,30 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public int getDisLikesTotalCount(Long id) {
         return boardMybatisRepository.getDisLikesTotalCount(id);
+    }
+
+    @Override
+    public List<BoardDTO> boardGetCategoryList(int categoryId) {
+    List<Board>  boardList=   boardMybatisRepository.boardGetCategoryList(categoryId);
+
+       return boardList.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+    private Board convertToEntity(BoardDTO boardDTO) {
+        Board board = new Board();
+        board.setTitle(boardDTO.getTitle());
+        board.setContent(boardDTO.getContent());
+        board.setWriter(boardDTO.getWriter());
+        board.setCategoryId(boardDTO.getCategoryId());
+        board.setMemberId(boardDTO.getMemberId());
+        return board;
+    }
+    private BoardDTO convertToDTO(Board board) {
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setTitle(board.getTitle());
+        boardDTO.setContent(board.getContent());
+        boardDTO.setWriter(board.getWriter());
+        boardDTO.setCategoryId(board.getCategoryId());
+        boardDTO.setMemberId(board.getMemberId());
+        return boardDTO;
     }
 }

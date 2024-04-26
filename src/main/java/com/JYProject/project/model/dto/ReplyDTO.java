@@ -1,7 +1,5 @@
 package com.JYProject.project.model.dto;
 
-import com.JYProject.project.model.BaseEntity;
-import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 
@@ -14,9 +12,11 @@ public class ReplyDTO  {
     @Comment("댓글PK")
     private Long id;
     @Comment("게시판")
-    private Long boardNo ;
+    private Long boardId ;
     @Comment("댓글작성자")
     private Long writer;
+    @Comment("댓글내용")
+    private String content;
     @Comment("등록일자")
     private LocalDateTime regDate;
     @Comment("삭제일자")

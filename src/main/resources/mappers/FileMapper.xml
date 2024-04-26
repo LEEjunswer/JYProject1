@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.JYProject.project.repository.mybatis.FileMapperRepository">
-<insert id="insertFile" parameterType="com.JYProject.project.model.dto.FileDTO">
-insert into  file (board_id, filename) values (#{boardId},#{fileName});
+    <resultMap id="fileResultMap" type="com.JYProject.project.model.File">
+        <id property="categoryId" column="category_id"/>
+        <result property="boardId" column="board_id"/>
+        <result property="fileName" column="file_name"/>
+        <result property="regDate" column="reg_date"/>
+    </resultMap>
+<insert id="insertFile" parameterType="com.JYProject.project.model.File">
+insert into  file (board_id, file_name) values (#{boardId},#{fileName});
 </insert>
-<update id="updateFile" parameterType="com.JYProject.project.model.dto.FileDTO">
-update file set filename=#{fileName}, reg_date=now() where board_id=#{board_id};
+<update id="updateFile" parameterType="com.JYProject.project.model.File">
+update file set file_name=#{fileName}, reg_date=now() where board_id=#{board_id};
 </update>
 <update id="deleteFile" parameterType="Long">
- update file set filename=null where board_id=#{id};
+ update file set file_name=null where board_id=#{id};
 </update>
-    <select id="getOneFile" parameterType="Long" resultType="com.JYProject.project.model.dto.FileDTO">
+    <select id="getOneFile" parameterType="Long" resultType="com.JYProject.project.model.File">
     select * from file where board_id=#{boardId};
     </select>
 </mapper>

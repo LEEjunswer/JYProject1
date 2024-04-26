@@ -1,42 +1,23 @@
 package com.JYProject.project.model;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
-@Getter
-@Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Category extends BaseEntity{
+public class Category {
+    
+    @Comment("카테고리번호")
+    private Long categoryId;
+    @Comment("카테고리이름 1.자유 2.정보 3.추천 4.후기 나중에 보고 더 추가할 예정")
+    private String categoryName;
 
-    @Id
-    @GeneratedValue
-    @Column(name = "category_id")
-    private Long id;
-
-    private String branch;
-
-    private String code;
-
-    private String name;
-
-    private Integer level;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="parent_cagegory_id")
-    private Category parentCategory;
-
-    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
-    private List<Category> subCategory = new ArrayList<>();
-
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Board> boardList = new ArrayList<>();
+    @Comment("등록일자")
+    private LocalDateTime regDate;
 
 }

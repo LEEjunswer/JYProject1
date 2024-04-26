@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.JYProject.project.repository.mybatis.FilterMapperRepository">
-    <insert id="makeFilter" parameterType="com.JYProject.project.model.dto.FilterDTO">
+    <resultMap id="filterMap" type="com.JYProject.project.model.Filter">
+      <id property="filterId" column="filter_id" />
+       <result property="word" column="word"/>
+        <result property="creatAt" column="create_at"/>
+
+    </resultMap>
+    <insert id="makeFilter" parameterType="com.JYProject.project.model.Filter">
        insert into filter (word) values (#{word});
     </insert>
     <delete id="deleteFilter" parameterType="Long">
         delete from filter where filter_id=#{id};
     </delete>
-    <select id="getAllFilter" resultType="com.JYProject.project.model.dto.FilterDTO">
+    <select id="getAllFilter" resultType="com.JYProject.project.model.Filter">
         select * from filter;
     </select>
 

@@ -20,7 +20,6 @@
         <result column="point" property="point" />
     </resultMap>
 
-<<<<<<< HEAD
     <insert id="insertMember" parameterType="com.JYProject.project.model.dto.MemberDTO">
         insert into member (login_id,pw,name,nickname,phone,email,zip_code,address,address_detail)
         values (#{loginId},#{pw},#{name},#{nickname},#{phone},#{email},#{zipCode},#{address},#{addressDetail})
@@ -28,27 +27,13 @@
 
     <select id="selectMemberDetail" parameterType="String" resultMap="memberResultMap">
         select * from member where login_id=#{loginId}
-=======
-    <insert id="insertMember" parameterType="MemberDTO">
-        insert into member (loginid, pw, name, nickname, phone, email, zipcode, address, address_detail, member_profile,
-                            last_login_date)
-        values (#{loginId}, #{pw}, #{name}, #{nickname}, #{phone}, #{email}, #{zipcode}, #{address}, #{addressDetail},
-                #{profilePic}, #{last_login_date})
-    </insert>
-
-    <select id="selectMemberDetail" parameterType="Long" resultType="com.JYProject.project.model.dto.MemberDTO">
-        select *
-        from member
-        where id = #{id}
->>>>>>> main
     </select>
 
     <update id="updateMember" parameterType="com.JYProject.project.model.dto.MemberDTO">
         update member
-<<<<<<< HEAD
         set    <if test="pw != null and pw != ''">
         pw = #{pw},
-    </if>
+            </if>
             nickname=#{nickname},
             phone = #{phone},
             email = #{email},
@@ -61,64 +46,23 @@
         delete from member where member_id=#{Id}
     </delete>
 
-    <select id="MemberAllList" resultMap="memberResultMap">
-        select *from member
-=======
-        set pw=#{pw},
-            nickname=#{nickname},
-            phone = #{phone},
-            email = #{email},
-            zipcode = #{zipcode},
-            address = #{address},
-            address_detail = #{addressDetail},
-            member_profile =#{profilePic}
-        where id = #{id};
-    </update>
-    <delete id="deleteMember" parameterType="Long">
-        delete
-        from member
-        where id = #{id}
-    </delete>
-
     <select id="MemberAllList" resultType="com.JYProject.project.model.dto.MemberDTO">
         select *
         from member
->>>>>>> main
     </select>
     <select id="selectMemberTotalCount" resultType="Integer">
-        select count(*)
-        from member;
+        select count(*) from member;
     </select>
-<<<<<<< HEAD
     <select id="validCheckId" resultType="boolean" parameterType="String">
         SELECT COUNT(*) > 0 FROM member WHERE login_id=#{loginId} AND pw=#{pw}
     </select>
+
     <select id="login"  parameterType="com.JYProject.project.model.dto.MemberDTO" resultMap="memberResultMap">
         select * from member where login_id=#{loginId} and pw=#{pw};
     </select>
 
     <select id="checkIdAndPw"  resultType="boolean" parameterType="com.JYProject.project.model.dto.MemberDTO">
         SELECT COUNT(*) > 0 FROM member WHERE login_id=#{loginId} AND pw=#{pw}
-=======
-    <select id="validCheckId" resultType="Boolean" parameterType="String">
-        select count(*)
-        from member
-        where loginid = ${loginId};
-    </select>
-    <select id="loginId" resultType="com.JYProject.project.model.dto.MemberDTO"
-            parameterType="com.JYProject.project.model.dto.MemberDTO">
-        select *
-        from member
-        where loginid = #{loginId}
-          and pw = #{pw};
-    </select>
-
-    <select id="checkIdAndPw" resultType="Boolean" parameterType="com.JYProject.project.model.dto.MemberDTO">
-        select *
-        from member
-        where loginid = #{loginId}
-          and pw = #{pw};
->>>>>>> main
     </select>
 
 </mapper>

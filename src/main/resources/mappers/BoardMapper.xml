@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.JYProject.project.repository.mybatis.BoardMapperRepository">
-    <resultMap id="boardResultMap" type="com.JYProject.project.model.dto.BoardDTO">
+    <resultMap id="boardResultMap" type="com.JYProject.project.model.Board">
         <id property="boardId" column="board_id"/>
         <result property="categoryId" column="category_id"/>
         <result property="writer" column="writer"/>
@@ -18,7 +18,7 @@
     </resultMap>
 
     <!--보드 추가 -->
-    <insert id="insertBoard" parameterType="com.JYProject.project.model.dto.BoardDTO">
+    <insert id="insertBoard" parameterType="com.JYProject.project.model.Board">
         insert into board (category_id,writer,title,content,member_id)
         values(#{categoryId},#{writer},#{title},#{content},#{memberId});
     </insert>
@@ -27,7 +27,7 @@
         select * from board where board_id=#{boardId};
     </select>
     <!--보드 수정 -->
-    <update id="updateBoard" parameterType="com.JYProject.project.model.dto.BoardDTO">
+    <update id="updateBoard" parameterType="com.JYProject.project.model.Board">
         update board
         set title=#{title},
             content=#{content},
@@ -61,6 +61,14 @@
         select count(*), dislikes from board where board_id=#{boardId}
      </select>
     <!-- 검색 할경우 리스트를 가져온다 -->
+    <select id="boardSearchAllList" parameterType="String" resultMap="boardResultMap">
+        SELECT * FROM board
+        WHERE title LIKE CONCAT('%', #{title}, '%') or content LIKE CONCAT('%',#{content},'%')
+    </select>
+    <select id="boardSearchWriterList" parameterType="String" resultMap="boardResultMap">
+        SELECT * FROM board
+        WHERE writer LIKE CONCAT('%', #{writer}, '%')
+    </select>
     <select id="boardSearchTitleList" parameterType="String" resultMap="boardResultMap">
         SELECT * FROM board
         WHERE title LIKE CONCAT('%', #{title}, '%')
@@ -69,4 +77,15 @@
     select * from board
     where content LIKE  CONCAT('%', #{content},'%')
     </select>
+
+        <select id="boardGetCategoryList" parameterType="Integer" resultMap="boardResultMap">
+                    select * from board
+                   <if test="categoryId != 0">
+                   where  category_id=#{categoryId};
+                        </if>
+                </select>
+    <select id="getMyBoardList" parameterType="Integer" resultMap="boardResultMap">
+        select * from board where member_id=#{memberId};
+    </select>
+
 </mapper>

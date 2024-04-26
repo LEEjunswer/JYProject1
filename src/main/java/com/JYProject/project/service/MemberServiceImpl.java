@@ -1,29 +1,35 @@
 package com.JYProject.project.service;
 
+import com.JYProject.project.model.Member;
 import com.JYProject.project.model.dto.MemberDTO;
-import com.JYProject.project.repository.mybatis.MemberMybatisMapperRepository;
+import com.JYProject.project.repository.mybatis.MemberMapperRepositoryImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MemberServiceImpl implements  MemberService{
 
-    private final MemberMybatisMapperRepository memberMybatisRepository;
+    private final MemberMapperRepositoryImpl memberMybatisRepository;
 
-    public MemberServiceImpl(MemberMybatisMapperRepository memberMybatisRepository) {
+    public MemberServiceImpl(MemberMapperRepositoryImpl memberMybatisRepository) {
         this.memberMybatisRepository = memberMybatisRepository;
     }
 
 
     @Override
     public int insertMember(MemberDTO memberDTO) {
-        return memberMybatisRepository.insertMember(memberDTO);
+        Member member = convertToEntity(memberDTO);
+
+        return memberMybatisRepository.insertMember(member);
 
     }
     @Override
     public MemberDTO login(MemberDTO memberDTO){
-        return memberMybatisRepository.login(memberDTO);
+        Member  member =convertToEntity(memberDTO);
+
+        return convertToDTO(member);
     }
 
     @Override
@@ -33,7 +39,9 @@ public class MemberServiceImpl implements  MemberService{
 
     @Override
     public MemberDTO selectMemberDetail(String loginId) {
-        return memberMybatisRepository.selectMemberDetail(loginId);
+            Member  member= memberMybatisRepository.selectMemberDetail(loginId);
+
+        return convertToDTO(member);
     }
 
     @Override
@@ -48,8 +56,8 @@ public class MemberServiceImpl implements  MemberService{
 
     @Override
     public List<MemberDTO> MemberAllList() {
-
-        return memberMybatisRepository.MemberAllList();
+            List<Member> memberList = memberMybatisRepository.MemberAllList();
+        return memberList.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -60,7 +68,39 @@ public class MemberServiceImpl implements  MemberService{
 
     @Override
     public boolean checkIdAndPw(MemberDTO memberDTO) {
-        return memberMybatisRepository.checkIdAndPw(memberDTO);
+        Member member   = convertToEntity(memberDTO);
+        return memberMybatisRepository.checkIdAndPw(member);
     }
 
+
+    private Member convertToEntity(MemberDTO memberDTO){
+        Member member = new Member();
+        member.setMemberId(memberDTO.getMemberId());
+        member.setLoginId(memberDTO.getLoginId());
+        member.setPw(memberDTO.getPw());
+        member.setActive(memberDTO.getActive());
+        member.setEmail(memberDTO.getEmail());
+        member.setLastLoginDate(memberDTO.getLastLoginDate());
+        member.setNickname(memberDTO.getNickname());
+        member.setRegDate(memberDTO.getRegDate());
+        member.setAddressDetail(memberDTO.getAddressDetail());
+        member.setPhone(memberDTO.getPhone());
+        member.setGrade(memberDTO.getGrade());
+        return  member;
+    }
+    private MemberDTO convertToDTO(Member member){
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setMemberId(member.getMemberId());
+        memberDTO.setLoginId(member.getLoginId());
+        memberDTO.setPw(member.getPw());
+        memberDTO.setActive(member.getActive());
+        memberDTO.setEmail(member.getEmail());
+        memberDTO.setLastLoginDate(member.getLastLoginDate());
+        memberDTO.setNickname(member.getNickname());
+        memberDTO.setRegDate(member.getRegDate());
+        memberDTO.setAddressDetail(member.getAddressDetail());
+        memberDTO.setPhone(member.getPhone());
+        memberDTO.setGrade(member.getGrade());
+        return memberDTO;
+    }
 }
