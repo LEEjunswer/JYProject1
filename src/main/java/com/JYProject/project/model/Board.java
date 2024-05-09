@@ -40,10 +40,10 @@ public class Board {
     private int viewCnt;
 
     @Comment("좋아요")
-    private Long likes;
+    private int likes;
 
     @Comment("싫어요")
-    private Long dislikes;
+    private int dislikes;
 
     @Comment("카레고리번호")
     private int categoryId;

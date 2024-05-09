@@ -14,7 +14,7 @@ public class FileDTO {
     private Long id;
 
     @Comment("글번호")
-    private Long boardNo;
+    private Long boardId;
 
     @Comment("파일이름")
     private String fileName;

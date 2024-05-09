@@ -2,6 +2,11 @@
     margin: 0 auto;
     padding: 0;
 }
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    margin: 0;
+}
 #header{
     width: 1280px;
     height: 100px;

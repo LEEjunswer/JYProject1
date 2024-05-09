@@ -52,7 +52,7 @@ public class BoardController {
     public String choiceCategory(@PathVariable("category") int categoryId,Model model){
         System.out.println(categoryId);
       List<BoardDTO> list =  boardService.boardGetCategoryList(categoryId);
-        model.addAttribute("list", list);
+        model.addAttribute("boardList", list);
         return "/boards/list";
     }
     //보드 생성

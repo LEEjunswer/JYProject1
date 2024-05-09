@@ -29,12 +29,15 @@ public class LikeMapperRepositoryImpl implements LikeMapperRepository {
     }
 
     @Override
-    public List<Like> getAllLikesBoardAndMemberId(Long id, Long MemberId, Long boardId) {
-        return null;
+    public List<Like> getAllLikesBoardAndMemberId(Like like) {
+        return likeMapperRepository.getAllLikesBoardAndMemberId(like);
     }
 
     @Override
-    public List<Like> getAllLikesReplyAndMemberId(Long id, Long MemberId, Long replyId) {
-        return null;
+    public List<Like> getAllLikesReplyAndMemberId(Like like) {
+        return likeMapperRepository.getAllLikesReplyAndMemberId(like);
     }
-}
+
+
+
+    }

@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class BoardDTO {
 
     @Comment("게시판번호")
@@ -39,10 +40,10 @@ public class BoardDTO {
     private int viewCnt;
 
     @Comment("좋아요")
-    private Long likes;
+    private int likes;
 
     @Comment("싫어요")
-    private Long dislikes;
+    private int dislikes;
 
     @Comment("카레고리번호")
     private int categoryId;

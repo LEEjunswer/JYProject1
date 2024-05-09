@@ -8,7 +8,7 @@ import java.util.List;
 public interface BoardService {
 
     public int insertBoard(BoardDTO boardDTO);
-    public Board selectBoardDetail(Long boardId);
+    public BoardDTO selectBoardDetail(Long boardId);
 
     public int updateBoard(BoardDTO boardDTO);
     public int deleteBoard(Long boardId);
