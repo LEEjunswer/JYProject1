@@ -1,16 +1,14 @@
 package com.JYProject.project.controller;
 
 import com.JYProject.project.model.dto.MemberDTO;
-import com.JYProject.project.service.MemberService;
 import com.JYProject.project.service.MemberServiceImpl;
 import com.JYProject.project.session.SessionConst;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -135,6 +133,20 @@ public class MemberController {
         redirectAttributes.addFlashAttribute("error", "아이디와 비밀번호가 일치하지 않습니다 다시 입력해주세요.");
         return "redirect:/members/deleteForm";
     }
+    // 좀더 수정 할 에정
+    @GetMapping("/members/logout")
+        public String logout(HttpServletRequest request,Model model) {
+        HttpSession session = request.getSession(false);
+        if(session != null){
+            session.removeAttribute(SessionConst.USER_ID);
+            session.removeAttribute(SessionConst.USER_NAME);
+            model.addAttribute("loginId", null);
+            model.addAttribute("nickname", null);
+            return "redirect:/";
+        }
+
+            return "redirect:/";
+        }
 
 
     //나중에 회원가입에서 ajax로 받을예정

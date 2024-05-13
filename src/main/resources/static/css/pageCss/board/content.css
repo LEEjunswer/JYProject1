@@ -1,0 +1,70 @@
+#content_container {
+    height: 80vh;
+    margin: 0 auto;
+    width: 1280px;
+
+}
+#content_board{
+    border:  1px solid black;
+    width: 100%;
+}
+.writer{
+    border:  1px solid red;
+}
+.content{
+    border:  1px solid yellow;
+}
+.contentLine{
+    border: 2px solid grey;
+    border-radius: 25% 25%;
+}
+.likesAndDislikes{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    height: 60px;
+    width: 100%;
+    border: 1px solid black;
+}
+.like, .disLikes {
+
+    margin: 0 10px; /* 양 옆 여백 설정 */
+}
+#commentParentText{
+    width: 100%;
+    border: 1px solid pink;
+}
+.btn-register{
+    border: none;
+    display: inline-block;
+    padding: 10px 10px;
+    border-radius: 15px;
+    font-family: "paybooc-Light", sans-serif;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+
+
+}
+#content_thead {
+    width: 100%;
+}
+#boardContent_title{
+        flex: 1;
+}
+#boardContent_titleText{
+    flex: 5;
+}
+#content_regDate{
+    flex: 1;
+}
+#content_regDateText{
+    flex: 3;
+}
+#commentTable{
+    text-align:  center;
+}
+#content{
+  text-align: center;
+}

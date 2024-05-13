@@ -37,13 +37,6 @@
     }
 
 </style>
-
-<script>
-    tinymce.init({
-        selector: '#mytextarea'
-    });
-</script>
-
 <head>
     <meta charset="UTF-8">
     <title>게시글 작성하기</title>
@@ -51,22 +44,22 @@
 <body>
 <h1 align="center">게시글 작성하기</h1>
 <form action="/boards/join" method="post">
-    <table align="center" border=1>
-        <input type="hidden" name="memberId" th:value="${memberId}" >
-        <input type="hidden" name="writer"  th:value="${nickname}">
+    <table id="board_join">
+        <input class="input_type"  type="hidden" name="memberId" th:value="${memberId}" >
+        <input  class="input_type" type="hidden" name="writer"  th:value="${nickname}">
         <tr>
-            <td>게시글 제목 : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
+            <td class="boardJoin_td">게시글 제목 : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
                     class="input" type="text" name="title"></td>
         </tr>
         <tr>
-            <td> <label>
+            <td class="boardJoin_td"> <label>
                 작성자 : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                 <input
                         class="input" th:value="${nickname}" type="text" name="writer" size="5" disabled>
             </label></td>
         </tr>
         <tr>
-            <td>게시판 카테고리 :  <input type="radio"
+            <td class="boardJoin_td">게시판 카테고리 :  <input type="radio"
                                    name="categoryId" value="1">자유 <input type="radio"
                                                                          name="categoryId" value="2">정보 <input type="radio"
                                                                                                                name="categoryId" value="3">추천 <input type="radio"
@@ -78,17 +71,17 @@
         </tr>
 
         <tr>
-            <td class="Content">게시글 내용
+            <td  id="boardJoin_Content">게시글 내용
                 <hr>
             </td>
         </tr>
         <tr>
-            <td><label id="1">
-                    <textarea id="mytextarea" name="content"></textarea>
+            <td class="boardJoin_td"><label id="1">
+                    <textarea id="boardJoin_textarea" name="content"></textarea>
             </label></td>
         </tr>
         <tr>
-            <td style="text-align: center; padding: 10px;"><!--<input
+            <td  class="boardJoin_submit"><!--<input
                     type="button" value="등록하기" onclick="validCheck(form)"> -->
                 <input type="submit" value="게시글 등록">
                 <input type="button" value="메인으로" th:attr="onclick=|location.href='@{/boards/list}'|">

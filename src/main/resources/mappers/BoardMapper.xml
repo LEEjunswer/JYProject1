@@ -86,6 +86,37 @@
                 </select>
     <select id="getMyBoardList" parameterType="Integer" resultMap="boardResultMap">
         select * from board where member_id=#{memberId};
+
     </select>
 
+    <select id="getWeekBestBoardList" parameterType="map" resultMap="boardResultMap">
+        SELECT *, (`likes` - disLikes) AS LikeCount
+        FROM board
+        <where>
+            <if test="categoryId != 0">
+                category_id=#{categoryId}
+                AND reg_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+        </if>
+            <if test="categoryId == 0">
+                    reg_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+        </if>
+        </where>
+        ORDER BY LikeCount DESC
+        LIMIT #{offset}, #{pageSize};
+    </select>
+    <select id="getDailyBestBoardList" parameterType="map" resultMap="boardResultMap">
+        SELECT *, (`likes` - disLikes) AS LikeCount
+        FROM board
+        <where>
+            <if test="categoryId != 0">
+                category_id = #{categoryId}
+                AND reg_date = CURDATE()
+            </if>
+            <if test="categoryId == 0">
+                reg_date = CURDATE()
+            </if>
+        </where>
+        ORDER BY LikeCount DESC
+        LIMIT #{offset}, #{pageSize};
+    </select>
 </mapper>

@@ -1,0 +1,1 @@
+let bestBoardButtons = document.getElementByI

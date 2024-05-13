@@ -27,9 +27,13 @@ public class MemberServiceImpl implements  MemberService{
     }
     @Override
     public MemberDTO login(MemberDTO memberDTO){
-        Member  member =convertToEntity(memberDTO);
-
-        return convertToDTO(member);
+        System.out.println("memberDTO = " + memberDTO);
+     Member checkLogin =   memberMybatisRepository.login(convertToEntity(memberDTO));
+        System.out.println("checkLogin = " + checkLogin);
+        if(checkLogin == null){
+            return  null;
+        }
+        return convertToDTO(checkLogin);
     }
 
     @Override
@@ -78,6 +82,7 @@ public class MemberServiceImpl implements  MemberService{
         member.setMemberId(memberDTO.getMemberId());
         member.setLoginId(memberDTO.getLoginId());
         member.setPw(memberDTO.getPw());
+        member.setName(memberDTO.getName());
         member.setActive(memberDTO.getActive());
         member.setEmail(memberDTO.getEmail());
         member.setLastLoginDate(memberDTO.getLastLoginDate());
@@ -94,6 +99,7 @@ public class MemberServiceImpl implements  MemberService{
         memberDTO.setLoginId(member.getLoginId());
         memberDTO.setPw(member.getPw());
         memberDTO.setActive(member.getActive());
+        memberDTO.setName(member.getName());
         memberDTO.setEmail(member.getEmail());
         memberDTO.setLastLoginDate(member.getLastLoginDate());
         memberDTO.setNickname(member.getNickname());

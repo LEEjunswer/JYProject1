@@ -16,7 +16,6 @@ public class Member{
     @Comment("유저PK")
     private Long memberId;
 
-
     @Comment("아이디")
     private String loginId;
 
@@ -50,6 +49,8 @@ public class Member{
     private LocalDateTime lastLoginDate;
     @Comment("회원 계정 비활성화 or 활성화 여부")
     private Boolean active;
+    @Comment("프로필 이미지")
+    private String profileImg;
     @Comment("등급")
     private String  Grade;
     @Comment("포인트")

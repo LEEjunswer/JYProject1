@@ -5,8 +5,105 @@
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
 <div id="main-container">
+    <div id="weekend-best">
+        <div id="weekend-header">
+            <div id="tabList-weekend" role="tablist" class="tabs tabs-boxed">
+                <button role="tab" class="tab tab-active">주간</button>
+                <button role="tab" class="tab">일간</button>
+            </div>
+            <div id="main-pagingButton" class="join mt-2">
+                <button class="join-item btn btn-xs btn-active" onclick="">1</button>
+                <button class="join-item btn btn-xs">2</button>
+                <button class="join-item btn btn-xs">3</button>
+                <button class="join-item btn btn-xs">4</button>
+            </div>
+        <div  id="tabList-category" role="tablist" class="tabs tabs-boxed">
+            <button role="tab" class="tab tab-active">전체</button>
+            <button role="tab" class="tab">자유</button>
+            <button role="tab" class="tab">정보</button>
+            <button role="tab" class="tab">후기</button>
+            <button role="tab" class="tab">기타</button>
+        </div>
+        </div>
+        <div id="weekend-content">
+            <div th:each="board : ${boards}" class="card w-64 bg-base-100 shadow-xl">
+                <figure>
+             <!--
+                    <img th:src="${board.get}" alt="img" />
+-->
+                </figure>
+                <div class="card-body">
+                    <p th:text="${board.getTitle()}">제목</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<div id="main-table">
+ <div id="free-area">
 
-
+     <h3>최신 자유게시판</h3>
+     <table class="table">
+         <thead>
+         <tr>
+             <th>게시글</th>
+             <th>작성자</th>
+             <th>추천수</th>
+             <th>작성일</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr class="bg-base-200">
+        <th>게시글번호</th>
+             <td>작성자NickName</td>
+             <td>게시글제목</td>
+             <td></td>
+         </tr>
+         </tbody>
+     </table>
+ </div>
+    <div id="info-area">
+       <h3> 최신 정보게시판</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>게시글</th>
+                <th>작성자</th>
+                <th>추천수</th>
+                <th>작성일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="bg-base-200">
+                <th>게시글번호</th>
+                <td>작성자NickName</td>
+                <td>게시글제목</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="recommend-area">
+        <h3> 최신 추천게시판</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>게시글</th>
+                <th>작성자</th>
+                <th>추천수</th>
+                <th>작성일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="bg-base-200">
+                <td>게시글제목</td>
+                <td>작성자NickName</td>
+             <td>추천수</td>
+                <td>작성일</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </div>
 <script th:inline="javascript">
     var updateMessage = [[${update}]];
@@ -15,5 +112,6 @@
     }
     /*]]>*/
 </script>
+
 </body>
 </html>

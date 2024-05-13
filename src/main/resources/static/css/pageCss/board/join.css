@@ -1,0 +1,32 @@
+#board_join {
+    width: 600px;
+}
+#boardJoin_textarea {
+    text-align: center;
+    width: 600px;
+    height: 200px;
+}
+#boardJoin_Content {
+    text-align: center;
+    border: 0;
+}
+#boardJon_input {
+    width: 300px;
+    text-align: center;
+}
+.input_type.img {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%; /* 동그라미를 만들기 위한 속성 */
+    border: none;
+    background-color: #808080;
+    cursor: pointer;
+}
+.boardJoin_td{
+    text-align: center;
+    align-items: center;
+}
+.boardJoin_submit{
+    text-align: center;
+    padding: 10px;
+}

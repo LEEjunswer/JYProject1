@@ -2,15 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.JYProject.project.repository.mybatis.ReplyMapperRepository">
-    <insert id="insertReply" parameterType="com.JYProject.project.model.dto.ReplyDTO">
+    <resultMap id="replyResultMap" type="com.JYProject.project.model.Reply">
+        <id property="replyId" column="reply_id"/>
+        <result property="boardId" column="board_id"/>
+        <result property="writer" column="writer"/>
+        <result property="content" column="content"/>
+        <result property="regDate" column="reg_date"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="deleteDate" column="delete_date"/>
+        <result property="likes" column="likes"/>
+        <result property="disLikes" column="dislikes"/>
+    </resultMap>
+    <insert id="insertReply" parameterType="com.JYProject.project.model.Reply">
        insert into reply (board_id, writer, content,update_date,delete_date) values
             (#{boardNo},#{writer},#{content},#{updateDate},#{deleteDate})
     </insert>
-    <select id="selectOneReply" parameterType="Long" resultType="com.JYProject.project.model.dto.ReplyDTO">
+    <select id="selectOneReply" parameterType="Long" resultType="com.JYProject.project.model.Reply">
     select  * from reply where reply_id=#{id}
     </select>
+
+    <select id="getBoardAllReply" parameterType="Long" resultMap="replyResultMap">
+        select * from reply where board_id=#{boardId};
+    </select>
     <!--댓글 수정 -->
-    <update id="updateReply" parameterType="com.JYProject.project.model.dto.ReplyDTO">
+    <update id="updateReply" parameterType="com.JYProject.project.model.Reply">
         update reply
         set content=#{content},
             update_date = NOW()

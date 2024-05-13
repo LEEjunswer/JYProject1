@@ -4,6 +4,8 @@ import com.JYProject.project.model.Board;
 import com.JYProject.project.model.dto.BoardDTO;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public interface BoardService {
 
@@ -26,4 +28,8 @@ public interface BoardService {
     public int getDisLikesTotalCount(Long boardId);
 
     public List<BoardDTO>boardGetCategoryList(int categoryId);
+
+    public List<BoardDTO>getWeekBestBoardList(Map<String, Object> params);
+
+    public List<BoardDTO>getDailyBestBoardList(Map<String,Object> params);
 }

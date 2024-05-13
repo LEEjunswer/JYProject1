@@ -3,18 +3,19 @@ package com.JYProject.project.service;
 import com.JYProject.project.model.Reply;
 import com.JYProject.project.model.dto.ReplyDTO;
 import com.JYProject.project.repository.mybatis.ReplyMapperRepositoryImpl;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class ReplyServiceImpl implements ReplyService {
 
     private final ReplyMapperRepositoryImpl replyMybatisRepository;
 
-    @Autowired
-    public  ReplyServiceImpl(ReplyMapperRepositoryImpl replyMybatisRepository){
-        this.replyMybatisRepository=replyMybatisRepository;
-    }
+
 
     @Override
     public int insertReply(ReplyDTO replyDTO) {

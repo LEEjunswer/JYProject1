@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -67,5 +68,16 @@ public class BoardMapperRepositoryImpl implements BoardMapperRepository {
         public List<Board> boardGetCategoryList(int categoryId) {
                 return boardMapperRepository.boardGetCategoryList(categoryId);
         }
+
+        @Override
+        public List<Board> getWeekBestBoardList(Map<String,Object> params) {
+                return boardMapperRepository.getWeekBestBoardList(params);
+        }
+
+        @Override
+        public List<Board> getDailyBestBoardList(Map<String, Object> params) {
+                return boardMapperRepository.getDailyBestBoardList(params);
+        }
+
 
 }

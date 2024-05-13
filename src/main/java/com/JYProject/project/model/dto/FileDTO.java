@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,7 +18,7 @@ public class FileDTO {
     private Long boardId;
 
     @Comment("파일이름")
-    private String fileName;
+    private List<String> fileNames;
 
     @Comment("파일등록일자")
     private LocalDateTime regDate;

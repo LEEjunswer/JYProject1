@@ -3,15 +3,17 @@ package com.JYProject.project.service;
 import com.JYProject.project.model.File;
 import com.JYProject.project.model.dto.FileDTO;
 import com.JYProject.project.repository.mybatis.FileMapperRepositoryImpl;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class FileServiceImpl implements FileService{
+
     private final FileMapperRepositoryImpl fileMybaitsRepository;
 
-    public FileServiceImpl(FileMapperRepositoryImpl fileMybaitsRepository){
-        this.fileMybaitsRepository=fileMybaitsRepository;
-    }
     @Override
     public int insertFile(FileDTO fileDTO) {
         return fileMybaitsRepository.insertFile(convertToEntity(fileDTO));
@@ -36,7 +38,7 @@ public class FileServiceImpl implements FileService{
     private File convertToEntity(FileDTO fileDTO){
         File file = new File();
         file.setFileId(fileDTO.getId());
-        file.setFileName(fileDTO.getFileName());
+        file.setFileNames(fileDTO.getFileNames());
         file.setBoardId(fileDTO.getBoardId());
         file.setRegDate(fileDTO.getRegDate());
         return file;
@@ -46,7 +48,7 @@ public class FileServiceImpl implements FileService{
             fileDTO.setId(file.getFileId());
             fileDTO.setBoardId(file.getBoardId());
             fileDTO.setRegDate(file.getRegDate());
-            fileDTO.setFileName(file.getFileName());
+            fileDTO.setFileNames(file.getFileNames());
         return  fileDTO;
     }
 }

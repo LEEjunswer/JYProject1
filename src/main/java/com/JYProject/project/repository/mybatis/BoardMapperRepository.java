@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Map;
+
 @Mapper
 public interface BoardMapperRepository {
 
@@ -27,5 +29,9 @@ public interface BoardMapperRepository {
     public int getDisLikesTotalCount(Long boardId);
 
     public List<Board> boardGetCategoryList(int categoryId);
+
+    public List<Board> getWeekBestBoardList(Map<String, Object> params);
+
+    public List<Board> getDailyBestBoardList(Map<String, Object> params);
 
 }

@@ -67,12 +67,14 @@ public String create(
 @GetMapping("boards/content/{boardId}")
 public String content(@PathVariable("boardId") Long boardId ,Model model,HttpSession session){
    BoardDTO board = boardService.selectBoardDetail(boardId);
-   String userId = (String) session.getAttribute(SessionConst.USER_ID);
+   String userId = (String) session.getAttribute(SessionConst.USER_NAME);
+   String nickName = (String) session.getAttribute(SessionConst.USER_NAME);
 
-    if (userId != null && !userId.equals(board.getMemberId())) {
+    if (userId != null || !board.getWriter().equals(nickName)) {
+
         boardService.boardViewCntIncrease(boardId);
         model.addAttribute("board" , board);
-        return "Check";
+        return "boards/content";
     }
   model.addAttribute("board" , board);
 

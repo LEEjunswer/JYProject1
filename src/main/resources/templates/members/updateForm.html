@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-
-</head>
+<head th:replace="~{fragments/head :: head}"/>
+<meta charset="UTF-8">
 <body>
-<div class="container">
+<div th:replace="~{fragments/header :: header}"></div>
+<div id="updateForm_header">
     <div class="login-header">
         <h2 th:text=" ${m.loginId} + ' -  회원수정 '"></h2>
     </div>

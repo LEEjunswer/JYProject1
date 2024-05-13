@@ -4,6 +4,7 @@ import com.JYProject.project.model.Like;
 import com.JYProject.project.model.dto.LikeDTO;
 import com.JYProject.project.repository.mybatis.LikeMapperRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class LikeServiceImpl implements LikeService {
 
     private final  LikeMapperRepository likeMapperRepository;
+
+
     @Override
     public int insertLikeBoard(LikeDTO likeDTO) {
 

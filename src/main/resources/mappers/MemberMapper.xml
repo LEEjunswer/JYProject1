@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.JYProject.project.repository.mybatis.MemberMapperRepository">
-    <resultMap id="memberResultMap" type="com.JYProject.project.model.dto.MemberDTO">
+    <resultMap id="memberResultMap" type="com.JYProject.project.model.Member">
         <id column="member_id" property="memberId" />
         <result column="login_id" property="loginId" />
         <result column="pw" property="pw" />
@@ -18,9 +18,10 @@
         <result column="active" property="active" />
         <result column="grade" property="Grade" />
         <result column="point" property="point" />
+        <result column="profile_img" property="profileImg" />
     </resultMap>
 
-    <insert id="insertMember" parameterType="com.JYProject.project.model.dto.MemberDTO">
+    <insert id="insertMember" parameterType="com.JYProject.project.model.Member">
         insert into member (login_id,pw,name,nickname,phone,email,zip_code,address,address_detail)
         values (#{loginId},#{pw},#{name},#{nickname},#{phone},#{email},#{zipCode},#{address},#{addressDetail})
     </insert>
@@ -29,7 +30,7 @@
         select * from member where login_id=#{loginId}
     </select>
 
-    <update id="updateMember" parameterType="com.JYProject.project.model.dto.MemberDTO">
+    <update id="updateMember" parameterType="com.JYProject.project.model.Member">
         update member
         set    <if test="pw != null and pw != ''">
         pw = #{pw},
@@ -46,7 +47,7 @@
         delete from member where member_id=#{Id}
     </delete>
 
-    <select id="MemberAllList" resultType="com.JYProject.project.model.dto.MemberDTO">
+    <select id="MemberAllList" resultType="com.JYProject.project.model.Member">
         select *
         from member
     </select>
@@ -57,11 +58,11 @@
         SELECT COUNT(*) > 0 FROM member WHERE login_id=#{loginId} AND pw=#{pw}
     </select>
 
-    <select id="login"  parameterType="com.JYProject.project.model.dto.MemberDTO" resultMap="memberResultMap">
+    <select id="login"  parameterType="com.JYProject.project.model.Member" resultMap="memberResultMap">
         select * from member where login_id=#{loginId} and pw=#{pw};
     </select>
 
-    <select id="checkIdAndPw"  resultType="boolean" parameterType="com.JYProject.project.model.dto.MemberDTO">
+    <select id="checkIdAndPw"  resultType="boolean" parameterType="com.JYProject.project.model.Member">
         SELECT COUNT(*) > 0 FROM member WHERE login_id=#{loginId} AND pw=#{pw}
     </select>
 
