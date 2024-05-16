@@ -72,6 +72,11 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public List<BoardDTO> getMyBoardList(Long memberId) {
+        return null;
+    }
+
+    @Override
     public int boardViewCntIncrease(Long boardId) {
         return boardMybatisRepository.boardViewCntIncrease(boardId);
     }

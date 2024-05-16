@@ -9,17 +9,23 @@
 <div th:replace="~{fragments/header :: header}" />
 <div id="board-container">
     <h2>게시글 목록</h2>
+    <div id="board_header">
+    <div id="board_category">
+
+        <a href="/category/0"> 전체</a>
+        <a href="/category/1">자유</a>
+        <a href="/category/2">정보</a>
+        <a href="/category/3">추천</a>
+        <a href="/category/3">후기</a>
+        <a href="/category/3">기타</a>
+
+
+    </div>
+    <div id="board_join">
+        <a href="/boards/join">글작성</a>
+    </div>
+    </div>
     <table class="board_list">
-        <div class="category">
-
-           <a href="/category/0"> 전체</a>
-            <a href="/category/1">자유</a>
-            <a href="/category/2">정보</a>
-            <a href="/category/3">추천</a>
-            <a href="/category/3">후기</a>
-            <a href="/category/3">기타</a>
-
-        </div>
         <colgroup>
             <col width="10%"/>
             <col width="50%"/>
@@ -49,7 +55,9 @@
                 th:text="${(list.likes != null ? list.likes : 0) - (list.dislikes != null ? list.dislikes : 0)}">좋아요</th>
             <th th:unless="${list.likes > list.dislikes}"
                 th:text="-${(list.dislikes != null ? list.dislikes : 0) - (list.likes != null ? list.likes : 0)}">싫어요</th>
-            <td th:text="${list.regDate}">날짜</td>
+            <td th:text="${#temporals.format(list.getRegDate(),'yyyy-MM-dd HH:mm:ss')}">
+                작성일
+            </td>
         </tr>
         <tr th:unless="${list} " th:each="list : ${boardList}">
             <td colspan="6">조회된 결과가 없습니다.</td>
@@ -58,18 +66,20 @@
     </table>
     <div class="search">
         <form action="boards/search">
-        <select>
-        <option name="choice" value="0">전체</option>
-            <option name="choice" value="1">작성자</option>
-            <option name="choice" value="2">제목</option>
-        </select>
-            <input type="text" name="search">
+            <label>
+                <select>
+                <option name="choice" value="0">전체</option>
+                    <option name="choice" value="1">작성자</option>
+                    <option name="choice" value="2">제목</option>
+                </select>
+            </label>
+            <label for="board_search"></label><input id="board_search" type="text" name="search">
         </form>
 
     </div>
 </div>
 <script th:inline="javascript">
-    var updateMessage = [[${update}]];
+    var updateMessage = /*[[${updateMessage}]]*/ '';
     if (updateMessage) {
         alert(updateMessage);
     }

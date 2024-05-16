@@ -24,6 +24,8 @@ public interface BoardService {
 
     public int getLikesTotalCount(Long boardId);
 
+    public List<BoardDTO> getMyBoardList(Long memberId);
+
     public int boardViewCntIncrease(Long boardId);
     public int getDisLikesTotalCount(Long boardId);
 

@@ -48,7 +48,7 @@ public class MemberController {
     public String list(Model model){
        List<MemberDTO> list= memberService.MemberAllList();
        model.addAttribute("list",list);
-       return "/members/list";
+       return "myPage";
     }
 
     @GetMapping("members/login")

@@ -1,6 +1,8 @@
-#board_join {
-    width: 600px;
+#boardJoin_Content{
+    text-align: center;
+    width: 80%;
 }
+
 #boardJoin_textarea {
     text-align: center;
     width: 600px;

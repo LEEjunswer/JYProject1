@@ -65,6 +65,11 @@ public class BoardMapperRepositoryImpl implements BoardMapperRepository {
         }
 
         @Override
+        public List<Board> getMyBoardList(Long memberId) {
+                return  boardMapperRepository.getMyBoardList(memberId);
+        }
+
+        @Override
         public List<Board> boardGetCategoryList(int categoryId) {
                 return boardMapperRepository.boardGetCategoryList(categoryId);
         }

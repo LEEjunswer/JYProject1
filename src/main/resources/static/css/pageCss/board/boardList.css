@@ -22,3 +22,18 @@
 .board_list th, .board_list td {
     text-align: center;
 }
+#board_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+#board_category{
+    float: left;
+}
+#board_join{
+    float: right;
+}
+#board_search{
+    border: lightgray solid 1px;
+}

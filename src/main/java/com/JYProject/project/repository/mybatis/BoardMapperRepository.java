@@ -24,9 +24,12 @@ public interface BoardMapperRepository {
     public List<Board> boardSearchTitleList(String title);
 
     public List<Board> boardSearchContentList(String content);
+
     public int getLikesTotalCount(Long boardId);
 
     public int getDisLikesTotalCount(Long boardId);
+
+    public List<Board> getMyBoardList(Long memberId);
 
     public List<Board> boardGetCategoryList(int categoryId);
 

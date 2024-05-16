@@ -1,48 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>'
 
-    <script src="https://cdn.tiny.cloud/1/g77d1at0bpy5p2pwugg66jppd10l79ykiov5mvc6eelw4y97/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-</head>
-<style>
-    table {
-        width: 600px;
-    }
-    textarea {
-        text-align: center;
-        width: 600px;
-        height: 200px;
-    }
-    .Content {
-        text-align: center;
-        border: 0;
-    }
-    .input {
-        width: 300px;
-        text-align: center;
-    }
-    input.img {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%; /* 동그라미를 만들기 위한 속성 */
-        border: none;
-        background-color: #808080;
-        cursor: pointer;
-    }
-    td{
-        text-align: center;
-        align-items: center;
-    }
-
-</style>
-<head>
-    <meta charset="UTF-8">
-    <title>게시글 작성하기</title>
-</head>
+<head th:replace="~{fragments/head :: head}"/>
+<meta charset="UTF-8">
 <body>
+<div th:replace="~{fragments/header :: header}"></div>
 <h1 align="center">게시글 작성하기</h1>
+<div id="boardJoin_container">
 <form action="/boards/join" method="post">
     <table id="board_join">
         <input class="input_type"  type="hidden" name="memberId" th:value="${memberId}" >
@@ -88,6 +52,7 @@
         </tr>
     </table>
 </form>
-
+</div>
+<script src="/static/js/board/join.js"></script>
 </body>
 </html>

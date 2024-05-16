@@ -42,6 +42,10 @@ public class BoardController {
             return "redirect:/home";*/
 
         String loginId = (String) session.getAttribute(SessionConst.USER_ID);
+        if(loginId == null){
+            model.addAttribute("updateMessage", "로그인 후에 글쓰기가 가능합니다.");
+            return "redirect:/boards/list";
+        }
         MemberDTO  m =  memberService.selectMemberDetail(loginId);
         model.addAttribute("nickname",m.getNickname());
         model.addAttribute("memberId",m.getMemberId());
@@ -115,6 +119,19 @@ public String delete(@PathVariable("boardId") Long boardId, HttpSession session,
     }
 
 }
+    @GetMapping("/boards/myBoard/{loginId}")
+    public String getMyBoardList(@PathVariable("loginId")String loginId,Model model ){
+    if(loginId == null){
+
+        return "home";
+    }
+
+    MemberDTO memberDTO = memberService.selectMemberDetail(loginId);
+    List<BoardDTO>  myBoardList  =  boardService.getMyBoardList(memberDTO.getMemberId());
+    model.addAttribute("myBoards" , myBoardList);
+    return "boards/myBoardList";
+    }
+
 
 
 
