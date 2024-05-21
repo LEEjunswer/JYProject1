@@ -11,7 +11,7 @@ import java.util.Map;
 @Mapper
 public interface BoardMapperRepository {
 
-    public int insertBoard(Board board);
+    public Long insertBoard(Board board);
     public Board selectBoardDetail(Long boardId);
     public int updateBoard(Board board);
     public int deleteBoard(Long boardId);

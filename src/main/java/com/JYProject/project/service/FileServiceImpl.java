@@ -7,32 +7,42 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class FileServiceImpl implements FileService{
 
-    private final FileMapperRepositoryImpl fileMybaitsRepository;
+    private final FileMapperRepositoryImpl fileRepository;
 
     @Override
     public int insertFile(FileDTO fileDTO) {
-        return fileMybaitsRepository.insertFile(convertToEntity(fileDTO));
+        return fileRepository.insertFile(convertToEntity(fileDTO));
     }
 
     @Override
     public int updateFile(FileDTO fileDTO) {
 
-        return fileMybaitsRepository.updateFile(convertToEntity(fileDTO));
+        return fileRepository.updateFile(convertToEntity(fileDTO));
     }
 
     @Override
     public int deleteFile(Long id) {
-        return fileMybaitsRepository.deleteFile(id);
+        return fileRepository.deleteFile(id);
     }
 
     @Override
-    public int getOneFile(Long boardId) {
-        return fileMybaitsRepository.getOneFile(boardId);
+    public FileDTO getOneFile(Long boardId) {
+
+        return convertToDTO(fileRepository.getOneFile(boardId)) ;
+    }
+
+    @Override
+    public List<FileDTO> getBestFileList(Long boardId) {
+        List<File> fileList = fileRepository.getBestFileList(boardId);
+        return fileList.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     private File convertToEntity(FileDTO fileDTO){

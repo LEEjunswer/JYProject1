@@ -1,11 +1,15 @@
 package com.JYProject.project.controller;
 
 import com.JYProject.project.model.dto.BoardDTO;
+import com.JYProject.project.model.dto.FileDTO;
 import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.service.BoardServiceImpl;
+import com.JYProject.project.service.FileServiceImpl;
 import com.JYProject.project.service.MemberServiceImpl;
 import com.JYProject.project.session.SessionConst;
 import jakarta.servlet.http.HttpSession;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,18 +17,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class BoardController {
 
     private  final BoardServiceImpl boardService;
     private final MemberServiceImpl memberService;
-    @Autowired
-    public  BoardController(BoardServiceImpl boardService, MemberServiceImpl memberService){
-        this.boardService=boardService;
-        this.memberService = memberService;
-    }
+    private final FileServiceImpl fileService;
+
 
 
     @GetMapping("/boards/list")
@@ -59,14 +62,37 @@ public class BoardController {
         model.addAttribute("boardList", list);
         return "/boards/list";
     }
-    //보드 생성
-@PostMapping("/boards/join")
-public String create(
-        @ModelAttribute BoardDTO boardDTO,RedirectAttributes redirectAttributes){
-    boardService.insertBoard(boardDTO);
-    redirectAttributes.addFlashAttribute("suc","성공적으로 게시글 등록되었습니다");
-    return "redirect:/boards/list";
-}
+
+    @PostMapping("/boards/join")
+    public String create(
+            @ModelAttribute BoardDTO boardDTO,
+            @RequestParam(value = "fileUrls") List<String> fileUrls,
+            RedirectAttributes redirectAttributes) {
+        System.out.println("boardDTO = " + boardDTO);
+        System.out.println("Received fileUrls: " + fileUrls);
+
+        try {
+            String contentChangeImgPath= boardDTO.getContent().replace("../uploads/", "http://localhost:8082/uploads/");
+            boardDTO.setContent(contentChangeImgPath);
+            Long getBoardId =  boardService.insertBoard(boardDTO);
+
+            System.out.println(getBoardId + " getBoardId");
+                FileDTO fileDTO = new FileDTO();
+                fileDTO.setBoardId(getBoardId);
+                fileDTO.setFileNameFromList(fileUrls);
+                fileDTO.setRegDate(LocalDateTime.now());
+                fileService.insertFile(fileDTO);
+
+
+            redirectAttributes.addFlashAttribute("suc", "성공적으로 게시글 등록되었습니다");
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "게시글 등록에 실패했습니다.");
+        }
+        return "redirect:/boards/list";
+    }
+
+
 //보드게시판 제목 클릭시 상세하게 보여줄 예정
 @GetMapping("boards/content/{boardId}")
 public String content(@PathVariable("boardId") Long boardId ,Model model,HttpSession session){

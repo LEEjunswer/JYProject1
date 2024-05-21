@@ -16,16 +16,24 @@
     display: flex;
     justify-content: space-between;
 }
-#tabList-weekend{
+#tabList-weekend {
     float: left;
     margin: 0;
     padding: 0;
-}
-#weekend-content{
-    margin-top: 15px;
-    display: flex;
+
 }
 
+#weekend-content{
+    margin-top: 10px;
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.card {
+    width: 200px;
+    margin-bottom: 10px;
+}
 #tabList-category{
     float: right;
     margin: 0;
@@ -41,6 +49,7 @@
 }
 
 .card .card-body {
+    margin-top: 20px;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -51,6 +60,7 @@
 }
 
 #main-table{
+    margin-top: 40px;
     border: 1px solid red;
     height: 600px;
     display: flex;

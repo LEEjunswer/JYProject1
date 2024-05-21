@@ -1,16 +1,15 @@
-#boardJoin_Content{
-    text-align: center;
-    width: 80%;
+#boardJoin_container{
+    width: 1280px;
+    margin: 0 auto;
+    border:  1px solid black;
+    height: 600px;
 }
-
-#boardJoin_textarea {
+#board_join{
+    width: 100%;
     text-align: center;
-    width: 600px;
-    height: 200px;
 }
-#boardJoin_Content {
-    text-align: center;
-    border: 0;
+#title_tr{
+    padding-bottom: 20px;
 }
 #boardJon_input {
     width: 300px;
@@ -24,6 +23,11 @@
     background-color: #808080;
     cursor: pointer;
 }
+#title_td{
+  border: 1px solid black;
+  width: 400px;
+  height: 25px;
+}
 .boardJoin_td{
     text-align: center;
     align-items: center;
@@ -31,4 +35,7 @@
 .boardJoin_submit{
     text-align: center;
     padding: 10px;
+}
+#boardJoin_title{
+    margin-bottom: 5px;
 }

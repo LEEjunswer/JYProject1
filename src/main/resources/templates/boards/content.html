@@ -36,7 +36,7 @@
 
                     <td colspan="2" id="content">
                         <hr id="contentLine"/>
-                        <p th:text="${board.content}">글 내용 </p>
+                        <p th:utext="${board.content}">글 내용 </p>
 
                     </td>
                 </tr>
@@ -48,13 +48,13 @@
                     <td>
                     <div class="likesAndDislikes">
                         <div class="like">
-                            <img src="/static/img/like.jpg" alt="like">
+                            <img src="/static/img/like.jpg" alt="like" class="like-img">
                         <div class="likeCount" th:text="${board.likes}">
                             1
                         </div>
                         </div>
                         <div class="disLikes">
-                            <img src="/static/img/disLike.jpg" alt="disLikes">
+                            <img src="/static/img/disLike.jpg" alt="disLikes" class="dislike-img">
                             <div class="disCount" th:text="${board.dislikes}">
                                 1
                             </div>

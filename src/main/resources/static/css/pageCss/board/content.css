@@ -68,3 +68,12 @@
 #content{
   text-align: center;
 }
+.like-img {
+    width: 40px;
+    height: 40px;
+}
+
+.dislike-img {
+    width: 40px;
+    height: 40px;
+}

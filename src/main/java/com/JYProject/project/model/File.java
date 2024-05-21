@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Data
@@ -20,8 +22,23 @@ public class File {
     private Long boardId;
 
     @Comment("파일이름")
-    private List<String> fileNames;
+    private String fileNames;
 
     @Comment("파일등록일자")
     private LocalDateTime regDate;
+
+    private List<String> getFileNamesList(String fileNames) {
+        if (this.fileNames != null && !this.fileNames.isEmpty()) {
+            return Arrays.asList(this.fileNames.split(","));
+        }
+        return new ArrayList<>();
+    }
+
+    private void setFileNameFromList(List<String> fileNameList){
+        if(fileNameList != null && !fileNameList.isEmpty()){
+            this.fileNames = String.join(",",fileNameList);
+        }else {
+            this.fileNames = "";
+        }
+    }
 }

@@ -26,15 +26,20 @@
         </div>
         </div>
         <div id="weekend-content">
-            <div th:each="board : ${boards}" class="card w-64 bg-base-100 shadow-xl">
-                <figure>
-             <!--
-                    <img th:src="${board.get}" alt="img" />
--->
-                </figure>
+            <div th:each="board, boardStat : ${boards}" class="card w-60 bg-base-100 shadow-xl">
+                <a th:href="@{/boards/content/{boardId}(boardId=${board.boardId})}">
+                    <figure>
+                        <img th:if="${files != null and boardStat != null and boardStat.index < files.size() and files[boardStat.index] != null and files[boardStat.index].fileNames != null and files[boardStat.index].getFileNamesList().size() > 0}"
+                             th:src="@{${files[boardStat.index].fileNames}}"
+                             alt="img" />
+                        <img th:unless="${files != null and boardStat != null and boardStat.index < files.size() and files[boardStat.index] != null and files[boardStat.index].fileNames != null and files[boardStat.index].getFileNamesList().size() > 0}"
+                             th:src="@{/static/img/unnamed.jpg}"
+                             alt="img" />
+                    </figure>
                 <div class="card-body">
                     <p th:text="${board.getTitle()}">제목</p>
                 </div>
+                </a>
             </div>
         </div>
     </div>

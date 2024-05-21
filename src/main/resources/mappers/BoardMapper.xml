@@ -18,7 +18,7 @@
     </resultMap>
 
     <!--보드 추가 -->
-    <insert id="insertBoard" parameterType="com.JYProject.project.model.Board">
+    <insert id="insertBoard" parameterType="com.JYProject.project.model.Board" useGeneratedKeys="true" keyProperty="boardId">
         insert into board (category_id,writer,title,content,member_id)
         values(#{categoryId},#{writer},#{title},#{content},#{memberId});
     </insert>

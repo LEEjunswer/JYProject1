@@ -2,7 +2,9 @@ package com.JYProject.project.controller;
 
 
 import com.JYProject.project.model.dto.BoardDTO;
+import com.JYProject.project.model.dto.FileDTO;
 import com.JYProject.project.service.BoardServiceImpl;
+import com.JYProject.project.service.FileServiceImpl;
 import com.JYProject.project.service.MemberServiceImpl;
 import com.JYProject.project.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,9 +15,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,6 +27,7 @@ import java.util.Map;
 public class HomeController {
     private final MemberServiceImpl memberService;
     private final BoardServiceImpl boardService;
+    private final FileServiceImpl fileService;
     @GetMapping("/")
     public String home(HttpServletRequest request, Model model){
         HttpSession session = request.getSession(false); // 세션 존재 확인
@@ -31,6 +36,18 @@ public class HomeController {
         params.put("offset", 0);
         params.put("pageSize", 5);
         List<BoardDTO> boardWeekBestList = boardService.getWeekBestBoardList(params);
+        List<Long> boardIds = boardWeekBestList.stream()
+                .map(BoardDTO::getBoardId)
+                .toList();
+
+        List<FileDTO> fileWeekBestList = new ArrayList<>();
+        for(Long boardId : boardIds){
+            List<FileDTO> files = fileService.getBestFileList(boardId);
+
+            fileWeekBestList.addAll(files);
+        }
+        System.out.println("fileWeekBestList체크 = " + fileWeekBestList);
+        model.addAttribute("files", fileWeekBestList);
         model.addAttribute("boards", boardWeekBestList);
         if (session != null && session.getAttribute(SessionConst.USER_ID) != null) {
             String loginId = (String) session.getAttribute(SessionConst.USER_ID);

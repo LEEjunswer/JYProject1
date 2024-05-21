@@ -5,53 +5,58 @@
 <meta charset="UTF-8">
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
-<h1 align="center">게시글 작성하기</h1>
 <div id="boardJoin_container">
-<form action="/boards/join" method="post">
+    <form id="postForm" method="post" enctype="multipart/form-data">
     <table id="board_join">
-        <input class="input_type"  type="hidden" name="memberId" th:value="${memberId}" >
-        <input  class="input_type" type="hidden" name="writer"  th:value="${nickname}">
         <tr>
-            <td class="boardJoin_td">게시글 제목 : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input
-                    class="input" type="text" name="title"></td>
-        </tr>
-        <tr>
-            <td class="boardJoin_td"> <label>
-                작성자 : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                <input
-                        class="input" th:value="${nickname}" type="text" name="writer" size="5" disabled>
-            </label></td>
-        </tr>
-        <tr>
-            <td class="boardJoin_td">게시판 카테고리 :  <input type="radio"
-                                   name="categoryId" value="1">자유 <input type="radio"
-                                                                         name="categoryId" value="2">정보 <input type="radio"
-                                                                                                               name="categoryId" value="3">추천 <input type="radio"
-                                                                                                                                                     name="categoryId" value="4">후기
-                <input type="radio"
-                       name="categoryId" value="3">추천 <input type="radio"
-                                                             name="categoryId" value="5">기타
-            </td>
-        </tr>
+            <td>
+                    <input class="input_type" type="hidden" name="memberId" th:value="${memberId}">
+                    <input class="input_type" type="hidden" name="writer" th:value="${nickname}">
+                    <tr id="title_tr">
+                        <td class="boardJoin_td">게시글 제목 : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            <input id="title_td" class="input" type="text" name="title">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="boardJoin_td">
+                            <label>작성자 : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                <input class="input" th:value="${nickname}" type="text" name="writer" disabled>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="boardJoin_td">
+                            게시판 카테고리 :
+                            <input type="radio" name="categoryId" value="1">자유
+                            <input type="radio" name="categoryId" value="2">정보
+                            <input type="radio" name="categoryId" value="3">추천
+                            <input type="radio" name="categoryId" value="4">후기
+                            <input type="radio" name="categoryId" value="5">기타
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="boardJoin_Content">게시글 내용
+                            <hr>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="boardJoin_td">
+                            <label id="1">
+                                <textarea id="tinymceTextarea" name="content"></textarea>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="boardJoin_submit">
+                            <input type="submit" value="게시글 등록">
+                            <input type="button" value="메인으로" th:attr="onclick=|location.href='@{/boards/list}'|">
+                        </td>
+                    </tr>
 
-        <tr>
-            <td  id="boardJoin_Content">게시글 내용
-                <hr>
             </td>
-        </tr>
-        <tr>
-            <td class="boardJoin_td"><label id="1">
-                    <textarea id="boardJoin_textarea" name="content"></textarea>
-            </label></td>
-        </tr>
-        <tr>
-            <td  class="boardJoin_submit"><!--<input
-                    type="button" value="등록하기" onclick="validCheck(form)"> -->
-                <input type="submit" value="게시글 등록">
-                <input type="button" value="메인으로" th:attr="onclick=|location.href='@{/boards/list}'|">
         </tr>
     </table>
-</form>
+    </form>
 </div>
 <script src="/static/js/board/join.js"></script>
 </body>

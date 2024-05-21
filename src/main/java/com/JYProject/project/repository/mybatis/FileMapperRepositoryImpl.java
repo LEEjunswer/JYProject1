@@ -5,6 +5,8 @@ import com.JYProject.project.model.dto.FileDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class FileMapperRepositoryImpl implements FileMapperRepository {
     private  final FileMapperRepository fileMapperRepository;
@@ -30,7 +32,12 @@ public class FileMapperRepositoryImpl implements FileMapperRepository {
 
     //boardId 같을 떄  가져오기
     @Override
-    public int getOneFile(Long boardId) {
+    public File getOneFile(Long boardId) {
         return fileMapperRepository.getOneFile(boardId);
+    }
+
+    @Override
+    public List<File> getBestFileList(Long boardId) {
+        return fileMapperRepository.getBestFileList(boardId);
     }
 }

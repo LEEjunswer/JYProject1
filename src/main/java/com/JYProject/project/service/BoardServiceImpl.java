@@ -20,9 +20,11 @@ public class BoardServiceImpl implements BoardService {
     private  final BoardMapperRepositoryImpl boardMybatisRepository;
 
     @Override
-    public int insertBoard(BoardDTO boardDTO) {
+    public Long insertBoard(BoardDTO boardDTO) {
+
         Board board =convertToEntity(boardDTO);
-        return boardMybatisRepository.insertBoard(board);
+        boardMybatisRepository.insertBoard(board);
+        return board.getBoardId();
     }
 
     @Override

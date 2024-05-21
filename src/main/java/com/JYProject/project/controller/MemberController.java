@@ -98,7 +98,7 @@ public class MemberController {
     public String updateForm(@RequestParam String loginId, Model model) {
         MemberDTO member = memberService.selectMemberDetail(loginId);
         model.addAttribute("m", member);
-        return "members/updateForm";
+        return "/members/updateForm";
     }
     @PostMapping("/members/updateForm")
     public String updateForm(@ModelAttribute MemberDTO memberDTO,RedirectAttributes redirectAttributes) {

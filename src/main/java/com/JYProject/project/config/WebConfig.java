@@ -4,13 +4,26 @@ import com.JYProject.project.interceptor.LogInterceptor;
 import com.JYProject.project.interceptor.LoginInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Slf4j
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+    @Value("${upload.path}")
+    private String uploadPath;
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:/" + uploadPath + "/");
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/");
+    }
+
     @Autowired
     private LogInterceptor logInterceptor;
 
@@ -25,7 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login", "/members/join", "/static/**")
+                .excludePathPatterns("/login", "/members/join", "/static/**", "/uploads/**")
                 .order(2);
     }
 }

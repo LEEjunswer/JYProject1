@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public interface BoardService {
 
-    public int insertBoard(BoardDTO boardDTO);
+    public Long insertBoard(BoardDTO boardDTO);
     public BoardDTO selectBoardDetail(Long boardId);
 
     public int updateBoard(BoardDTO boardDTO);

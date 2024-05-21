@@ -17,7 +17,7 @@ public class BoardMapperRepositoryImpl implements BoardMapperRepository {
         public BoardMapperRepositoryImpl(BoardMapperRepository boardMapperRepository) {
                 this.boardMapperRepository = boardMapperRepository;
         }
-        public int insertBoard(Board board){
+        public Long insertBoard(Board board){
                 return boardMapperRepository.insertBoard(board);
         }
         public Board selectBoardDetail(Long boardId){
