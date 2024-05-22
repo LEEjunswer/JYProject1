@@ -3,7 +3,6 @@
 
     width: 1280px;
     margin: 0 auto;
-    border:  1px solid black;
     height: 600px;
 }
 #weekend-best{
@@ -11,10 +10,28 @@
     border: 1px crimson;
     width: 100%;
 }
-
 #weekend-header {
     display: flex;
     justify-content: space-between;
+    align-items: center; /* 수직 정렬 */
+    gap: 20px; /* 요소 간의 간격 */
+}
+
+#tabList-weekend,
+#main-pagingButton,
+#tabList-category {
+    display: flex;
+    align-items: center; /* 수직 정렬 */
+}
+
+.tabs {
+    display: flex;
+    gap: 10px; /* 버튼 간의 간격 */
+}
+
+.join {
+    display: flex;
+    gap: 5px; /* 버튼 간의 간격 */
 }
 #tabList-weekend {
     float: left;

@@ -29,9 +29,10 @@
             </li>
         </ul>
     </div>
+     <form id="searchForm" method="post">
      <label class="input input-bordered flex items-center gap-2" id="search_bar">
-         <input type="text" id="query" class="search-input" placeholder="제목을 입력해주세요" />
-         <button type="submit" class="search-button">
+         <input type="text" id="header_query" name="query" class="search-input" placeholder="제목을 입력해주세요" />
+         <button type="submit" class="search-button" id="search_button">
              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
                  <path fill-rule="evenodd"
                        d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
@@ -39,6 +40,7 @@
              </svg>
          </button>
      </label>
+     </form>
     <div class="dropdown dropdown-end w-40" th:if="${loginId == null}">
      <div tabindex="0" role="button" class="btn btn-ghost btn-circle w-32">회원메뉴</div>
         <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
@@ -53,7 +55,7 @@
    <div class="dropdown dropdown-end w-40" th:if="${loginId != null && loginId != 'admin'}">
        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
            <div class="w-10 rounded-full">
-               <img alt="프로필이미지" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" /> <!-- 나중에 개인프로필이미지로 변경할 예정-->
+               <img alt="프로필이미지" src="/static/img/Basicimage.png" /> <!-- 나중에 개인프로필이미지로 변경할 예정-->
            </div>
        </div>
        <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
@@ -92,7 +94,8 @@
     </div>
 
 </div>
-</header>
 
+</header>
+<script src="/static/js/fragments/header.js"></script>
 </body>
 </html>

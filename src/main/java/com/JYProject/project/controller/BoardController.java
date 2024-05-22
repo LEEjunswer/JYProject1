@@ -158,8 +158,12 @@ public String delete(@PathVariable("boardId") Long boardId, HttpSession session,
     return "boards/myBoardList";
     }
 
-
-
-
+    @PostMapping("/boards/search/{query}")
+    public String searchContent(@PathVariable("query") String query, Model model){
+        System.out.println("query = " + query);
+        List<BoardDTO> boardSearchTitleList = boardService.boardSearchTitleList(query);
+        model.addAttribute("boardList", boardSearchTitleList);
+        return "boards/list";
+    }
 
 }

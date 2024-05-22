@@ -8,25 +8,26 @@
     <div id="weekend-best">
         <div id="weekend-header">
             <div id="tabList-weekend" role="tablist" class="tabs tabs-boxed">
-                <button role="tab" class="tab tab-active">주간</button>
-                <button role="tab" class="tab">일간</button>
+                <button role="tab" class="weekOrDay tab tab-active" data-tab="week">주간</button>
+                <button role="tab" class="weekOrDay tab" data-tab="day">일간</button>
             </div>
             <div id="main-pagingButton" class="join mt-2">
-                <button class="join-item btn btn-xs btn-active" onclick="">1</button>
+                <button class="join-item btn btn-xs btn-active">1</button>
                 <button class="join-item btn btn-xs">2</button>
                 <button class="join-item btn btn-xs">3</button>
                 <button class="join-item btn btn-xs">4</button>
+                <button class="join-item btn btn-xs">5</button>
             </div>
         <div  id="tabList-category" role="tablist" class="tabs tabs-boxed">
-            <button role="tab" class="tab tab-active">전체</button>
-            <button role="tab" class="tab">자유</button>
-            <button role="tab" class="tab">정보</button>
-            <button role="tab" class="tab">후기</button>
-            <button role="tab" class="tab">기타</button>
+            <button role="tab" class="btn_category tab tab-active" data-category-id="0">전체</button>
+            <button role="tab" class="btn_category tab" data-category-id="1">자유</button>
+            <button role="tab" class="btn_category tab" data-category-id="2">정보</button>
+            <button role="tab" class="btn_category tab" data-category-id="3">후기</button>
+            <button role="tab" class="btn_category tab" data-category-id="4">기타</button>
         </div>
         </div>
         <div id="weekend-content">
-            <div th:each="board, boardStat : ${boards}" class="card w-60 bg-base-100 shadow-xl">
+            <div th:each="board, boardStat : ${boards}" class="card w-40 h-25 bg-base-100 shadow-xl">
                 <a th:href="@{/boards/content/{boardId}(boardId=${board.boardId})}">
                     <figure>
                         <img th:if="${files != null and boardStat != null and boardStat.index < files.size() and files[boardStat.index] != null and files[boardStat.index].fileNames != null and files[boardStat.index].getFileNamesList().size() > 0}"
@@ -110,6 +111,7 @@
     </div>
 </div>
 </div>
+<script src="/static/js/home.js"></script>
 <script th:inline="javascript">
     var updateMessage = [[${update}]];
     if (updateMessage) {

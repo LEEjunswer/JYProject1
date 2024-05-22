@@ -8,7 +8,6 @@
 <body>
 <div th:replace="~{fragments/header :: header}" />
 <div id="board-container">
-    <h2>게시글 목록</h2>
     <div id="board_header">
     <div id="board_category">
 
@@ -22,7 +21,7 @@
 
     </div>
     <div id="board_join">
-        <a href="/boards/join">글작성</a>
+        <a href="/boards/join" class="btn btn-outline btn-accent justify-self-end">글작성</a>
     </div>
     </div>
     <table class="board_list">
