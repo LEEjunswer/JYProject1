@@ -81,8 +81,10 @@
         <select id="boardGetCategoryList" parameterType="Integer" resultMap="boardResultMap">
                     select * from board
                    <if test="categoryId != 0">
-                   where  category_id=#{categoryId};
+                   where  category_id=#{categoryId}
                         </if>
+                Order By board_id Desc
+                    Limit 5;
                 </select>
     <select id="getMyBoardList" parameterType="Long" resultMap="boardResultMap">
         select * from board where member_id=#{memberId};

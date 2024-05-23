@@ -36,6 +36,11 @@ public class HomeController {
         params.put("offset", 0);
         params.put("pageSize", 5);
         List<BoardDTO> boardWeekBestList = boardService.getWeekBestBoardList(params);
+        //   @Comment("카테고리이름 1.자유 2.정보 3.추천 4.후기 나중에 보고 더 추가할 예정")
+        List<BoardDTO> boardFreeList  = boardService.boardGetCategoryList(1);
+        List<BoardDTO> boardInfoList  = boardService.boardGetCategoryList(2);
+        List<BoardDTO> boardRecommendList  = boardService.boardGetCategoryList(3);
+        List<BoardDTO> boardReviewList  = boardService.boardGetCategoryList(4);
         List<Long> boardIds = boardWeekBestList.stream()
                 .map(BoardDTO::getBoardId)
                 .toList();
@@ -46,12 +51,16 @@ public class HomeController {
 
             fileWeekBestList.addAll(files);
         }
-        System.out.println("fileWeekBestList체크 = " + fileWeekBestList);
         model.addAttribute("files", fileWeekBestList);
         model.addAttribute("boards", boardWeekBestList);
+        model.addAttribute("freeList" , boardFreeList);
+        model.addAttribute("infoList",boardInfoList);
+        model.addAttribute("recommendList",boardRecommendList);
+        model.addAttribute("reviewList",boardReviewList);
         if (session != null && session.getAttribute(SessionConst.USER_ID) != null) {
             String loginId = (String) session.getAttribute(SessionConst.USER_ID);
             String nickname = (String) session.getAttribute(SessionConst.USER_NAME);
+
             model.addAttribute("loginId", loginId);
             model.addAttribute("nickname", nickname);
         }

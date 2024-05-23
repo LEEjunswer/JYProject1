@@ -8,14 +8,14 @@
 
     <h2>회원가입</h2>
     <div class="textForm">
-        <input name="loginId" type="text" class="id" placeholder="아이디(6~20)입력">
-
+        <input name="loginId" id="loginId" type="text" class="id" placeholder="아이디(6~20)입력">
+        <button onclick="idValidCheck()">중복체크</button>
     </div>
     <div class="textForm">
-        <input name="pw" type="password" class="pw" placeholder="비밀번호">
+        <input name="pw" type="password"  id="password" class="pw" placeholder="비밀번호">
     </div>
     <div class="textForm">
-        <input name="loginPwConfirm" type="password" class="pw" placeholder="비밀번호 확인">
+        <input name="pwCheck" type="password" class="pw" placeholder="비밀번호 확인">
     </div>
     <div class="textForm">
         <input name="name" type="text" class="name" placeholder="이름">
@@ -40,10 +40,10 @@
     <div class="textForm">
         <input name="phone" type="number" class="cellphoneNo" placeholder="핸드폰번호입력">
     </div>
-    <input type="submit"  class="btn_loginForm" value="회원가입"/>
+    <button id="join-submit" type="button"  class="btn_loginForm" value="회원가입"></button>
     <input type="button" class="btn_loginForm" value="뒤로가기" onclick="history.back()"/>
 </form>
 
-
+<script src="/static/js/member/join.js"></script>
 </body>
 </html>

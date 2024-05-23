@@ -88,6 +88,7 @@ CREATE TABLE member
     `zip_code`         VARCHAR(10)     NULL        COMMENT '우편번호',
     `address`         VARCHAR(100)    NULL        COMMENT '주소',
     `address_detail`  VARCHAR(100)    NULL        COMMENT '상세주소',
+    `profile`   VARCHAR(100) NULL   COMMENT '프로필이미지',
     `reg_date`         DATETIME        NOT NULL   DEFAULT CURRENT_TIMESTAMP  COMMENT '가입일자',
     `last_login_date`  DATETIME      NOT NULL  DEFAULT CURRENT_TIMESTAMP comment '마지막 로그인',
     `active` 		BOOLEAN 	DEFAULT true 	COMMENT '계정 활성화 여부',

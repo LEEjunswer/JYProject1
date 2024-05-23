@@ -37,7 +37,7 @@ public class MemberController {
     public String create(@ModelAttribute MemberDTO memberDTO){
         System.out.println("member =" + memberDTO.toString());
 
-        System.out.println("체크용");
+
         int check = memberService.insertMember(memberDTO);
 
         return "home";
@@ -91,7 +91,7 @@ public class MemberController {
             return "redirect:/members/update";
         }
         // 리다이렉트할 때 GET 요청으로 보내야 함
-        return "redirect:/members/updateForm?loginId=" + memberDTO.getLoginId();
+        return "redirect:/members/updateForm";
     }
 
     @GetMapping("/members/updateForm")

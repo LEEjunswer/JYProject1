@@ -29,7 +29,7 @@
         <div id="weekend-content">
             <div th:each="board, boardStat : ${boards}" class="card w-40 h-25 bg-base-100 shadow-xl">
                 <a th:href="@{/boards/content/{boardId}(boardId=${board.boardId})}">
-                    <figure>
+                    <figure class="full">
                         <img th:if="${files != null and boardStat != null and boardStat.index < files.size() and files[boardStat.index] != null and files[boardStat.index].fileNames != null and files[boardStat.index].getFileNamesList().size() > 0}"
                              th:src="@{${files[boardStat.index].fileNames}}"
                              alt="img" />
@@ -54,15 +54,15 @@
              <th>게시글</th>
              <th>작성자</th>
              <th>추천수</th>
-             <th>작성일</th>
          </tr>
          </thead>
          <tbody>
-         <tr class="bg-base-200">
-        <th>게시글번호</th>
-             <td>작성자NickName</td>
-             <td>게시글제목</td>
-             <td></td>
+         <tr th:each=" free : ${freeList}" class="bg-base-200">
+             <a th:href="@{/boards/content/{boardId}(boardId=${free.boardId})}">
+             <td th:text="${free.title}">제목</td>
+             <td th:text="${free.writer}">작성자</td>
+             <td th:text="${free.likes - free.dislikes}">추천수</td>
+             </a>
          </tr>
          </tbody>
      </table>
@@ -75,15 +75,16 @@
                 <th>게시글</th>
                 <th>작성자</th>
                 <th>추천수</th>
-                <th>작성일</th>
+
             </tr>
             </thead>
             <tbody>
-            <tr class="bg-base-200">
-                <th>게시글번호</th>
-                <td>작성자NickName</td>
-                <td>게시글제목</td>
-                <td></td>
+            <tr th:each=" info : ${infoList}" class="bg-base-200">
+                <a th:href="@{/boards/content/{boardId}(boardId=${info.boardId})}">
+                <td th:text="${info.title}">제목</td>
+                <td th:text="${info.writer}">작성자</td>
+                <td th:text="${info.likes - info.dislikes}">추천수</td>
+                </a>
             </tr>
             </tbody>
         </table>
@@ -96,15 +97,36 @@
                 <th>게시글</th>
                 <th>작성자</th>
                 <th>추천수</th>
-                <th>작성일</th>
             </tr>
             </thead>
             <tbody>
-            <tr class="bg-base-200">
-                <td>게시글제목</td>
-                <td>작성자NickName</td>
-             <td>추천수</td>
-                <td>작성일</td>
+            <tr th:each="recommend : ${recommendList}" class="bg-base-200">
+                <a th:href="@{/boards/content/{boardId}(boardId=${recommend.boardId})}">
+                <td th:text="${recommend.title}">제목</td>
+                <td th:text="${recommend.writer}">작성자</td>
+             <td th:text="${recommend.likes - recommend.dislikes}">추천수</td>
+                </a>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="review-area">
+        <h3>최신 후기게시판</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>게시글</th>
+                <th>작성자</th>
+                <th>추천수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="review :${reviewList}"  class="bg-base-200">
+                <a th:href="@{/boards/content/{boardId}(boardId=${review.boardId})}">
+            <td th:text="${review.title}">제목</td>
+                <td th:text="${review.writer}">작성자</td>
+                <td th:text="${review.likes - review.dislikes}">추천수</td>
+                </a>
             </tr>
             </tbody>
         </table>

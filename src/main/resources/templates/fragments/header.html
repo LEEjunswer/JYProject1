@@ -54,7 +54,10 @@
     </div>
    <div class="dropdown dropdown-end w-40" th:if="${loginId != null && loginId != 'admin'}">
        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-           <div class="w-10 rounded-full">
+           <div th:if="${}" class="w-10 rounded-full">
+               <img alt="프로필이미지" src="/static/img/Basicimage.png" /> <!-- 나중에 개인프로필이미지로 변경할 예정-->
+           </div>
+           <div  th:unless="${}" class="w-10 rounded-full">
                <img alt="프로필이미지" src="/static/img/Basicimage.png" /> <!-- 나중에 개인프로필이미지로 변경할 예정-->
            </div>
        </div>

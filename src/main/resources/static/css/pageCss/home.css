@@ -75,10 +75,21 @@
     padding: 10px;
     color: #fff;
 }
+.full {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.full img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 #main-table{
     margin-top: 40px;
-    border: 1px solid red;
     height: 600px;
     display: flex;
 }
