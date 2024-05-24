@@ -55,4 +55,6 @@ public class MemberDTO  {
     @Comment("포인트")
     private Long point;
 
+    private String profileImg;
+
 }

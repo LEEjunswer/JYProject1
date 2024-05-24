@@ -18,7 +18,7 @@
         <result column="active" property="active" />
         <result column="grade" property="Grade" />
         <result column="point" property="point" />
-        <result column="profile_img" property="profileImg" />
+        <result column="profile" property="profileImg" />
     </resultMap>
 
     <insert id="insertMember" parameterType="com.JYProject.project.model.Member">
@@ -66,4 +66,9 @@
         SELECT COUNT(*) > 0 FROM member WHERE login_id=#{loginId} AND pw=#{pw}
     </select>
 
+    <update id="updateProfileImg" parameterType="com.JYProject.project.model.Member">
+            update member
+            set profile =#{profileImg}
+                where login_id =#{loginId};
+    </update>
 </mapper>

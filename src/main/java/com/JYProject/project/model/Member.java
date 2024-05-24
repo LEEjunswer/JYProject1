@@ -56,4 +56,5 @@ public class Member{
     @Comment("포인트")
     private Long point;
 
+
 }

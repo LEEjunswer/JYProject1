@@ -3,8 +3,16 @@ package com.JYProject.project.service;
 import com.JYProject.project.model.Member;
 import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.repository.mybatis.MemberMapperRepositoryImpl;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +20,11 @@ import java.util.stream.Collectors;
 public class MemberServiceImpl implements  MemberService{
 
     private final MemberMapperRepositoryImpl memberMybatisRepository;
+
+    
+    // 프로필 이미지 저장 장소
+    @Value("${profile.upload.path}")
+    private String profileUploadPath;
 
     public MemberServiceImpl(MemberMapperRepositoryImpl memberMybatisRepository) {
         this.memberMybatisRepository = memberMybatisRepository;
@@ -27,9 +40,8 @@ public class MemberServiceImpl implements  MemberService{
     }
     @Override
     public MemberDTO login(MemberDTO memberDTO){
-        System.out.println("memberDTO = " + memberDTO);
+
      Member checkLogin =   memberMybatisRepository.login(convertToEntity(memberDTO));
-        System.out.println("checkLogin = " + checkLogin);
         if(checkLogin == null){
             return  null;
         }
@@ -76,6 +88,20 @@ public class MemberServiceImpl implements  MemberService{
         return memberMybatisRepository.checkIdAndPw(member);
     }
 
+    @Override
+    public void updateProfileImage(String loginId,MultipartFile profileImage, String profile)throws  IOException  {
+
+        Path uploadDirectory = Paths.get(profileUploadPath);
+        String profileImg = profileUploadPath + "/"+ profile;
+        if (!Files.exists(uploadDirectory)) {
+            Files.createDirectories(uploadDirectory);
+        }
+        Path filePath = uploadDirectory.resolve(profile);
+        Files.copy(profileImage.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        memberMybatisRepository.updateProfileImg(loginId, profileImg);
+    }
+
+
 
     private Member convertToEntity(MemberDTO memberDTO){
         Member member = new Member();
@@ -85,6 +111,7 @@ public class MemberServiceImpl implements  MemberService{
         member.setName(memberDTO.getName());
         member.setActive(memberDTO.getActive());
         member.setEmail(memberDTO.getEmail());
+        member.setProfileImg(memberDTO.getProfileImg());
         member.setLastLoginDate(memberDTO.getLastLoginDate());
         member.setNickname(memberDTO.getNickname());
         member.setRegDate(memberDTO.getRegDate());
@@ -102,6 +129,7 @@ public class MemberServiceImpl implements  MemberService{
         memberDTO.setName(member.getName());
         memberDTO.setEmail(member.getEmail());
         memberDTO.setLastLoginDate(member.getLastLoginDate());
+        memberDTO.setProfileImg(member.getProfileImg());
         memberDTO.setNickname(member.getNickname());
         memberDTO.setRegDate(member.getRegDate());
         memberDTO.setAddressDetail(member.getAddressDetail());

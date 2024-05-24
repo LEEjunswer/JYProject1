@@ -21,7 +21,7 @@ CREATE TABLE board
 );
 ALTER TABLE board
     ADD CONSTRAINT fk_category_board FOREIGN KEY (category_id) REFERENCES category(category_id),
-    ADD constraint fk_member_board Foreign key (member_id) references member(id);
+    ADD constraint fk_member_board Foreign key (member_id) references member(member_id);
 ALTER TABLE board COMMENT 'community(자유게시판) 게시글을 위한 테이블';
 
 

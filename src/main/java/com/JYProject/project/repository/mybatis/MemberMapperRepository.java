@@ -8,20 +8,20 @@ import java.util.List;
 @Mapper
 public interface MemberMapperRepository {
 
-    public int insertMember(Member member);
+     int insertMember(Member member);
 
-    Member login(Member member);
-    public Member selectMemberDetail(String loginId);
+     Member login(Member member);
+     Member selectMemberDetail(String loginId);
 
-    public int updateMember(MemberDTO memberDTO);
+    int updateMember(MemberDTO memberDTO);
 
-    public boolean validCheckId(String loginId);
-    public int deleteMember(Long id);
+    boolean validCheckId(String loginId);
+    int deleteMember(Long id);
 
-    public List<Member> MemberAllList();
+    List<Member> MemberAllList();
 
-    public int selectMemberTotalCount();
-    public boolean checkIdAndPw(Member member);
-
+    int selectMemberTotalCount();
+    boolean checkIdAndPw(Member member);
+    void updateProfileImg(String loginId , String profileImg);
 
 }

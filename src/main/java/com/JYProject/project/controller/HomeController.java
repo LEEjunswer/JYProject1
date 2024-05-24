@@ -3,6 +3,7 @@ package com.JYProject.project.controller;
 
 import com.JYProject.project.model.dto.BoardDTO;
 import com.JYProject.project.model.dto.FileDTO;
+import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.service.BoardServiceImpl;
 import com.JYProject.project.service.FileServiceImpl;
 import com.JYProject.project.service.MemberServiceImpl;
@@ -60,7 +61,11 @@ public class HomeController {
         if (session != null && session.getAttribute(SessionConst.USER_ID) != null) {
             String loginId = (String) session.getAttribute(SessionConst.USER_ID);
             String nickname = (String) session.getAttribute(SessionConst.USER_NAME);
-
+         MemberDTO memberDetail = memberService.selectMemberDetail(loginId);
+          String profile = memberDetail.getProfileImg();
+            String basePath = "C:/ecpliseworkspace/JYproject/ljy/src/main/resources";
+            String relativePath = profile.replace(basePath, "");
+            model.addAttribute("profile", relativePath);
             model.addAttribute("loginId", loginId);
             model.addAttribute("nickname", nickname);
         }

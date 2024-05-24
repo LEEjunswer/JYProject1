@@ -21,6 +21,8 @@ public class MemberController {
     // RequestMappnig(/members) 줄 예정 계정 비활성화 및 회원탈퇴 구현예정  테이블 delete_member로 값 전환시킬예정 회원탈퇴 시키고
     private final MemberServiceImpl memberService;
 
+
+
     @Autowired
     public MemberController(MemberServiceImpl memberService) {
         this.memberService = memberService;

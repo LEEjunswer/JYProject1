@@ -16,10 +16,17 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Value("${upload.path}")
     private String uploadPath;
+
+    // 프로필 이미지 저장 장소
+    @Value("${profile.upload.path}")
+    private String profileUploadPath;
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/uploads/**")
                 .addResourceLocations("file:/" + uploadPath + "/");
+        registry.addResourceHandler("/profile/**")
+                .addResourceLocations("file:/" + profileUploadPath+ "/");
+
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
     }
@@ -38,7 +45,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login", "/members/join", "/static/**", "/uploads/**")
+                .excludePathPatterns("/login", "/members/join", "/static/**", "/uploads/**","/profile/**")
                 .order(2);
     }
 }

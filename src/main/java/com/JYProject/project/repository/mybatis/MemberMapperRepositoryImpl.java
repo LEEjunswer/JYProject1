@@ -59,5 +59,12 @@ public class MemberMapperRepositoryImpl implements MemberMapperRepository {
         return memberMapperRepository.checkIdAndPw(member);
     }
 
+    // 프로필 이미지 넣기
+    @Override
+    public void updateProfileImg(String loginId, String profileImg) {
+        memberMapperRepository.updateProfileImg(loginId,profileImg);
+        return ;
+    }
+
 
 }

@@ -1,6 +1,7 @@
 const header_query = document.getElementById("header_query");
 const search_button = document.getElementById('search_button');
 const search_form = document.getElementById('searchForm');
+
 search_button.addEventListener("click",()=>{
     searchFunction();
 })
