@@ -6,6 +6,7 @@
 <div th:replace="~{fragments/header :: header}"></div>
 
 <div id="content_container">
+    <input id="boardId_content" type="hidden" th:attr="data-value=${board.boardId}">
             <table id="content_board">
                 <thead>
                 <tr >
@@ -48,13 +49,13 @@
                     <td>
                     <div class="likesAndDislikes">
                         <div class="like">
-                            <img src="/static/img/like.jpg" alt="like" class="like-img">
+                            <img src="/static/img/like.jpg" alt="like" class="like-img" onclick="likes()">
                         <div class="likeCount" th:text="${board.likes}">
                             1
                         </div>
                         </div>
                         <div class="disLikes">
-                            <img src="/static/img/disLike.jpg" alt="disLikes" class="dislike-img">
+                            <img src="/static/img/disLike.jpg" alt="disLikes" class="dislike-img" onclick="disLikes()">
                             <div class="disCount" th:text="${board.dislikes}">
                                 1
                             </div>

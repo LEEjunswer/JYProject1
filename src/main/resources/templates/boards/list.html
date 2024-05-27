@@ -9,20 +9,17 @@
 <div th:replace="~{fragments/header :: header}" />
 <div id="board-container">
     <div id="board_header">
-    <div id="board_category">
+        <div id="board_category">
 
-        <a href="/category/0"> 전체</a>
-        <a href="/category/1">자유</a>
-        <a href="/category/2">정보</a>
-        <a href="/category/3">추천</a>
-        <a href="/category/3">후기</a>
-        <a href="/category/3">기타</a>
-
-
-    </div>
-    <div id="board_join">
-        <a href="/boards/join" class="btn btn-outline btn-accent justify-self-end">글작성</a>
-    </div>
+            <a href="/category/0"> 전체</a>
+            <a href="/category/1">자유</a>
+            <a href="/category/2">정보</a>
+            <a href="/category/3">추천</a>
+            <a href="/category/4">후기</a>
+        </div>
+        <div id="list_join">
+            <button id="list_joinForm" class="btn btn-outline btn-accent" onclick="location.href='/boards/join'">글작성</button>
+        </div>
     </div>
     <table class="board_list">
         <colgroup>
@@ -63,16 +60,18 @@
         </tr>
         </tbody>
     </table>
-    <div class="search">
-        <form action="boards/search">
+    <div id="search-bar" class="search">
+        <form action="/boards/search" method="get">
             <label>
-                <select>
-                <option name="choice" value="0">전체</option>
-                    <option name="choice" value="1">작성자</option>
-                    <option name="choice" value="2">제목</option>
+                <select id="list_select" name="choice">
+                    <option value="0">전체</option>
+                    <option value="1">제목</option>
+                    <option value="2">내용</option>
+                    <option value="3">작성자</option>
                 </select>
             </label>
             <label for="board_search"></label><input id="board_search" type="text" name="search">
+            <button type="button" class="btn btn-outline btn-success w-16 text-xs h-6" onclick="onSearch()">검색</button>
         </form>
 
     </div>

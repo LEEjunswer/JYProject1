@@ -142,6 +142,7 @@ public class MemberController {
         if(session != null){
             session.removeAttribute(SessionConst.USER_ID);
             session.removeAttribute(SessionConst.USER_NAME);
+            session.removeAttribute("profile");
             model.addAttribute("loginId", null);
             model.addAttribute("nickname", null);
             return "redirect:/";

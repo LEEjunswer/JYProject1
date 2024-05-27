@@ -11,6 +11,5 @@ public interface LikeMapperRepository {
     public int insertLikeBoard(Like like);
     public int insertLikeReply(Like like);
     public List<Like> getAllLikes(Long id);
-    public List<Like> getAllLikesBoardAndMemberId(Like like);
-    public List<Like> getAllLikesReplyAndMemberId(Like like);
+    public boolean getOneLikesBoardAndMemberId(Like like);
 }

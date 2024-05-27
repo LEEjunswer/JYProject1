@@ -65,7 +65,7 @@ public class HomeController {
           String profile = memberDetail.getProfileImg();
             String basePath = "C:/ecpliseworkspace/JYproject/ljy/src/main/resources";
             String relativePath = profile.replace(basePath, "");
-            model.addAttribute("profile", relativePath);
+            session.setAttribute("profile", relativePath);
             model.addAttribute("loginId", loginId);
             model.addAttribute("nickname", nickname);
         }

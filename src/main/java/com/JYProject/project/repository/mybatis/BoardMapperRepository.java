@@ -11,30 +11,31 @@ import java.util.Map;
 @Mapper
 public interface BoardMapperRepository {
 
-    public Long insertBoard(Board board);
-    public Board selectBoardDetail(Long boardId);
-    public int updateBoard(Board board);
-    public int deleteBoard(Long boardId);
-    public List<Board> boardAllList();
-    public int selectBoardTotalCount();
+    Long insertBoard(Board board);
+     Board selectBoardDetail(Long boardId);
+     int updateBoard(Board board);
+     int deleteBoard(Long boardId);
+     List<Board> boardAllList();
+     int selectBoardTotalCount();
 
-    public int boardViewCntIncrease(Long boardId);
+     int boardViewCntIncrease(Long boardId);
 
     // 밑에 리스트는 나중에 검색했을때 값 가져올 예정
-    public List<Board> boardSearchTitleList(String title);
+     List<Board> boardSearchAllList(String string);
+     List<Board> boardSearchTitleList(String title);
+    List<Board> boardSearchWriterList(String writer);
+     List<Board> boardSearchContentList(String content);
 
-    public List<Board> boardSearchContentList(String content);
+     int getLikesTotalCount(Long boardId);
 
-    public int getLikesTotalCount(Long boardId);
+     int getDisLikesTotalCount(Long boardId);
 
-    public int getDisLikesTotalCount(Long boardId);
+     List<Board> getMyBoardList(Long memberId);
 
-    public List<Board> getMyBoardList(Long memberId);
+     List<Board> boardGetCategoryList(int categoryId);
 
-    public List<Board> boardGetCategoryList(int categoryId);
+     List<Board> getWeekBestBoardList(Map<String, Object> params);
 
-    public List<Board> getWeekBestBoardList(Map<String, Object> params);
-
-    public List<Board> getDailyBestBoardList(Map<String, Object> params);
+     List<Board> getDailyBestBoardList(Map<String, Object> params);
 
 }

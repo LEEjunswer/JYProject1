@@ -21,8 +21,6 @@
             <li><a href="/category/2">정보</a></li>
             <li><a href="/category/3">추천</a></li>
             <li><a href="/category/4">후기</a></li>
-            <li><a href="/category/6">이벤트</a></li>
-            <li><a href="/category/5">기타</a></li>
 
         </ul>
     </details>
@@ -54,10 +52,10 @@
     </div>
    <div class="dropdown dropdown-end w-40" th:if="${loginId != null && loginId != 'admin'}">
        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-           <div th:if="${profile}" class="w-10 rounded-full">
-               <img alt="프로필이미지"   th:src="@{${profile}}"/> <!-- 나중에 개인프로필이미지로 변경할 예정-->
+           <div th:if="${session.profile}" class="w-10 rounded-full">
+               <img alt="프로필이미지"   th:src="@{${session.profile}}"/> <!-- 나중에 개인프로필이미지로 변경할 예정-->
            </div>
-           <div  th:unless="${profile}" class="w-10 rounded-full">
+           <div  th:unless="${session.profile}" class="w-10 rounded-full">
                <img alt="프로필이미지" src="/static/img/Basicimage.png" /> <!-- 나중에 개인프로필이미지로 변경할 예정-->
            </div>
        </div>
@@ -76,12 +74,13 @@
 
        </ul>
    </div>
+     <div id="user_id" th:text="${session.nickname}" >nicname</div>
     <div class="dropdown dropdown-end" th:if="${loginId != null && loginId == 'admin'}">
         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-            <div class="w-10 rounded-full">
-                <img th:if="${profile != null}" alt="프로필이미지" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" /> <!-- 나중에 개인프로필이미지로 변경할 예정-->
-                <img th:unless="${profile != null}" alt="프로필 이미지" th:src="${profile}">
-            </div>
+
+                <img th:if="${session.profile != null}" alt="프로필이미지" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"  class="w-10 rounded-full"/> <!-- 나중에 개인프로필이미지로 변경할 예정-->
+                <img th:unless="${session.profile != null}" alt="프로필 이미지" th:src="${session.profile}"  class="w-10 rounded-full"/>
+
         </div>
         <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
             <li>
@@ -94,10 +93,9 @@
             <li><a>필터리스트</a></li>
             <li><a></a></li>
             <li><a href="/members/join">로그아웃</a></li>
-
         </ul>
+        <div id="admin_id" >관리자</div>
     </div>
-
 </div>
     <div class="modal" id="myModal">
         <div id="modal_content">
@@ -105,13 +103,17 @@
                 <h5 class="modal-title">프로필 사진 변경</h5>
                 <button type="button" id="modalBtn-close" class="btn-close photo-reset" data-bs-dismiss="modal" aria-label="Close">X</button>
                 <hr class="modalBtn-hr">
-                <img   th:if="${profile != null}"
-                       th:src="@{${profile}}"
-                       alt="img" class="profile_img w-20 rounded-full"/>
-                <img th:unless="${profile != null}"
+                <div class="avatar">
+                <div class="w-24 rounded-full">
+                <img   th:if="${session.profile != null}"
+                       th:src="@{${session.profile}}"
+                       alt="img" id="checkImgOne" />
+                <img th:unless="${session.profile != null}"
                      th:src="@{/static/img/Basicimage.png}"
-                     alt="img"  class="profile_img w-20 rounded-full" />
-                <button type="button" class="btn-close photo-reset" data-bs-dismiss="modal" aria-label="Close"></button>
+                     alt="img"  id="checkImgTwo"/>
+                </div>
+                </div>
+                    <button type="button" class="btn-close photo-reset" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <input type="hidden" th:value="${loginId}" id="loginId" />
             <hr class="modalBtn-hr">
@@ -132,10 +134,15 @@
             </div>
         </div>
     </div>
+
     <script src="/static/js/fragments/headerModal.js"></script>
     <script src="/static/js/fragments/header.js"></script>
 </header>
 
-
+<div id="home_line">
+    <a class="header_line" href="#">공지사항</a>
+    <a class="header_line" href="#">이벤트</a>
+    <a class="header_line" href="#">애니뉴스</a>
+</div>
 </body>
 </html>

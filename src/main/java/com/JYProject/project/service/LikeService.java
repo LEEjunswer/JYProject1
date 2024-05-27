@@ -9,7 +9,7 @@ public interface LikeService {
     public int insertLikeBoard(LikeDTO likeDTO);
     public int insertLikeReply(LikeDTO likeDTO);
     public List<LikeDTO> getAllLikes(Long id);
-    public List<LikeDTO> getAllLikesBoardAndMemberId(LikeDTO likeDTO);
-    public List<LikeDTO> getAllLikesReplyAndMemberId(LikeDTO likeDTO);
+    public boolean getOneLikesBoardAndMemberId(LikeDTO likeDTO);
+
 
 }

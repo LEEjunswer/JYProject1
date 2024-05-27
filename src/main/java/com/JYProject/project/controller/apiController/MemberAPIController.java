@@ -2,6 +2,7 @@ package com.JYProject.project.controller.apiController;
 
 import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.service.MemberServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,7 @@ public class MemberAPIController {
     }
 
     @RequestMapping(value = "members/updateProfile", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, Object>> updateProfileImage(@RequestParam("loginId") String loginId, @RequestParam("profileImage") MultipartFile profileImage) throws IOException {
+    public ResponseEntity<Map<String, Object>> updateProfileImage(@RequestParam("loginId") String loginId, @RequestParam("profileImage") MultipartFile profileImage , HttpSession session) throws IOException {
         if (profileImage.isEmpty()) {
             throw new IllegalArgumentException("Profile image file is empty");
         }
@@ -55,8 +56,15 @@ public class MemberAPIController {
         String filename = System.currentTimeMillis() + "-" + profileImage.getOriginalFilename();
         memberService.updateProfileImage(loginId,profileImage,filename);
 
+        MemberDTO memberDetail = memberService.selectMemberDetail(loginId);
+        String profile = memberDetail.getProfileImg();
+        String basePath = "C:/ecpliseworkspace/JYproject/ljy/src/main/resources";
+        String relativePath = profile.replace(basePath, "");
+
         Map<String, Object> response = new HashMap<>();
         response.put("message", "프로필 이미지 저장이 성공적으로 완료되었습니다.");
+        session.removeAttribute("profile");
+        session.setAttribute("profile", relativePath);
         return ResponseEntity.ok(response);
     }
 }

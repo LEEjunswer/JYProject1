@@ -9,29 +9,31 @@ import java.util.Objects;
 
 public interface BoardService {
 
-    public Long insertBoard(BoardDTO boardDTO);
-    public BoardDTO selectBoardDetail(Long boardId);
+     Long insertBoard(BoardDTO boardDTO);
+     BoardDTO selectBoardDetail(Long boardId);
 
-    public int updateBoard(BoardDTO boardDTO);
-    public int deleteBoard(Long boardId);
+     int updateBoard(BoardDTO boardDTO);
+     int deleteBoard(Long boardId);
 
-    public List<BoardDTO> boardAllList();
+     List<BoardDTO> boardAllList();
 
-    public List<BoardDTO> boardSearchTitleList(String title);
+    List<BoardDTO> boardSearchAllList(String string);
+    List<BoardDTO> boardSearchTitleList(String title);
+    List<BoardDTO> boardSearchWriterList(String writer);
+    List<BoardDTO> boardSearchContentList(String content);
 
-    public List<BoardDTO> boardSearchContentList(String content);
-    public int selectBoardTotalCount();
+     int selectBoardTotalCount();
 
-    public int getLikesTotalCount(Long boardId);
+     int getLikesTotalCount(Long boardId);
 
-    public List<BoardDTO> getMyBoardList(Long memberId);
+     List<BoardDTO> getMyBoardList(Long memberId);
 
-    public int boardViewCntIncrease(Long boardId);
-    public int getDisLikesTotalCount(Long boardId);
+     int boardViewCntIncrease(Long boardId);
+     int getDisLikesTotalCount(Long boardId);
 
-    public List<BoardDTO>boardGetCategoryList(int categoryId);
+     List<BoardDTO>boardGetCategoryList(int categoryId);
 
-    public List<BoardDTO>getWeekBestBoardList(Map<String, Object> params);
+     List<BoardDTO>getWeekBestBoardList(Map<String, Object> params);
 
-    public List<BoardDTO>getDailyBestBoardList(Map<String,Object> params);
+     List<BoardDTO>getDailyBestBoardList(Map<String,Object> params);
 }

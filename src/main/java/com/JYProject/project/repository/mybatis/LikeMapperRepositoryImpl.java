@@ -29,13 +29,8 @@ public class LikeMapperRepositoryImpl implements LikeMapperRepository {
     }
 
     @Override
-    public List<Like> getAllLikesBoardAndMemberId(Like like) {
-        return likeMapperRepository.getAllLikesBoardAndMemberId(like);
-    }
-
-    @Override
-    public List<Like> getAllLikesReplyAndMemberId(Like like) {
-        return likeMapperRepository.getAllLikesReplyAndMemberId(like);
+    public boolean getOneLikesBoardAndMemberId(Like like) {
+        return likeMapperRepository.getOneLikesBoardAndMemberId(like);
     }
 
 

@@ -14,17 +14,20 @@
                     <input class="input_type" type="hidden" name="writer" th:value="${nickname}">
                     <tr id="title_tr">
                         <td class="boardJoin_td">게시글 제목 : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            <input id="title_td" class="input" type="text" name="title">
+                            <input id="title_join" class="input" type="text" name="title">
                         </td>
                     </tr>
                     <tr>
                         <td class="boardJoin_td">
                             <label>작성자 : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                <input class="input" th:value="${nickname}" type="text" name="writer" disabled>
+                                <input id="input_writer" th:value="${nickname}" type="text" name="writer" disabled>
                             </label>
                         </td>
+
                     </tr>
-                    <tr>
+
+                    <tr class="boardJoin_hr">
+
                         <td class="boardJoin_td">
                             게시판 카테고리 :
                             <input type="radio" name="categoryId" value="1">자유
@@ -35,12 +38,14 @@
                         </td>
                     </tr>
                     <tr>
-                        <td id="boardJoin_Content">게시글 내용
-                            <hr>
-                        </td>
-                    </tr>
-                    <tr>
                         <td class="boardJoin_td">
+                            <span>
+        <span class="highlight">음란물</span>,
+        <span class="highlight">차별, 비하, 혐오</span> 및
+                                <span class="highlight">초상권, 저작권 침해 게시물</span>은
+        민, 형사상의 책임을 질 수 있습니다.
+          </span>
+                            <hr class="boardJoin_hr">
                             <label id="1">
                                 <textarea id="tinymceTextarea" name="content"></textarea>
                             </label>
@@ -48,8 +53,8 @@
                     </tr>
                     <tr>
                         <td class="boardJoin_submit">
-                            <input type="submit" value="게시글 등록">
-                            <input type="button" value="메인으로" th:attr="onclick=|location.href='@{/boards/list}'|">
+                            <input type="submit" class="btn btn-outline btn-success gap-2" value="게시글 등록">
+                            <input type="button" class="btn btn-outline btn-success"  value="메인으로" th:attr="onclick=|location.href='@{/boards/list}'|">
                         </td>
                     </tr>
 

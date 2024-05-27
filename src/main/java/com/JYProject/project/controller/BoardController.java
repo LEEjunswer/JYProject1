@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 @Slf4j
 @Controller
@@ -159,11 +160,26 @@ public String delete(@PathVariable("boardId") Long boardId, HttpSession session,
     }
 
     @PostMapping("/boards/search/{query}")
-    public String searchContent(@PathVariable("query") String query, Model model){
+    public String searchTitle(@PathVariable("query") String query, Model model){
         System.out.println("query = " + query);
         List<BoardDTO> boardSearchTitleList = boardService.boardSearchTitleList(query);
         model.addAttribute("boardList", boardSearchTitleList);
         return "boards/list";
     }
+  /*  @GetMapping("/boards/search/{detail}/{/search}")
+    public String searchDetails(@PathVariable("search") String search,@PathVariable("detail") String detail,Model model ){
+        List<BoardDTO> boardList = new ArrayList<>();
+        if(detail.equals("0")){
+        boardList = boardService.boardSearchAllList(search);
+        }else if(detail.equals("1")){
+            boardList = boardService.boardSearchTitleList(search);
+        }else if(detail.equals("2")){
+            boardList = boardService.boardSearchContentList(search);
+        }else{
+            boardList =boardService.boardSearchWriterList(search);
+        }
 
+        model.addAttribute("boardList",boardList);
+        return "boards/list";
+    }*/
 }

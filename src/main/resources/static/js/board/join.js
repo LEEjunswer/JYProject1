@@ -1,11 +1,15 @@
-        const uploadedImageUrls = [];
-        tinymce.init({
-            selector: "#tinymceTextarea",
-            language: 'ko_KR',
-            plugins: "paste image imagetools",
-            height: 800,
-            width: 1200,
-            toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | image",
+const boardContent = document.getElementById("tinymceTextarea");
+const categoryId = document.getElementsByName('categoryId');
+const boardTitle = document.getElementById("title_join");
+const uploadedImageUrls = [];
+
+tinymce.init({
+    selector: "#tinymceTextarea",
+    language: 'ko_KR',
+    plugins: "paste image imagetools",
+    height: 600,
+    width: 1200,
+    toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | image",
     paste_data_images: true,
     file_picker_types: 'image',
     images_upload_handler: function(blobInfo, success, failure) {
@@ -13,6 +17,26 @@
 
         const formData = new FormData();
         formData.append('file', file);
+
+        if (!boardTitle.value.trim()) {
+            alert("제목을 입력해주세요.");
+            return;
+        }
+        let isChecked = false;
+        for (let i = 0; i < categoryId.length; i++) {
+            if (categoryId[i].checked) {
+                isChecked = true;
+                break;
+            }
+        }
+        if (!isChecked) {
+            alert("카테고리를 선택해주세요.");
+            return;
+        }
+        if (!tinymce.get("tinymceTextarea").getContent().trim()) {
+            alert("내용을 입력해주세요.");
+            return;
+        }
 
         fetch('/upload-image', {
             method: 'POST',
@@ -22,7 +46,6 @@
             .then(result => {
                 if (result && result.fileUrl) {
                     uploadedImageUrls.push(result.fileUrl);
-
                     tinymce.activeEditor.dom.select(`img[src="${blobInfo.blobUri()}"]`).forEach(img => {
                         img.src = result.fileUrl;
                         img.width = 800;
@@ -61,14 +84,33 @@ document.getElementById('postForm').addEventListener('submit', handleSubmit);
 function handleSubmit(event) {
     event.preventDefault();
 
+    // 제목, 카테고리, 내용 유효성 검사
+    if (!boardTitle.value.trim()) {
+        alert("제목을 입력해주세요.");
+        return;
+    }
+    if (!tinymce.get("tinymceTextarea").getContent().trim()) {
+        alert("내용을 입력해주세요.");
+        return;
+    }
+    let isChecked = false;
+    for (let i = 0; i < categoryId.length; i++) {
+        if (categoryId[i].checked) {
+            isChecked = true;
+            break;
+        }
+    }
+    if (!isChecked) {
+        alert("카테고리를 선택해주세요.");
+        return;
+    }
+
     const formData = new FormData(event.target);
 
     const content = tinymce.get("tinymceTextarea").getContent();
     formData.set("content", content);
-
-    // 이미지 URL이 없을 때 공백 문자열 추가
     if (uploadedImageUrls.length > 0) {
-        formData.append("fileUrls", uploadedImageUrls[0]);
+        formData.append("fileUrls", uploadedImageUrls.join(',')); // 여러 이미지 URL을 콤마로 구분하여 전달
     } else {
         formData.append("fileUrls", "");
     }
@@ -87,5 +129,6 @@ function handleSubmit(event) {
         })
         .catch(error => {
             console.error('게시글 등록 중 오류 발생:', error);
+            alert('게시글 등록 중 오류가 발생했습니다.');
         });
 }

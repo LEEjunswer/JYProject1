@@ -52,8 +52,20 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public List<BoardDTO> boardSearchAllList(String string) {
+        List<Board> boardList = boardMybatisRepository.boardSearchAllList(string);
+        return boardList.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public List<BoardDTO> boardSearchTitleList(String title) {
         List<Board> boardList = boardMybatisRepository.boardSearchTitleList(title);
+        return boardList.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BoardDTO> boardSearchWriterList(String writer) {
+        List<Board> boardList = boardMybatisRepository.boardSearchWriterList(writer);
         return boardList.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 

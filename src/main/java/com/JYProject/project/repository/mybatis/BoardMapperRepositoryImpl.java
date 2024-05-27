@@ -45,8 +45,18 @@ public class BoardMapperRepositoryImpl implements BoardMapperRepository {
         }
 
         @Override
+        public List<Board> boardSearchAllList(String string) {
+                return boardMapperRepository.boardSearchAllList(string);
+        }
+
+        @Override
         public List<Board> boardSearchTitleList(String title) {
                 return boardMapperRepository.boardSearchTitleList(title);
+        }
+
+        @Override
+        public List<Board> boardSearchWriterList(String writer) {
+                return boardMapperRepository.boardSearchWriterList(writer);
         }
 
         @Override

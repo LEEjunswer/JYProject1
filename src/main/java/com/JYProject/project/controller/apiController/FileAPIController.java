@@ -21,6 +21,7 @@ public class FileAPIController{
 
     @PostMapping("/upload-image")
     public Map<String, String> handleFileUpload(@RequestParam("file") MultipartFile file) {
+        System.out.println("file = " + file);
         String filename = System.currentTimeMillis() + "-" + file.getOriginalFilename();
         try {
             File uploadDir = new File(uploadPath);

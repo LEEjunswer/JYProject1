@@ -37,23 +37,17 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public List<LikeDTO> getAllLikesBoardAndMemberId(LikeDTO likeDTO) {
+    public boolean getOneLikesBoardAndMemberId(LikeDTO likeDTO) {
 
-        List<Like> like = likeMapperRepository.getAllLikesBoardAndMemberId(convertToEntity(likeDTO));
-        return like.stream().map(this::convertToDTO).collect(Collectors.toList());
+        return likeMapperRepository.getOneLikesBoardAndMemberId(convertToEntity(likeDTO));
     }
 
-    @Override
-    public List<LikeDTO> getAllLikesReplyAndMemberId(LikeDTO likeDTO) {
-        List<Like> like = likeMapperRepository.getAllLikesReplyAndMemberId(convertToEntity(likeDTO));
-        return like.stream().map(this::convertToDTO).collect(Collectors.toList());
-    }
+
 
     private Like convertToEntity(LikeDTO likeDTO){
             Like like = new Like();
             like.setLikeId(likeDTO.getLikeId());
             like.setMemberId(likeDTO.getMemberId());
-            like.setReplyId(likeDTO.getReplyId());
             like.setRegDate(likeDTO.getRegDate());
         return like;
     }

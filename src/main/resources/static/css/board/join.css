@@ -1,15 +1,31 @@
 #boardJoin_container{
     width: 1280px;
     margin: 0 auto;
-    border:  1px solid black;
+
     height: 600px;
+}
+#title_join{
+    height: 20px;
+    border: 1px solid black;
+    margin-bottom: 3px;
+
+}
+#input_writer{
+   height: 20px;
+}
+.highlight{
+    color: red;
+    font-weight: bold;
 }
 #board_join{
     width: 100%;
     text-align: center;
+    border: 1px solid black;
 }
+
 #title_tr{
     padding-bottom: 20px;
+    border: 1px solid black;
 }
 #boardJon_input {
     width: 300px;
@@ -27,6 +43,10 @@
   border: 1px solid black;
   width: 400px;
   height: 25px;
+}
+.boardJoin_hr{
+    border: 3px solid dimgrey;
+    margin-bottom: 5px;
 }
 .boardJoin_td{
     text-align: center;

@@ -1,13 +1,13 @@
-const profile = document.getElementById("profile_open");``
+const profile = document.getElementById("profile_open");
 const myModal = document.getElementById("myModal");
 const modalClose = document.getElementById("modalBtn-close");
-const profileImg = document.getElementsByClassName("profile_img");
 const profileUpload = document.getElementById("profile_upload");
 const profileSubmit= document.getElementById("photo_submit");
 const  modalCloseTwo =document.getElementById("photo_reset");
 profile.addEventListener("click", ()=>{
     myModal.style.display="block";
     myModal.style.opacity="1";
+    profileUpload.files[0] = null;
     disableClickOutside();
 })
 
@@ -15,11 +15,13 @@ profile.addEventListener("click", ()=>{
 modalClose.addEventListener("click",() =>{
     myModal.style.display="none";
     myModal.style.opacity="0";
+    profileUpload.files[0] = null;
     enableClickOutside();
 })
 modalCloseTwo.addEventListener("click" , ()=>{
     myModal.style.display='none';
     myModal.style.opacity='0';
+    profileUpload.files[0] = null;
     enableClickOutside();
 })
 
@@ -32,10 +34,16 @@ function loadFile(input) {
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            document.getElementById('profile_img').src = e.target.result;
+            if( document.getElementById('checkImgOne')) {
+                document.getElementById('checkImgOne').src = e.target.result;
+            }
+            if(document.getElementById('checkImgTwo')){
+            document.getElementById('checkImgTwo').src = e.target.result;
+            }
         }
         reader.readAsDataURL(file);
     }
+
 }
 
 // 다른창 클릭 막기
@@ -47,16 +55,15 @@ function disableClickOutside() {
 }
 
 function enableClickOutside() {
-    document.querySelectorAll('header > *:not(#myModal)').forEach(function (element) {
+    document.querySelectorAll('body > *:not(#myModal)').forEach(function (element) {
         element.style.pointerEvents = "auto";
     });
 }
 profileSubmit.addEventListener("click",()=> {
 
-    console.log("체크 투")
-    const fileInput = document.getElementById('profile_upload');
+
     const loginId = document.getElementById("loginId").value;
-    const file = fileInput.files[0];
+    const file = profileUpload.files[0];
     if (file) {
         const formData = new FormData();
         formData.append('profileImage', file);

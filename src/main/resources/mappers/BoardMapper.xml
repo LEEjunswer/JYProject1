@@ -61,23 +61,26 @@
         select count(*), dislikes from board where board_id=#{boardId}
      </select>
     <!-- 검색 할경우 리스트를 가져온다 -->
+    <!--    List<Board> boardSearchAllList(String string);
+     List<Board> boardSearchTitleList(String title);
+    List<Board> boardSearchWriterList(String writer);
+     List<Board> boardSearchContentList(String content);-->
     <select id="boardSearchAllList" parameterType="String" resultMap="boardResultMap">
         SELECT * FROM board
-        WHERE title LIKE CONCAT('%', #{title}, '%') or content LIKE CONCAT('%',#{content},'%')
+        WHERE title LIKE CONCAT('%', #{string}, '%') or content LIKE CONCAT('%',#{string},'%')
     </select>
     <select id="boardSearchWriterList" parameterType="String" resultMap="boardResultMap">
         SELECT * FROM board
         WHERE writer LIKE CONCAT('%', #{writer}, '%')
     </select>
+    <select id="boardSearchContentList" parameterType="String" resultMap="boardResultMap">
+        select * from board
+        where content LIKE CONCAT('%', #{content},'%');
+    </select>
     <select id="boardSearchTitleList" parameterType="String" resultMap="boardResultMap">
         SELECT * FROM board
         WHERE title LIKE CONCAT('%', #{title}, '%')
     </select>
-    <select id="boardSearchContentList" parameterType="String" resultMap="boardResultMap">
-    select * from board
-    where content LIKE  CONCAT('%', #{content},'%')
-    </select>
-
         <select id="boardGetCategoryList" parameterType="Integer" resultMap="boardResultMap">
                     select * from board
                    <if test="categoryId != 0">
