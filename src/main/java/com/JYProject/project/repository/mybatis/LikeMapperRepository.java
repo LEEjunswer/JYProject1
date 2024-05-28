@@ -8,8 +8,10 @@ import java.util.List;
 @Mapper
 public interface LikeMapperRepository {
 
-    public int insertLikeBoard(Like like);
-    public int insertLikeReply(Like like);
-    public List<Like> getAllLikes(Long id);
-    public boolean getOneLikesBoardAndMemberId(Like like);
+     int insertLikeBoard(Like like);
+     int insertLikeReply(Like like);
+     List<Like> getAllLikes(Long id);
+     int getOneLikesBoardAndMemberId(Like like);
+     int getOneBoardDisLikes(Like like);
+     int getOneBoardLikes(Like like);
 }

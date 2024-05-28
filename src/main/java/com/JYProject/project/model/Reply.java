@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Reply  {
     @Comment("댓글PK")
-    private Long id;
+    private Long replyId;
     @Comment("게시판 ID")
     private Long boardId ;
     @Comment("댓글작성자")
-    private Long writer;
+    private Long memberId;
     @Comment("댓글내용")
     private String content;
     @Comment("등록일자")

@@ -95,6 +95,16 @@
     </select>
 
 
+    <update id="incrementLikes">
+        UPDATE board SET likes = likes + 1 WHERE board_id = #{boardId}
+    </update>
+
+    <update id="incrementDislikes">
+        UPDATE board SET dislikes = dislikes + 1 WHERE board_id = #{boardId}
+    </update>
+
+
+
     <select id="getWeekBestBoardList" parameterType="map" resultMap="boardResultMap">
         SELECT *, (`likes` - disLikes) AS LikeCount
         FROM board

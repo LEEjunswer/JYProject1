@@ -14,8 +14,8 @@
         <result property="disLikes" column="dislikes"/>
     </resultMap>
     <insert id="insertReply" parameterType="com.JYProject.project.model.Reply">
-       insert into reply (board_id, writer, content,update_date,delete_date) values
-            (#{boardNo},#{writer},#{content},#{updateDate},#{deleteDate})
+       insert into reply (board_id, writer, content,reg_date) values
+            (#{boardId},#{writer},#{content},#{regDate})
     </insert>
     <select id="selectOneReply" parameterType="Long" resultType="com.JYProject.project.model.Reply">
     select  * from reply where reply_id=#{id}
@@ -42,5 +42,8 @@
     </select>
     <select id="replyDisLiesTotalCount" parameterType="Long" resultType="Integer">
         select count(*),dislikes from reply where  reply_id=#{id};
+    </select>
+    <select id="getOneBoardReplyCount" parameterType="Long" resultType="Integer">
+        select count(*) from reply where board_id = #{boardId};
     </select>
 </mapper>

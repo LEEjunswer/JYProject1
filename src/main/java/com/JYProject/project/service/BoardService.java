@@ -36,4 +36,6 @@ public interface BoardService {
      List<BoardDTO>getWeekBestBoardList(Map<String, Object> params);
 
      List<BoardDTO>getDailyBestBoardList(Map<String,Object> params);
+    void incrementLikes(Long boardId);
+    void incrementDislikes(Long boardId);
 }

@@ -62,10 +62,12 @@ public class HomeController {
             String loginId = (String) session.getAttribute(SessionConst.USER_ID);
             String nickname = (String) session.getAttribute(SessionConst.USER_NAME);
          MemberDTO memberDetail = memberService.selectMemberDetail(loginId);
-          String profile = memberDetail.getProfileImg();
-            String basePath = "C:/ecpliseworkspace/JYproject/ljy/src/main/resources";
-            String relativePath = profile.replace(basePath, "");
-            session.setAttribute("profile", relativePath);
+         if( memberDetail.getProfileImg()!= null) {
+             String profile = memberDetail.getProfileImg();
+             String basePath = "C:/ecpliseworkspace/JYproject/ljy/src/main/resources";
+             String relativePath = profile.replace(basePath, "");
+             session.setAttribute("profile", relativePath);
+         }
             model.addAttribute("loginId", loginId);
             model.addAttribute("nickname", nickname);
         }

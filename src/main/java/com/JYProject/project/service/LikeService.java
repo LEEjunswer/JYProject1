@@ -6,10 +6,11 @@ import com.JYProject.project.model.dto.LikeDTO;
 import java.util.List;
 
 public interface LikeService {
-    public int insertLikeBoard(LikeDTO likeDTO);
-    public int insertLikeReply(LikeDTO likeDTO);
-    public List<LikeDTO> getAllLikes(Long id);
-    public boolean getOneLikesBoardAndMemberId(LikeDTO likeDTO);
-
+     int insertLikeBoard(LikeDTO likeDTO);
+     int insertLikeReply(LikeDTO likeDTO);
+     List<LikeDTO> getAllLikes(Long id);
+     int getOneLikesBoardAndMemberId(LikeDTO likeDTO);
+     int getOneBoardDisLikes(LikeDTO likeDTO);
+     int getOneBoardLikes(LikeDTO likeDTO);
 
 }

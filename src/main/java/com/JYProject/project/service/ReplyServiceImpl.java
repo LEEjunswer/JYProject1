@@ -51,11 +51,16 @@ public class ReplyServiceImpl implements ReplyService {
         return replyMybatisRepository.replyDisLikesTotalCount(id);
     }
 
+    @Override
+    public int getOneBoardReplyCount(Long boardId) {
+        return replyMybatisRepository.getOneBoardReplyCount(boardId);
+    }
+
     private Reply convertToEntity(ReplyDTO replyDTO){
         Reply reply = new Reply();
-        reply.setId(replyDTO.getId());
+        reply.setReplyId(replyDTO.getReplyId());
         reply.setContent(replyDTO.getContent());
-        reply.setWriter(replyDTO.getWriter());
+        reply.setMemberId(replyDTO.getMemberId());
         reply.setBoardId(replyDTO.getBoardId());
         reply.setLikes(replyDTO.getLikes());
         reply.setRegDate(replyDTO.getRegDate());
@@ -65,8 +70,8 @@ public class ReplyServiceImpl implements ReplyService {
     }
     private ReplyDTO convertToDTO(Reply reply){
         ReplyDTO replyDTO = new ReplyDTO();
-        replyDTO.setId(reply.getId());
-        replyDTO.setWriter(replyDTO.getWriter());
+        replyDTO.setReplyId(reply.getReplyId());
+        replyDTO.setMemberId(replyDTO.getMemberId());
         replyDTO.setDislikes(reply.getDislikes());
         replyDTO.setContent(reply.getContent());
         replyDTO.setLikes(reply.getLikes());

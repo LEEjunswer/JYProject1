@@ -38,4 +38,7 @@ public interface BoardMapperRepository {
 
      List<Board> getDailyBestBoardList(Map<String, Object> params);
 
+  void incrementLikes(Long boardId);
+
+ void incrementDislikes(Long boardId);
 }

@@ -4,31 +4,35 @@
     width: 1280px;
 
 }
+
 #content_board{
     border:  1px solid black;
+    border-bottom: none;
+    min-height: 600px;
+    overflow: auto;
     width: 100%;
 }
-.writer{
-    border:  1px solid red;
-}
-.content{
-    border:  1px solid yellow;
+#content_tabs button {
+    float: right;
+    margin-left: 5px;
 }
 .contentLine{
     border: 2px solid grey;
     border-radius: 25% 25%;
 }
-.likesAndDislikes{
+#likesAndDislikes{
+    margin-top: 0;
     display: flex;
     justify-content: center;
     text-align: center;
     height: 60px;
     width: 100%;
     border: 1px solid black;
+    border-top: none;
 }
 .like, .disLikes {
 
-    margin: 0 10px; /* 양 옆 여백 설정 */
+    margin: 0 10px;
 }
 #commentParentText{
     width: 100%;
@@ -47,26 +51,40 @@
 
 
 }
+#content_tr{
+    height: 60px;
+}
+.content_td{
+
+    border: 1px solid black;
+}
+.content_viewCnt{
+    border: 1px solid black;
+}
+.content_viewCnt span {
+    display: inline-block;
+}
 #content_thead {
     width: 100%;
+
+}
+#boardContent_header{
+    height: 60px;
 }
 #boardContent_title{
         flex: 1;
+    border: 1px solid black;
 }
 #boardContent_titleText{
     flex: 5;
+    border: 1px solid black
 }
-#content_regDate{
-    flex: 1;
-}
-#content_regDateText{
-    flex: 3;
-}
-#commentTable{
-    text-align:  center;
-}
+
 #content{
-  text-align: center;
+    display: block;
+     margin-top: 10px;
+    min-height: 600px;
+    overflow: auto;
 }
 .like-img {
     width: 40px;

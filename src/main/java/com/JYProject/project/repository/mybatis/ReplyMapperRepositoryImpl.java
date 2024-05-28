@@ -43,6 +43,11 @@ public class ReplyMapperRepositoryImpl implements ReplyMapperRepository {
         return replyMapperRepository.replyDisLikesTotalCount(id);
     }
 
+    @Override
+    public int getOneBoardReplyCount(Long id) {
+        return replyMapperRepository.getOneBoardReplyCount(id);
+    }
+
 
 }
 

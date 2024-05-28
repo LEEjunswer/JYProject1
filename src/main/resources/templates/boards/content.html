@@ -9,98 +9,88 @@
     <input id="boardId_content" type="hidden" th:attr="data-value=${board.boardId}">
             <table id="content_board">
                 <thead>
-                <tr >
-                    <th id="boardContent_title">제목</th>
-                    <th id="boardContent_titleText" th:text="${board.title}"></th>
+                <tr id="boardContent_header">
+                    <th id="boardContent_title">제목 </th>
+                    <th id="boardContent_titleText" th:colspan="4" th:text="${board.title}"></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td id="content_regDate">작성일 :
-                    </td>
-                    <td th:text="${#temporals.format(board.getRegDate(),'yyyy-MM-dd HH:mm:ss')}">
-                        yyyy-MM-dd HH:mm:ss
-                    </td>
-                </tr>
-                <tr>
-                    <td id="content_writer">글쓴이 :
-                    </td>
-                    <td th:text="${board.writer}">
+                <tr id="content_tr">
+                    <td class="content_td">
+                       <span>글쓴이 :</span>
+                    <span  th:text="${board.writer}">
                         작성자
+                    </span>
                     </td>
+                    <td class="content_td">
+                        <span>작성일 :</span>
+                    <span th:text="${#temporals.format(board.getRegDate(),'yyyy-MM-dd HH:mm:ss')}">
+                        yyyy-MM-dd HH:mm:ss
+                    </span>
+                    </td>
+
                     <td class="content_viewCnt">
-                        <span>조회수 :</span>
+                        <span>조회수 : </span>
                         <span th:text="${board.viewCnt}" >123</span>
                     </td>
                 </tr>
                 <tr>
 
-                    <td colspan="2" id="content">
-                        <hr id="contentLine"/>
+                    <td colspan="6" id="content">
                         <p th:utext="${board.content}">글 내용 </p>
 
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <table id="commentTable" class="table table-condensed"></table>
-            <table class="table table-condensed">
-                <tr>
-                    <td>
-                    <div class="likesAndDislikes">
-                        <div class="like">
-                            <img src="/static/img/like.jpg" alt="like" class="like-img" onclick="likes()">
-                        <div class="likeCount" th:text="${board.likes}">
-                            1
-                        </div>
-                        </div>
-                        <div class="disLikes">
-                            <img src="/static/img/disLike.jpg" alt="disLikes" class="dislike-img" onclick="disLikes()">
-                            <div class="disCount" th:text="${board.dislikes}">
-                                1
-                            </div>
-                        </div>
-                    </div>
 
-                                <span class="form-inline" role="form">
-                                    <p>
-                                        <hr class="contentLine">
-                                    <!-- 댓글 등록 RestCnotroller-->
+    <div id="likesAndDislikes">
+        <div class="like">
+            <img src="/static/img/like.jpg" alt="like" class="like-img" onclick="likes()">
+            <div id="like-count" class="likeCount" th:text="${board.likes}">
+                1
+            </div>
+        </div>
+        <div class="disLikes">
+            <img src="/static/img/disLike.jpg" alt="disLikes" class="dislike-img" onclick="disLikes()">
+            <div  id="dislike-count" class="disCount" th:text="${board.dislikes}">
+                1
+            </div>
+        </div>
+    </div>
+    <div id="content_tabs">
+        <button type="button"> ㅣ 새로고침 ㅣ</button>
+        <button id="close_review" type="button"> ㅣ 댓글닫기 ㅣ</button>
+        <button type="button"> ㅣ 본문보기 ㅣ</button>
+    </div>
+    <span class="form-inline" role="form">
                                     <form action="/boards/" method="post" >
                                     <div class="form-group">
-
-                                            <label for="commentParentText"></label><textarea id="commentParentText" name="content" rows="6"></textarea>
+                                     <span>전체 댓글</span>
+                                        <span id="count_review" th:text="">(1)</span>
+                                            <textarea id="commentParentText" name="content" rows="6"></textarea>
                                             <button type="button" class="btn-register"  onclick="formCheckReply()" style='float:right'>댓글등록</button>
                                         </div>
-                                    </p>
-                                </form>
+                                 </form>
                                 </span>
-                    </td>
-                </tr>
-            </table>
             <table class="table table-condensed">
                 <thead>
                 <tr>
                     <td>
-                                    <span style='float:right'>
+                        <span style='float:right'>
                                         <button type="button" id="content_list" class="btn btn-default">목록</button>
-                                        <button type="button" id="content_modify" class="btn btn-default">수정</button>
-                                        <button type="button" id="content_delete" class="btn btn-default">삭제</button>
+
+                                        <button th:if="${board.writer == nickname}" type="button" id="content_modify" class="btn btn-default">수정</button>
+                                        <button th:if="${board.writer == nickname}" type="button" id="content_delete" class="btn btn-default">삭제</button>
                                        <!-- <button type="button" id="write" class="btn btn-default">글쓰기</button>-->
                                     </span>
                     </td>
                 </tr>
                 </thead>
             </table>
+    <table id="commentTable" class="table table-condensed"></table>
         </div>
+<script src="/static/js/board/content.js"></script>
 
-    <hr/>
 </body>
 </html>
-<script th:inline="javascript">
-    var updateMessage = [[${suc}]];
-    if (updateMessage) {
-        alert(updateMessage);
-    }
-    /*]]>*/
-</script>

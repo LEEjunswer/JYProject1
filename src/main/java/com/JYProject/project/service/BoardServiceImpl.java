@@ -120,6 +120,16 @@ public class BoardServiceImpl implements BoardService {
         return boardList.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
+    @Override
+    public void incrementLikes(Long boardId) {
+
+    }
+
+    @Override
+    public void incrementDislikes(Long boardId) {
+
+    }
+
     private Board convertToEntity(BoardDTO boardDTO) {
         Board board = new Board();
         board.setTitle(boardDTO.getTitle());

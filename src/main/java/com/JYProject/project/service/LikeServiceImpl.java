@@ -2,6 +2,7 @@ package com.JYProject.project.service;
 
 import com.JYProject.project.model.Like;
 import com.JYProject.project.model.dto.LikeDTO;
+import com.JYProject.project.repository.mybatis.BoardMapperRepository;
 import com.JYProject.project.repository.mybatis.LikeMapperRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +18,16 @@ import java.util.stream.Collectors;
 public class LikeServiceImpl implements LikeService {
 
     private final  LikeMapperRepository likeMapperRepository;
-
+    private  final BoardMapperRepository boardMapperRepository;
 
     @Override
     public int insertLikeBoard(LikeDTO likeDTO) {
 
+        if (likeDTO.isLikes()) {
+            boardMapperRepository.incrementLikes(likeDTO.getBoardId());
+        } else {
+            boardMapperRepository.incrementDislikes(likeDTO.getBoardId());
+        }
         return likeMapperRepository.insertLikeBoard(convertToEntity(likeDTO));
     }
 
@@ -37,17 +43,28 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public boolean getOneLikesBoardAndMemberId(LikeDTO likeDTO) {
+    public int getOneLikesBoardAndMemberId(LikeDTO likeDTO) {
 
         return likeMapperRepository.getOneLikesBoardAndMemberId(convertToEntity(likeDTO));
     }
 
+    @Override
+    public int getOneBoardDisLikes(LikeDTO likeDTO) {
+        return likeMapperRepository.getOneBoardDisLikes(convertToEntity(likeDTO));
+    }
+
+    @Override
+    public int getOneBoardLikes(LikeDTO likeDTO) {
+        return likeMapperRepository.getOneBoardLikes(convertToEntity(likeDTO));
+    }
 
 
     private Like convertToEntity(LikeDTO likeDTO){
             Like like = new Like();
             like.setLikeId(likeDTO.getLikeId());
             like.setMemberId(likeDTO.getMemberId());
+            like.setBoardId(likeDTO.getBoardId());
+            like.setLikes(likeDTO.isLikes());
             like.setRegDate(likeDTO.getRegDate());
         return like;
     }
@@ -56,6 +73,7 @@ public class LikeServiceImpl implements LikeService {
         likeDTO.setLikeId(like.getLikeId());
         likeDTO.setBoardId(like.getBoardId());
         likeDTO.setMemberId(like.getMemberId());
+        likeDTO.setLikes(like.isLikes());
         likeDTO.setRegDate(like.getRegDate());
         return likeDTO;
     }

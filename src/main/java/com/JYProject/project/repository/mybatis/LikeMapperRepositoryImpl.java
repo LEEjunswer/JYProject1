@@ -29,10 +29,19 @@ public class LikeMapperRepositoryImpl implements LikeMapperRepository {
     }
 
     @Override
-    public boolean getOneLikesBoardAndMemberId(Like like) {
+    public int getOneLikesBoardAndMemberId(Like like) {
         return likeMapperRepository.getOneLikesBoardAndMemberId(like);
     }
 
-
-
+    @Override
+    public int getOneBoardDisLikes(Like like) {
+        return likeMapperRepository.getOneBoardDisLikes(like);
     }
+
+    @Override
+    public int getOneBoardLikes(Like like) {
+        return likeMapperRepository.getOneBoardLikes(like);
+    }
+
+
+}

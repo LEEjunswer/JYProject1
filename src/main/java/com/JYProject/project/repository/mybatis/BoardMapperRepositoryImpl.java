@@ -94,5 +94,15 @@ public class BoardMapperRepositoryImpl implements BoardMapperRepository {
                 return boardMapperRepository.getDailyBestBoardList(params);
         }
 
+        @Override
+        public void incrementLikes(Long boardId) {
+
+        }
+
+        @Override
+        public void incrementDislikes(Long boardId) {
+
+        }
+
 
 }

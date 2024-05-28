@@ -1,5 +1,6 @@
 package com.JYProject.project.controller.apiController;
 
+import com.JYProject.project.model.dto.BoardDTO;
 import com.JYProject.project.model.dto.LikeDTO;
 import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.service.BoardServiceImpl;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -27,42 +30,69 @@ public class BoardAPIController {
     private final LikeServiceImpl likeService;
     @RequestMapping(value="/boards/checkLogin",method = RequestMethod.GET)
     public ResponseEntity<Boolean> checkLogin(HttpSession session) {
-        Boolean isLoggedIn = (Boolean) session.getAttribute(SessionConst.USER_ID);
-        if (isLoggedIn != null && isLoggedIn) {
+        String isLoggedIn = (String) session.getAttribute(SessionConst.USER_ID);
+        if (isLoggedIn != null) {
             return ResponseEntity.ok(true);
         } else {
             return ResponseEntity.ok(false);
         }
     }
-    @RequestMapping(value = "/boards/disLikes" , method = RequestMethod.GET)
-    public ResponseEntity<String> checkDisLikes(@RequestParam Long boardId, HttpSession session){
-        String isLogin = (String) session.getAttribute(SessionConst.USER_ID);
-        MemberDTO memberDTO = memberService.selectMemberDetail(isLogin);
-        LikeDTO likeDTO = new LikeDTO();
-        likeDTO.setBoardId(boardId);
-        likeDTO.setMemberId(memberDTO.getMemberId());
-        boolean alreadyDisliked = likeService.getOneLikesBoardAndMemberId(likeDTO);
-        if (alreadyDisliked) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 싫어요를 눌렀습니다.");
-        }
-        likeDTO.setLikes(false);
 
-        likeService.insertLikeBoard(likeDTO);
-        return ResponseEntity.ok("싫어요를 하셨씁니다.");
-    }
-    @RequestMapping(value = "/boards/likes" , method = RequestMethod.GET)
-    public ResponseEntity<String> checkLikes(@RequestParam Long boardId, HttpSession session){
+    @RequestMapping(value = "/boards/disLikes" , method = RequestMethod.POST)
+    public Map<String,Object> checkDisLikes(@RequestParam String boardId, HttpSession session){
+        Map<String, Object> response = new HashMap<>();
         String isLogin = (String) session.getAttribute(SessionConst.USER_ID);
+        Long changeBoardId = Long.parseLong(boardId);
+
         MemberDTO memberDTO = memberService.selectMemberDetail(isLogin);
-        LikeDTO likeDTO = new LikeDTO();
-        likeDTO.setBoardId(boardId);
-        likeDTO.setMemberId(memberDTO.getMemberId());
-        boolean alreadyDisliked = likeService.getOneLikesBoardAndMemberId(likeDTO);
-        if (alreadyDisliked) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 싫어요를 눌렀습니다.");
+        BoardDTO boardDTO  = boardService.selectBoardDetail(changeBoardId);
+        if(boardDTO.getMemberId().equals(memberDTO.getMemberId())){
+            response.put("message", "본인 글은 좋아요 싫어요를 하실 수 없습니다.");
+            return response;
         }
+        System.out.println("memberDTO = " + memberDTO);
+        LikeDTO likeDTO = new LikeDTO();
+        likeDTO.setBoardId(changeBoardId);
+        likeDTO.setMemberId(memberDTO.getMemberId());
+        int alreadyDisliked = likeService.getOneLikesBoardAndMemberId(likeDTO);
+
+        if (alreadyDisliked != 0) {
+            response.put("message", "이미 싫어요를 눌렀습니다.");
+            return response;
+        }
+
+        likeDTO.setLikes(false);
+        likeService.insertLikeBoard(likeDTO);
+        int disLikeCount = likeService.getOneBoardDisLikes(likeDTO);
+        response.put("dislikeCount", disLikeCount);
+        response.put("message", "게시글 싫어요를 눌렀습니다.");
+        return response;
+    }
+    @RequestMapping(value = "/boards/likes" , method = RequestMethod.POST)
+    public Map<String, Object> checkLikes(@RequestParam String boardId, HttpSession session){
+        Map<String, Object> response = new HashMap<>();
+        String isLogin = (String) session.getAttribute(SessionConst.USER_ID);
+        Long changeBoardId = Long.parseLong(boardId);
+        MemberDTO memberDTO = memberService.selectMemberDetail(isLogin);
+        BoardDTO boardDTO  = boardService.selectBoardDetail(changeBoardId);
+        if(boardDTO.getMemberId().equals(memberDTO.getMemberId())){
+            response.put("message", "본인 글은 좋아요 싫어요를 하실 수 없습니다.");
+            return response;
+        }
+        LikeDTO likeDTO = new LikeDTO();
+        likeDTO.setBoardId(changeBoardId);
+        likeDTO.setMemberId(memberDTO.getMemberId());
+        int alreadyDisliked = likeService.getOneLikesBoardAndMemberId(likeDTO);
+        if (alreadyDisliked != 0) {
+            response.put("message", "이미 좋아요를 하셨습니다");
+            return response;
+        }
+
         likeDTO.setLikes(true);
         likeService.insertLikeBoard(likeDTO);
-        return ResponseEntity.ok("좋아요를 하셨습니다.");
+        int likesCount = likeService.getOneBoardLikes(likeDTO);
+        response.put("message", "게시글 좋아요를 눌렀습니다.");
+        response.put("likesCount",likesCount);
+        return response;
     }
 }
