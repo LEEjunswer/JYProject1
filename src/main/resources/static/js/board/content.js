@@ -1,5 +1,6 @@
 const boardId= document.getElementById("boardId_content").getAttribute('data-value');
 
+
 function checkLoginAndPerformAction(action) {
 console.log("boardId"+boardId);
     fetch("/boards/checkLogin")
@@ -69,3 +70,5 @@ function updateLikeCount(count) {
 function updateDislikeCount(count) {
     document.getElementById("dislike-count").innerText = count;
 }
+
+

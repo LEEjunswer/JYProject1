@@ -5,6 +5,9 @@ import com.JYProject.project.model.dto.ReplyDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
+
 @Repository
 public class ReplyMapperRepositoryImpl implements ReplyMapperRepository {
 
@@ -44,8 +47,13 @@ public class ReplyMapperRepositoryImpl implements ReplyMapperRepository {
     }
 
     @Override
-    public int getOneBoardReplyCount(Long id) {
-        return replyMapperRepository.getOneBoardReplyCount(id);
+    public int getOneBoardReplyCount(Long boardId) {
+        return replyMapperRepository.getOneBoardReplyCount(boardId);
+    }
+
+    @Override
+    public List<Reply> getOneBoardReply(Map<String, Object> params) {
+        return replyMapperRepository.getOneBoardReply(params);
     }
 
 

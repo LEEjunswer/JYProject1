@@ -1,7 +1,6 @@
 package com.JYProject.project.model.dto;
 
 import lombok.*;
-import org.hibernate.annotations.Comment;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,24 +11,24 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FileDTO {
+    //("파일번호")
+    private Long fileId;
 
-    @Comment("파일번호")
-    private Long id;
-
-    @Comment("글번호")
+    //("글번호")
     private Long boardId;
 
-    @Comment("파일이름")
+    //("파일이름")
     private String fileNames;
 
-    @Comment("파일등록일자")
+    //("파일등록일자")
     private LocalDateTime regDate;
 
-    public List<String> getFileNamesList() {
-        if (this.fileNames != null && !this.fileNames.isEmpty()) {
-            return Arrays.asList(this.fileNames.split(","));
+    public String getFirstFileName () {
+        if (this.fileNames != null && !this.fileNames.isEmpty() && fileNames.contains(",")) {
+            fileNames = fileNames.substring(0, fileNames.indexOf(","));
+            return fileNames;
         }
-        return new ArrayList<>();
+        return fileNames;
     }
 
     public void setFileNameFromList(List<String> fileNameList){

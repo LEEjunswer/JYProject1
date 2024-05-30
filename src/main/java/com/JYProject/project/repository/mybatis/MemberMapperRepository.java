@@ -9,7 +9,7 @@ import java.util.List;
 public interface MemberMapperRepository {
 
      int insertMember(Member member);
-
+    Member getOneMemberId(Long id);
      Member login(Member member);
      Member selectMemberDetail(String loginId);
 

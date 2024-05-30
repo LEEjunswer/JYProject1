@@ -62,6 +62,10 @@
         select * from member where login_id=#{loginId} and pw=#{pw};
     </select>
 
+    <select id="getOneMemberId"  parameterType="Long" resultMap="memberResultMap">
+        select * from member where member_id=#{id};
+    </select>
+
     <select id="checkIdAndPw"  resultType="boolean" parameterType="com.JYProject.project.model.Member">
         SELECT COUNT(*) > 0 FROM member WHERE login_id=#{loginId} AND pw=#{pw}
     </select>

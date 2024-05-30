@@ -49,7 +49,6 @@ public class HomeController {
         List<FileDTO> fileWeekBestList = new ArrayList<>();
         for(Long boardId : boardIds){
             List<FileDTO> files = fileService.getBestFileList(boardId);
-
             fileWeekBestList.addAll(files);
         }
         model.addAttribute("files", fileWeekBestList);

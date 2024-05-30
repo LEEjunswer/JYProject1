@@ -27,17 +27,17 @@
             </div>
         </div>
         <div id="weekend-content">
-            <div th:each="board, boardStat : ${boards}" class="card w-40 h-25 bg-base-100 shadow-xl">
+            <div th:each="board, boardStat : ${boards}" class="home card w-40 h-25 bg-base-100 shadow-xl">
                 <a th:href="@{/boards/content/{boardId}(boardId=${board.boardId})}">
-                    <figure class="full">
-                        <img th:if="${files != null and boardStat != null and boardStat.index < files.size() and files[boardStat.index] != null and files[boardStat.index].fileNames != null and files[boardStat.index].getFileNamesList().size() > 0}"
-                             th:src="@{${files[boardStat.index].fileNames}}"
+                    <figure class="homeFull">
+                        <img th:if="${boardStat.index < files.size() and files[boardStat.index].getFirstFileName() != null }"
+                             th:src="@{${files[boardStat.index].getFirstFileName()}}"
                              alt="img" />
-                        <img th:unless="${files != null and boardStat != null and boardStat.index < files.size() and files[boardStat.index] != null and files[boardStat.index].fileNames != null and files[boardStat.index].getFileNamesList().size() > 0}"
+                        <img th:unless="${boardStat.index < files.size() and files[boardStat.index].getFirstFileName() != null }"
                              th:src="@{/static/img/unnamed.jpg}"
                              alt="img" />
                     </figure>
-                <div class="card-body">
+                <div class="home card-body">
                     <p th:text="${board.getTitle()}">제목</p>
                 </div>
                 </a>
@@ -55,10 +55,12 @@
          </thead>
          <tbody>
          <tr th:each=" free : ${freeList}" class="bg-base-200">
-             <a th:href="@{/boards/content/{boardId}(boardId=${free.boardId})}">
-             <td th:text="${free.title}">제목</td>
 
+             <td th:text="${free.title}">
+                 <a th:href="@{/boards/content/{boardId}(boardId=${free.boardId})}">
+                 제목
              </a>
+             </td>
          </tr>
          </tbody>
      </table>
@@ -75,10 +77,12 @@
             </thead>
             <tbody>
             <tr th:each=" info : ${infoList}" class="bg-base-200">
-                <a th:href="@{/boards/content/{boardId}(boardId=${info.boardId})}">
-                <td th:text="${info.title}">제목</td>
 
-                </a>
+                <td th:text="${info.title}">
+                    <a th:href="@{/boards/content/{boardId}(boardId=${info.boardId})}">
+                        제목
+                    </a>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -95,9 +99,12 @@
             <tbody>
 
             <tr th:each="recommend : ${recommendList}" class="bg-base-200">
-                <a th:href="@{/boards/content/{boardId}(boardId=${recommend.boardId})}">
-                <td th:text="${recommend.title}">제목</td>
-                </a>
+
+                <td th:text="${recommend.title}">
+                    <a th:href="@{/boards/content/{boardId}(boardId=${recommend.boardId})}">
+                        제목</a>
+                </td>
+
             </tr>
             </tbody>
         </table>
@@ -113,9 +120,11 @@
             </thead>
             <tbody>
             <tr th:each="review :${reviewList}"  class="bg-base-200">
-                <a th:href="@{/boards/content/{boardId}(boardId=${review.boardId})}">
-            <td th:text="${review.title}">제목</td>
+
+            <td th:text="${review.title}">
+                <a th:href="@{/boards/content/{boardId}(boardId=${review.boardId})}">제목
                 </a>
+            </td>
             </tr>
             </tbody>
         </table>

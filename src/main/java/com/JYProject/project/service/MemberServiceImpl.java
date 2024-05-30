@@ -38,6 +38,13 @@ public class MemberServiceImpl implements  MemberService{
         return memberMybatisRepository.insertMember(member);
 
     }
+
+    @Override
+    public MemberDTO getOneMemberId(Long id) {
+        return convertToDTO(memberMybatisRepository.getOneMemberId(id));
+    }
+
+
     @Override
     public MemberDTO login(MemberDTO memberDTO){
 

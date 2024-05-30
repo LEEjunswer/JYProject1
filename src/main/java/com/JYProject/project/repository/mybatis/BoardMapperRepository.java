@@ -3,7 +3,7 @@ package com.JYProject.project.repository.mybatis;
 import com.JYProject.project.model.Board;
 import com.JYProject.project.model.dto.BoardDTO;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.data.jpa.repository.Query;
+
 
 import java.util.List;
 import java.util.Map;

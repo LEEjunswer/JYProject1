@@ -49,14 +49,14 @@ public class CategoryServiceImpl implements  CategoryService{
 
     private Category convertToEntity(CategoryDTO categoryDTO){
         Category category = new Category();
-        category.setCategoryId(categoryDTO.getId());
+        category.setCategoryId(categoryDTO.getCategoryId());
         category.setCategoryName(categoryDTO.getCategoryName());
         category.setRegDate(categoryDTO.getRegDate());
         return  category;
     }
     private CategoryDTO convertToDTO(Category category){
         CategoryDTO categoryDTO = new CategoryDTO();
-        categoryDTO.setId(category.getCategoryId());
+        categoryDTO.setCategoryId(category.getCategoryId());
         categoryDTO.setCategoryName(category.getCategoryName());
         categoryDTO.setRegDate(category.getRegDate());
         return  categoryDTO;

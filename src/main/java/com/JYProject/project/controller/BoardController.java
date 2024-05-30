@@ -1,11 +1,10 @@
 package com.JYProject.project.controller;
 
-import com.JYProject.project.model.dto.BoardDTO;
-import com.JYProject.project.model.dto.FileDTO;
-import com.JYProject.project.model.dto.MemberDTO;
+import com.JYProject.project.model.dto.*;
 import com.JYProject.project.service.BoardServiceImpl;
 import com.JYProject.project.service.FileServiceImpl;
 import com.JYProject.project.service.MemberServiceImpl;
+import com.JYProject.project.service.ReplyServiceImpl;
 import com.JYProject.project.session.SessionConst;
 import jakarta.servlet.http.HttpSession;
 import lombok.NoArgsConstructor;
@@ -19,7 +18,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -28,6 +30,7 @@ public class BoardController {
     private  final BoardServiceImpl boardService;
     private final MemberServiceImpl memberService;
     private final FileServiceImpl fileService;
+    private final ReplyServiceImpl replyService;
 
 
 
@@ -46,10 +49,10 @@ public class BoardController {
             return "redirect:/home";*/
 
         String loginId = (String) session.getAttribute(SessionConst.USER_ID);
-        if(loginId == null){
+/*        if(loginId == null){
             model.addAttribute("updateMessage", "로그인 후에 글쓰기가 가능합니다.");
             return "redirect:/boards/list";
-        }
+        }*/
         MemberDTO  m =  memberService.selectMemberDetail(loginId);
         model.addAttribute("nickname",m.getNickname());
         model.addAttribute("memberId",m.getMemberId());
@@ -77,7 +80,6 @@ public class BoardController {
             boardDTO.setContent(contentChangeImgPath);
             Long getBoardId =  boardService.insertBoard(boardDTO);
 
-            System.out.println(getBoardId + " getBoardId");
                 FileDTO fileDTO = new FileDTO();
                 fileDTO.setBoardId(getBoardId);
                 fileDTO.setFileNameFromList(fileUrls);
@@ -98,16 +100,21 @@ public class BoardController {
 @GetMapping("boards/content/{boardId}")
 public String content(@PathVariable("boardId") Long boardId ,Model model,HttpSession session){
    BoardDTO board = boardService.selectBoardDetail(boardId);
-   String userId = (String) session.getAttribute(SessionConst.USER_NAME);
-   String nickName = (String) session.getAttribute(SessionConst.USER_NAME);
 
+
+   ReplyResponseDTO replyDTOList = replyService.getOneBoardReplyPaging(boardId,1,10);
+    System.out.println("replyDTOList = " + replyDTOList.toString());
+ /*  List<MemberDTO> memberDTOList = memberService.get     replyDTOList.getMemberList();*/
+   String userId = (String) session.getAttribute(SessionConst.USER_ID);
+   String nickName = (String) session.getAttribute(SessionConst.USER_NAME);
+    model.addAttribute("replies",replyDTOList);
+   model.addAttribute("board" , board);
     if (userId != null || !board.getWriter().equals(nickName)) {
 
         boardService.boardViewCntIncrease(boardId);
-        model.addAttribute("board" , board);
+
         return "boards/content";
     }
-  model.addAttribute("board" , board);
 
     return "boards/content";
 }

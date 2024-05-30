@@ -26,7 +26,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:/" + uploadPath + "/");
         registry.addResourceHandler("/profile/**")
                 .addResourceLocations("file:/" + profileUploadPath+ "/");
-
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
     }
@@ -41,11 +40,14 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(logInterceptor)
                 .addPathPatterns("/**")
-                .order(1);
+                .order(1); // 모든 경로에 대해 로깅을 수행하는 Interceptor  우선 순위를 정한다.
 
+        
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login", "/members/join", "/static/**", "/uploads/**","/profile/**")
-                .order(2);
+                .excludePathPatterns("/login", "/members/join", "/static/**", "/uploads/**", "/profile/**")
+                .order(3);
+
+
     }
 }

@@ -10,8 +10,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class BoardResponseDTO {
     private List<BoardDTO> boardList;
     private List<FileDTO> fileWeekBestList;
+    private int totalPages;
+    private int currentPage;
 }

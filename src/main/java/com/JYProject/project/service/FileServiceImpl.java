@@ -47,7 +47,7 @@ public class FileServiceImpl implements FileService{
 
     private File convertToEntity(FileDTO fileDTO){
         File file = new File();
-        file.setFileId(fileDTO.getId());
+        file.setFileId(fileDTO.getFileId());
         file.setFileNames(fileDTO.getFileNames());
         file.setBoardId(fileDTO.getBoardId());
         file.setRegDate(fileDTO.getRegDate());
@@ -55,7 +55,7 @@ public class FileServiceImpl implements FileService{
     }
     private FileDTO convertToDTO(File file){
         FileDTO fileDTO = new FileDTO();
-            fileDTO.setId(file.getFileId());
+            fileDTO.setFileId(file.getFileId());
             fileDTO.setBoardId(file.getBoardId());
             fileDTO.setRegDate(file.getRegDate());
             fileDTO.setFileNames(file.getFileNames());

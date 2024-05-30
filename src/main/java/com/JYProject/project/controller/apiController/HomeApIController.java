@@ -5,18 +5,15 @@ import com.JYProject.project.model.dto.BoardResponseDTO;
 import com.JYProject.project.model.dto.FileDTO;
 import com.JYProject.project.service.BoardServiceImpl;
 import com.JYProject.project.service.FileServiceImpl;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.query.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

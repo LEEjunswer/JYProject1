@@ -20,6 +20,12 @@ public class MemberMapperRepositoryImpl implements MemberMapperRepository {
         return memberMapperRepository.insertMember(member);
     }
 
+    @Override
+    public Member getOneMemberId(Long id) {
+        return memberMapperRepository.getOneMemberId(id);
+    }
+
+
     public Member login(Member member){
         return memberMapperRepository.login(member);
 

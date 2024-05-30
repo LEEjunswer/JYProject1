@@ -3,7 +3,6 @@ package com.JYProject.project.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Comment;
 
 import java.time.LocalDateTime;
 
@@ -11,21 +10,22 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reply  {
-    @Comment("댓글PK")
+    //("댓글PK")
     private Long replyId;
-    @Comment("게시판 ID")
+    //("게시판 ID")
     private Long boardId ;
-    @Comment("댓글작성자")
+    //("댓글작성자")
     private Long memberId;
-    @Comment("댓글내용")
+    //("댓글내용")
     private String content;
-    @Comment("등록일자")
+    //("등록일자")
     private LocalDateTime regDate;
-    @Comment("삭제일자")
+    //("삭제일자")
     private LocalDateTime deletedDate;
-    @Comment("좋아요")
+// 밑에는 나중에 구현 예쩡
+    /*    //("좋아요")
     private Long likes;
-    @Comment("싫어요")
-    private Long dislikes;
+    //("싫어요")
+    private Long dislikes;*/
 
 }

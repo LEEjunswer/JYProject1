@@ -17,6 +17,7 @@ tinymce.init({
 
         const formData = new FormData();
         formData.append('file', file);
+/*
 
         if (!boardTitle.value.trim()) {
             alert("제목을 입력해주세요.");
@@ -37,6 +38,7 @@ tinymce.init({
             alert("내용을 입력해주세요.");
             return;
         }
+*/
 
         fetch('/upload-image', {
             method: 'POST',
@@ -84,6 +86,17 @@ document.getElementById('postForm').addEventListener('submit', handleSubmit);
 function handleSubmit(event) {
     event.preventDefault();
 
+
+    const formData = new FormData(event.target);
+
+    const content = tinymce.get("tinymceTextarea").getContent();
+    formData.set("content", content);
+    if (uploadedImageUrls.length > 0) {
+        formData.append("fileUrls", uploadedImageUrls.join(',')); // 여러 이미지 URL을 콤마로 구분하여 전달
+    } else {
+        formData.append("fileUrls", "");
+    }
+
     // 제목, 카테고리, 내용 유효성 검사
     if (!boardTitle.value.trim()) {
         alert("제목을 입력해주세요.");
@@ -104,17 +117,6 @@ function handleSubmit(event) {
         alert("카테고리를 선택해주세요.");
         return;
     }
-
-    const formData = new FormData(event.target);
-
-    const content = tinymce.get("tinymceTextarea").getContent();
-    formData.set("content", content);
-    if (uploadedImageUrls.length > 0) {
-        formData.append("fileUrls", uploadedImageUrls.join(',')); // 여러 이미지 URL을 콤마로 구분하여 전달
-    } else {
-        formData.append("fileUrls", "");
-    }
-
     fetch('/boards/join', {
         method: 'POST',
         body: formData

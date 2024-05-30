@@ -5,17 +5,17 @@
     <resultMap id="replyResultMap" type="com.JYProject.project.model.Reply">
         <id property="replyId" column="reply_id"/>
         <result property="boardId" column="board_id"/>
-        <result property="writer" column="writer"/>
+        <result property="memberId" column="member_id"/>
         <result property="content" column="content"/>
         <result property="regDate" column="reg_date"/>
         <result property="updateDate" column="update_date"/>
         <result property="deleteDate" column="delete_date"/>
-        <result property="likes" column="likes"/>
-        <result property="disLikes" column="dislikes"/>
+<!--        <result property="likes" column="likes"/>
+        <result property="disLikes" column="dislikes"/>-->
     </resultMap>
     <insert id="insertReply" parameterType="com.JYProject.project.model.Reply">
-       insert into reply (board_id, writer, content,reg_date) values
-            (#{boardId},#{writer},#{content},#{regDate})
+       insert into reply (board_id, member_id, content) values
+            (#{boardId},#{memberId},#{content})
     </insert>
     <select id="selectOneReply" parameterType="Long" resultType="com.JYProject.project.model.Reply">
     select  * from reply where reply_id=#{id}
@@ -43,7 +43,12 @@
     <select id="replyDisLiesTotalCount" parameterType="Long" resultType="Integer">
         select count(*),dislikes from reply where  reply_id=#{id};
     </select>
+
     <select id="getOneBoardReplyCount" parameterType="Long" resultType="Integer">
         select count(*) from reply where board_id = #{boardId};
+    </select>
+    <select id="getOneBoardReply" parameterType="map" resultMap="replyResultMap">
+        select * from reply where board_id=#{boardId} ORDER BY reg_date DESC
+        LIMIT #{offset}, #{pageSize};
     </select>
 </mapper>

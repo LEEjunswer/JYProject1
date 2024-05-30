@@ -29,12 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
         let file = fileList.find(file => file.boardId === board.boardId);
         let imageUrl = file && file.fileNames ? file.fileNames : '/static/img/unnamed.jpg';
         return `
-            <div class="card w-40 h-25 bg-base-100 shadow-xl">
+            <div class="home card w-40 h-25 bg-base-100 shadow-xl">
                 <a href="/boards/content/${board.boardId}">
                     <figure>
                         <img src="${imageUrl}" alt="img" />
                     </figure>
-                    <div class="card-body">
+                    <div class="home card-body">
                         <p>${board.title}</p>
                     </div>
                 </a>
