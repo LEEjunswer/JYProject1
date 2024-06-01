@@ -150,10 +150,10 @@ public class MemberController {
         String isLogin = (String)httpSession.getAttribute(SessionConst.USER_ID);
         if(isLogin == null){
 
-            return "/";
+            return "redirect:/";
         }
-        MemberDTO memberDTO = memberService.selectMemberDetail(isLogin);
 
+        MemberDTO memberDTO = memberService.selectMemberDetail(isLogin);
         model.addAttribute("m", memberDTO);
         return "/members/myPage";
     }

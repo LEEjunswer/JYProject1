@@ -1,0 +1,8 @@
+#myPage_container{
+    width: 1280px;
+    height: 80vh;
+    margin:  0 auto;
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
