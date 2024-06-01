@@ -19,7 +19,7 @@ public class ReplyDTO  {
     //("등록일자")
     private LocalDateTime regDate;
     //("삭제일자")
-    private LocalDateTime deletedDate;
+    private LocalDateTime deleteDate;
     //("좋아요")
     private Long likes;
     //("싫어요")

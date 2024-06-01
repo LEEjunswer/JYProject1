@@ -124,12 +124,9 @@
         SELECT *, (`likes` - disLikes) AS LikeCount
         FROM board
         <where>
+            DATE_FORMAT(reg_date, "%Y-%m-%d") = CURDATE()
             <if test="categoryId != 0">
-                category_id = #{categoryId}
-                AND reg_date = CURDATE()
-            </if>
-            <if test="categoryId == 0">
-                reg_date = CURDATE()
+                AND category_id = #{categoryId}
             </if>
         </where>
         ORDER BY LikeCount DESC

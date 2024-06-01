@@ -29,13 +29,13 @@
         update reply
         set content=#{content},
             update_date = NOW()
-        where reply_id=#{id};
+        where reply_id=#{replyId};
     </update>
     <!--댓글 삭제 -->
     <update id="deleteReply" parameterType="Long">
         update reply
         set  delete_date = NOW()
-        where reply_id=#{id};
+        where reply_id=#{replyId};
     </update>
     <select id="replyLikesTotalCount" parameterType="Long" resultType="Integer">
     select count(*),likes from reply where reply_id=#{id};

@@ -63,15 +63,43 @@ public class ReplyAPIController {
     }
 
 
-    @PostMapping("boards/content/{idx}/reply/{delReplyIdx}")
-    public String delelteReply(@PathVariable("idx") Long idx, @PathVariable("delReplyIdx") Long replyIdx,HttpSession session){
-        MemberDTO m = (MemberDTO)session.getAttribute("log");
-        Long writer = (Long)m.getMemberId();
-        if(writer== null){
-            return  "/members/home";
-        }
-        replyService.deleteReply(replyIdx);
+    @PostMapping("/review/comment/delete")
+    public  ResponseEntity<Map<String,String>> deleteReply(HttpSession session,@RequestBody ReplyDTO replyDTO){
+        Map<String, String> response = new HashMap<>();
 
-        return "redirect:boards/content"+idx;
+       
+         String isLogin = (String) session.getAttribute(SessionConst.USER_ID);
+         if(isLogin == null){
+             response.put("message","비정상적인 접근입니다.");
+             return ResponseEntity.ok(response);
+         }
+
+       int  check =  replyService.deleteReply(replyDTO.getReplyId());
+        if( check> 0){
+            response.put("message", "댓글이 정상적으로 삭제되었습니다.");
+            return  ResponseEntity.ok(response);
+        }
+        response.put("message", "댓글 삭제 오류.");
+        return ResponseEntity.ok(response);
+    }
+    @PostMapping("/review/comment/update")
+    public  ResponseEntity<Map<String,String>> updateReview(HttpSession session,@RequestBody ReplyDTO replyDTO){
+
+        Map<String, String> response = new HashMap<>();
+        String isLogin = (String) session.getAttribute(SessionConst.USER_ID);
+        
+        if(isLogin == null){
+            response.put("message","비정상적인 접근입니다.");
+            return ResponseEntity.ok(response);
+        }
+
+        int  check =  replyService.updateReply(replyDTO);
+        System.out.println("check = " + check);
+        if( check> 0){
+            response.put("message", "댓글이 정상적으로 수정되었습니다.");
+            return  ResponseEntity.ok(response);
+        }
+        response.put("message", "댓글 수정 오류.");
+        return ResponseEntity.ok(response);
     }
 }

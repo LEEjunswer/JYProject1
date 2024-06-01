@@ -68,16 +68,33 @@
     </div>
     <div id="boardCommentContainer">
         <div id="boardCommentList">
-            <div class="content card w-full bg-base-100 shadow-xl mb-2 relative" th:each="reply : ${replies.getReplyList()}">
-                <div class="content card-body">
-                        <span class="text-sm text-left" th:text="'작성자 : ' + ${reply.memberId} + '       작성일 : ' +  ${#temporals.format(reply.regDate, 'yyyy-MM-dd HH:mm:ss')}">
+            <div class="comment card w-full bg-base-100 shadow-xl relative" th:each="reply : ${replies.getReplyList()}">
+                <div class="comment card-body block m-0">
+                        <span class="comment-span text-sm" th:text="'작성자 : ' + ${repliesMember[replyStat.index].nickname} + '       작성일 : ' +  ${#temporals.format(reply.regDate, 'yyyy-MM-dd HH:mm:ss')}">
                     <!-- 여기에 작성자와 작성일 텍스트가 들어갑니다 -->
                 </span>
-                    <p class="text-lg text-left" th:text="${reply.content}">
+                    <p th:if="${reply.getDeleteDate() == null}" class="comment-value text-lg" th:text="${reply.content}">
                         <!-- 여기에 댓글 내용이 들어갑니다 -->
                     </p>
+                    <p th:unless="${reply.getDeleteDate() == null}" class="comment text-lg text-red-800">
+                        <!--여기는 삭제된 댓글입니다.-->
+                    삭제된 댓글입니다.
+                    </p>
                 </div>
+                <div class="absolute top-0 right-0">
+                    <button class="comment-delBtn btn btn-square btn-outline" th:attr="reply-value=${reply.getReplyId()}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    <button class="comment-updateBtn absolute top-0 right-20 btn btn-square btn-outline" th:attr="reply-value=${reply.getReplyId()}">
+                        수정
+                    </button>
+                    <button class="absolute top-0 right-20 w-24 btn btn-square btn-outline" style="display: none;">
+                        수정하기
+                    </button>
             </div>
+        </div>
         </div>
         <div id="pagingComment" class="pagingQueryDiv flex justify-center">
             <!-- 페이징 처리용 UI가 들어갑니다 -->

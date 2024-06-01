@@ -29,7 +29,7 @@ public class ReplyServiceImpl implements ReplyService {
     public int insertReply(ReplyDTO replyDTO) {
        Reply reply = convertToEntity(replyDTO);
 
-        return  replyMybatisRepository.insertReply(reply );
+        return  replyMybatisRepository.insertReply(reply);
     }
 
     @Override
@@ -45,8 +45,11 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public int deleteReply(Long id) {
-        return replyMybatisRepository.deleteReply(id);
+    public int deleteReply(Long replyId) {
+        System.out.println("replyId 1층 = " + replyId);
+        int  check=replyMybatisRepository.deleteReply(replyId);
+        
+        return check;
     }
 
     @Override
@@ -101,7 +104,7 @@ public class ReplyServiceImpl implements ReplyService {
         reply.setMemberId(replyDTO.getMemberId());
         reply.setBoardId(replyDTO.getBoardId());
         reply.setRegDate(replyDTO.getRegDate());
-        reply.setDeletedDate(replyDTO.getDeletedDate());
+        reply.setDeleteDate(replyDTO.getDeleteDate());
 /*        *//*        reply.setLikes(replyDTO.getLikes());*//*
         reply.setDislikes(replyDTO.getDislikes());*/
         return  reply;
@@ -113,7 +116,7 @@ public class ReplyServiceImpl implements ReplyService {
         replyDTO.setMemberId(reply.getMemberId());
         replyDTO.setContent(reply.getContent());
         replyDTO.setRegDate(reply.getRegDate());
-        replyDTO.setDeletedDate(reply.getDeletedDate());
+        replyDTO.setDeleteDate(reply.getDeleteDate());
 /*        replyDTO.setDislikes(reply.getDislikes());
         replyDTO.setLikes(reply.getLikes());*/
         return replyDTO;

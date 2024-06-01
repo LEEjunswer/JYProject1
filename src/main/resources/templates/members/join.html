@@ -4,45 +4,67 @@
 <meta charset="UTF-8">
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
-<form action="/members/join" method="POST" class="joinForm">
 
-    <h2>회원가입</h2>
-    <div class="textForm">
-        <input name="loginId" id="loginId" type="text" class="id" placeholder="아이디(6~20)입력">
-        <button onclick="idValidCheck()">중복체크</button>
-    </div>
-    <div class="textForm">
-        <input name="pw" type="password"  id="password" class="pw" placeholder="비밀번호">
-    </div>
-    <div class="textForm">
-        <input name="pwCheck" type="password" class="pw" placeholder="비밀번호 확인">
-    </div>
-    <div class="textForm">
-        <input name="name" type="text" class="name" placeholder="이름">
-    </div>
-    <div class="textForm">
-        <input name="nickname" type="text" class="name" placeholder="닉네임을 입력하세요">
-    </div>
-    <div class="textForm">
-        <input name="email" type="text" class="email" placeholder="이메일">
-    </div>
-    <div class="textForm">
-        <input name="zipcode" type="text" class="nickname" placeholder="우편번호를 입력하세요">
-    </div>
-    <div class="textForm">
-        <input name="address" type="text" class="address" placeholder="집주소를 입력하세요">
-    </div>
-    <div class="textForm">
-        <input name="addressDetail" type="text" class="address" placeholder="동+ 아파트번호를 입력하세요">
-    </div>
+<div id="join_container" class="join flex">
+        <form action="/members/join" method="POST" id="join_form">
+        <span id="join_title">회원가입</span>
+        <table class="w-full h-80" id="join_table">
+            <tr class="pb-2">
+                <td class="w-1/4 text-right pr-2">아이디 :</td>
+                <td class="w-3/4 pb-2">
+                        <input name="loginId" id="inputLoginId" type="text" class="joinInput_form w-40" placeholder="아이디(6~20)입력">
+                    <button type="button" class="btn btn-sm btn-neutral ml-2" onclick="idValidCheck()">중복체크</button>
+                </td>
+            </tr>
+            <tr class="pb-1">
+                <td class="w-1/4 text-right pr-2 pb-1">이름 :</td>
+                <td class="w-3/4 pb-1">
+                    <input name="name" type="text" class="joinInput_form w-40" placeholder="이름">
+                </td>
+            </tr>
+            <tr>
+                <td class="w-1/4 text-right pr-2 pb-1">비밀번호 :</td>
+                <td class="w-3/4 pb-1">
+                    <input name="pw" type="password" id="password" oninput="checkPw()" class="joinInput_form w-40" placeholder="비밀번호">
+                </td>
+            </tr>
+            <tr>
+                <td class="w-1/4 text-right pr-2 pb-1">비밀번호확인 :</td>
+                <td class="w-3/4 pb-1">
+                    <input id="passwordConfirm" type="password" class="joinInput_form w-40" oninput="checkPw()" placeholder="비밀번호 확인">
+                </td>
+            </tr>
+            <tr>
+                <td class="w-1/4 text-right pr-2 pb-1">닉네임 :</td>
+                <td class="w-3/4 pb-1">
+                    <input id="nickname" name="nickname" type="text" class="joinInput_form w-40" placeholder="닉네임을 입력하세요">
+                    <button type="button" class="btn btn-sm btn-neutral ml-2" onclick="nickValidCheck()">중복체크</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="w-1/4 text-right pr-2 pb-1">이메일 :</td>
+                <td class="w-3/4 pb-1">
+                    <input name="email" type="text" class="joinInput_form w-40" placeholder="이메일">@
+                    <select name="emailaddr">
+                        <option value="">직접입력</option>
+                        <option value="gmail.com">gmail.com</option>
+                        <option value="hanmail.net">hanmail.net</option>
+                        <option value="msn.com">msn.com</option>
+                        <option value="naver.com">naver.com</option>
+                        <option value="nate.com">nate.com</option>
+                    </select>
+                </td>
+            </tr>
+
+        </table>
+            <div id="join_buttons" class="w-40 h-20 rounded flex justify-content-center">
+                <button id="join_submit" onclick="formSubmitCheck(form)" type="button" class="btn_loginForm mr-5">회원가입</button>
+                <input type="button" class="btn_loginForm" value="뒤로가기" onclick="history.back()"/>
+            </div>
+        </form>
+</div>
 
 
-    <div class="textForm">
-        <input name="phone" type="number" class="cellphoneNo" placeholder="핸드폰번호입력">
-    </div>
-    <button id="join-submit" type="button"  class="btn_loginForm" value="회원가입"></button>
-    <input type="button" class="btn_loginForm" value="뒤로가기" onclick="history.back()"/>
-</form>
 
 <script src="/static/js/member/join.js"></script>
 </body>

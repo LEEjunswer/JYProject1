@@ -3,6 +3,40 @@ const boardCommentWrite = document.getElementById('boardCommentWrite');
 let currentPage = 0;
 const pageSize = 10;
 const boardCommentList = document.getElementById('boardCommentList');
+let getComments =document.getElementsByClassName('comment-value');
+if(document.getElementsByClassName('comment-delBtn')) {
+    let deleteButtons = document.getElementsByClassName('comment-delBtn');
+        for(let i = 0 ; i<deleteButtons.length; i++){
+            let deleteButton = deleteButtons[i];
+            let replyId =    deleteButton.getAttribute('reply-value');
+             deleteButton.addEventListener('click' ,()=>{
+                 deleteComment(replyId)
+            });
+
+    }
+
+}
+if(document.getElementsByClassName('comment-updateBtn')){
+    let updateButtons = document.getElementsByClassName('comment-updateBtn');
+    for(let i = 0; i<updateButtons.length; i++){
+        let updateButton = updateButtons[i];
+        let replyId = updateButton.getAttribute('reply-value');
+        let getComment = getComments[i];
+        updateButton.addEventListener('click',()=>{
+            if(updateButton.textContent.trim() === '수정') {
+                updateButton.textContent = '완료';
+                getComment.contentEditable = true;
+                getComment.style.backgroundColor = "grey";
+            }else{
+                updateComment(replyId,getComment.textContent);
+                getComment.contentEditable = false;
+                getComment.style.backgroundColor = "white";
+                updateButton.textContent = '수정';
+            }
+            });
+
+    }
+}
 
 
 fetchComments(boardId, currentPage,pageSize);
@@ -138,63 +172,63 @@ function reviewContentJoin(){
             alert("서버에 문제가 생겼습니다. 잠시 후 다시 이용해주세요.");
         });
 }
+
 function deleteComment(commentId) {
     const data = {
-        boardDTO: {
-            id: boardId
-        },
-        id : commentId,
-
+        replyId : commentId,
     };
 
-    fetch(`/board/comment/delete`, {
+    fetch(`/review/comment/delete`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     })
-        .then(response => {
+    /*    .then(response => {
             if (response.redirected) {
                 window.location.href = response.url;
             } else {
                 return response.json();
             }
-        })
+        })*/
+        .then(response => response.json())
         .then(data => {
-            if (data) {
-                alert(data);
-            }
+
+            alert(data.message);
+
         })
         .catch(error => console.error('Error:', error));
 }
 function updateComment(commentId, commentChange) {
+    if(commentChange.trim().length < 2){
+        alert("공백 또는 두 글자 이하로 수정하실 수 없습니다");
+        return;
+    }
     const data = {
-        boardDTO: {
-            id: boardId
-        },
-        id : commentId,
-        comment: commentChange
+        replyId : commentId,
+        content: commentChange
     };
 
-    fetch(`/board/comment/update`, {
+    fetch(`/review/comment/update`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     })
-        .then(response => {
+        /*.then(response => {
             if (response.redirected) {
                 window.location.href = response.url;
             } else {
                 return response.json();
             }
-        })
+        })*/
+        .then(response => response.json())
         .then(data => {
-            if (data) {
-                alert(data);
-            }
+
+            alert(data.message);
+
         })
         .catch(error => console.error('Error:', error));
 }
@@ -204,11 +238,12 @@ function updateComment(commentId, commentChange) {
 // 댓글 닫기 클릭시 기능
 function closeReview(){
     let closeButton = document.getElementById("close_review");
-        if(closeButton.innerHTML === 'ㅣ 댓글닫기 ㅣ'){
-            closeButton.innerHTML = "ㅣ 댓글열기 ㅣ";
+        if(closeButton.textContent === 'ㅣ 댓글닫기 ㅣ'){
+            closeButton.textContent = "ㅣ 댓글열기 ㅣ";
             boardCommentContainer.style.display = 'none';
         }else{
-            closeButton.innerHTML = 'ㅣ 댓글닫기 ㅣ';
+            closeButton.textContent = 'ㅣ 댓글닫기 ㅣ';
             boardCommentContainer.style.display = 'block';
         }
 }
+

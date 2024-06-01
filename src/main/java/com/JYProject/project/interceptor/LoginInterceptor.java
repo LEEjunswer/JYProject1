@@ -20,7 +20,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession(false);
         String uri = request.getRequestURI();
         String loginPath = request.getContextPath() + "/members/login";
-        String[] protectedPaths = { "/boards/join", "/boards/delete", "/boards/update", "/members/profile","/members/delete","/members/update" };
+        String[] protectedPaths = { "/boards/join", "/boards/delete", "/boards/update", "/members/profile","/members/delete","/members/update","members/myPage" };
         boolean isProtectedPath = false;
         for (String path : protectedPaths) {
             if (uri.startsWith(request.getContextPath() + path)) {

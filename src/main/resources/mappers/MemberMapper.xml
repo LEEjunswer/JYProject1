@@ -55,9 +55,14 @@
         select count(*) from member;
     </select>
     <select id="validCheckId" resultType="boolean" parameterType="String">
-        SELECT COUNT(*) > 0 FROM member WHERE login_id=#{loginId} AND pw=#{pw}
+        SELECT COUNT(*) > 0 FROM member WHERE login_id=#{loginId};
     </select>
-
+    <select id="validCheckNick" resultType="boolean" parameterType="String">
+        SELECT COUNT(*) > 0 FROM member WHERE nickname=#{nickname};
+    </select>
+    <select id="validCheckEmail" resultType="boolean" parameterType="String">
+        SELECT COUNT(*) > 0 FROM member WHERE email=#{email};
+    </select>
     <select id="login"  parameterType="com.JYProject.project.model.Member" resultMap="memberResultMap">
         select * from member where login_id=#{loginId} and pw=#{pw};
     </select>

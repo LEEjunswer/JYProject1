@@ -53,15 +53,15 @@
              <th>제목</th>
          </tr>
          </thead>
-         <tbody>
-         <tr th:each=" free : ${freeList}" class="bg-base-200">
-
-             <td th:text="${free.title}">
-                 <a th:href="@{/boards/content/{boardId}(boardId=${free.boardId})}">
-                 제목
-             </a>
+         <tbody th:each=" free : ${freeList}" class="bg-base-200">
+         <tr>
+             <td>
+                 <a th:href="'/boards/content/' + ${free.boardId}">
+                <span th:text="${free.title}">제목</span>
+                </a>
              </td>
          </tr>
+
          </tbody>
      </table>
  </div>
@@ -75,12 +75,11 @@
 
             </tr>
             </thead>
-            <tbody>
-            <tr th:each=" info : ${infoList}" class="bg-base-200">
-
-                <td th:text="${info.title}">
-                    <a th:href="@{/boards/content/{boardId}(boardId=${info.boardId})}">
-                        제목
+            <tbody th:each=" info : ${infoList}" class="bg-base-200">
+            <tr>
+                <td>
+                    <a th:href="'/boards/content/' + ${info.boardId}">
+                        <span th:text="${info.title}">제목</span>
                     </a>
                 </td>
             </tr>
@@ -96,16 +95,16 @@
 
             </tr>
             </thead>
-            <tbody>
+            <tbody th:each="recommend : ${recommendList}" class="bg-base-200">
 
-            <tr th:each="recommend : ${recommendList}" class="bg-base-200">
-
-                <td th:text="${recommend.title}">
-                    <a th:href="@{/boards/content/{boardId}(boardId=${recommend.boardId})}">
-                        제목</a>
+            <tr>
+                <td>
+                    <a th:href="'/boards/content/' + ${recommend.boardId}">
+                        <span th:text="${recommend.title}">제목</span>
+                    </a>
                 </td>
-
             </tr>
+
             </tbody>
         </table>
     </div>
@@ -118,13 +117,13 @@
 
             </tr>
             </thead>
-            <tbody>
-            <tr th:each="review :${reviewList}"  class="bg-base-200">
-
-            <td th:text="${review.title}">
-                <a th:href="@{/boards/content/{boardId}(boardId=${review.boardId})}">제목
-                </a>
-            </td>
+            <tbody th:each="review :${reviewList}" class="bg-base-200">
+            <tr>
+                <td>
+                    <a th:href="'/boards/content/' + ${review.boardId}">
+                        <span th:text="${review.title}">제목</span>
+                    </a>
+                </td>
             </tr>
             </tbody>
         </table>

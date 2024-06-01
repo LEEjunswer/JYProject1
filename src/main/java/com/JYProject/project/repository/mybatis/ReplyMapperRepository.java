@@ -13,7 +13,7 @@ public interface ReplyMapperRepository {
      int insertReply(Reply reply);
     Reply selectOneReply(Long id);
     int updateReply(Reply reply);
-    int deleteReply(Long id);
+    int deleteReply(Long replyId);
     int replyLikesTotalCount(Long id);
     int replyDisLikesTotalCount(Long id);
     int getOneBoardReplyCount(Long boardId);

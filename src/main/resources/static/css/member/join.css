@@ -1,93 +1,29 @@
-
-.joinForm {
-    text-decoration: none;
-    font-family:sans-serif;
-    position:absolute;
-    width:400px;
-    height:400px;
-    padding: 30px 20px;
-    background-color:#FFFFFF;
-    text-align:center;
-    top:40%;
-    left:50%;
-    transform: translate(-50%,-50%);
-    border-radius: 15px;
+#join_container{
+    height: 80vh;
+    margin: 0 auto;
+    width: 1280px;
 }
-.joinForm h2 {
-    text-align: center;
-    margin: 30px;
+#join_title{
+    display: flex;
+    align-items: center;
+    text-align:  center;
+    font-size: 24px;
+    justify-content: center;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
-
-.textForm {
-    border-bottom: 2px solid #adadad;
-    margin: 30px;
-    padding: 10px 10px;
+#join_form{
+    width: 460px;
 }
-
-
-.id {
-    width: 100%;
-    border:none;
-    outline:none;
-    color: #636e72;
-    font-size:16px;
-    height:25px;
-    background: none;
+#join_table{
+    border: 1px solid black;
 }
-
-.pw {
-    width: 100%;
-    border:none;
-    outline:none;
-    color: #636e72;
-    font-size:16px;
-    height:25px;
-    background: none;
+.joinInput_form{
+  border-bottom: 1px solid black;
 }
-
-.name {
-    width: 100%;
-    border:none;
-    outline:none;
-    color: #636e72;
-    font-size:16px;
-    height:25px;
-    background: none;
-}
-
-.email {
-    width: 100%;
-    border:none;
-    outline:none;
-    color: #636e72;
-    font-size:16px;
-    height:25px;
-    background: none;
-}
-
-.nickname {
-    width: 100%;
-    border:none;
-    outline:none;
-    color: #636e72;
-    font-size:16px;
-    height:25px;
-    background: none;
-}
-
-.cellphoneNo {
-    width: 100%;
-    border:none;
-    outline:none;
-    color: #636e72;
-    font-size:16px;
-    height:25px;
-    background: none;
-}
-
 .btn_loginForm {
     position:relative;
-    left:40%;
+    left:30%;
     transform: translateX(-50%);
     margin-bottom: 40px;
     width:80%;

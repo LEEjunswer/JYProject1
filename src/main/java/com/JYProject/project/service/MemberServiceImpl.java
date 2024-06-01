@@ -61,6 +61,16 @@ public class MemberServiceImpl implements  MemberService{
     }
 
     @Override
+    public boolean validCheckNick(String nickname) {
+        return memberMybatisRepository.validCheckNick(nickname);
+    }
+
+    @Override
+    public boolean validCheckEmail(String email) {
+        return memberMybatisRepository.validCheckEmail(email);
+    }
+
+    @Override
     public MemberDTO selectMemberDetail(String loginId) {
             Member  member= memberMybatisRepository.selectMemberDetail(loginId);
 

@@ -45,15 +45,7 @@ public class MemberController {
         return "home";
 
     }
-    //모든 회원리스트 가져가기 어드민 영역 수정예정
-    @GetMapping("/members/list")
-    public String list(Model model){
-       List<MemberDTO> list= memberService.MemberAllList();
-       model.addAttribute("list",list);
-       return "myPage";
-    }
-
-    @GetMapping("members/login")
+    @GetMapping("/members/login")
     public String loginForm(){
 
         return  "/members/loginForm";
@@ -115,7 +107,7 @@ public class MemberController {
     public String deleteForm(HttpSession session,Model model){
         String loginId = (String) session.getAttribute(SessionConst.USER_ID);
         model.addAttribute("loginId",loginId);
-        return "members/deleteForm";
+        return "/members/deleteForm";
     }
     @PostMapping("/members/delete")
     public String delete(@ModelAttribute MemberDTO memberDTO
@@ -151,27 +143,18 @@ public class MemberController {
             return "redirect:/";
         }
 
+    @GetMapping("/members/myPage")
+    public String myPage(HttpSession httpSession, Model model){
+        System.out.println("진입");
+        //인터셉터로 처리하게 했지만 계속 적어보기
+        String isLogin = (String)httpSession.getAttribute(SessionConst.USER_ID);
+        if(isLogin == null){
 
-    //나중에 회원가입에서 ajax로 받을예정
-    @PostMapping("/validCheck")
-    @ResponseBody
-    public String validIdCheck(@RequestParam String loginId){
-    boolean check = !memberService.validCheckId(loginId);
-        if(check){
-        return "valid";
-        }else{
-        return "invalid";
+            return "/";
         }
-    }
-    //회원탈퇴시 로그인한 아이디와 비밀번호 입력한 값이 같을시에 ajax로 받이서 삭제 예정
-    @PostMapping("/validCheckPassword")
-    @ResponseBody
-    public String validPwCheck(@ModelAttribute MemberDTO memberDTO){
-       boolean check = !memberService.checkIdAndPw(memberDTO);
-        if(check){
-            return"valid";
-        }else{
-            return"invalid";
-        }
+        MemberDTO memberDTO = memberService.selectMemberDetail(isLogin);
+
+        model.addAttribute("m", memberDTO);
+        return "/members/myPage";
     }
 }

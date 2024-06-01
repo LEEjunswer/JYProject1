@@ -26,6 +26,7 @@ import java.util.Map;
 public class HomeApIController {
     private final BoardServiceImpl boardService;
     private final FileServiceImpl fileService;
+
     @RequestMapping(value = "/home/bestWeekBoard", method = RequestMethod.GET)
     public ResponseEntity<BoardResponseDTO> getBoardWeekBest(@RequestParam(defaultValue =  "0") int categoryId, @RequestParam(defaultValue = "1")int page, @RequestParam(defaultValue = "5")int pageSize) {
         //MyBatis Page 계산방법
@@ -46,6 +47,7 @@ public class HomeApIController {
 
             fileWeekBestList.addAll(files);
         }
+
         BoardResponseDTO  responseDTO= new BoardResponseDTO();
         responseDTO.setBoardList(boardList);
         responseDTO.setFileWeekBestList(fileWeekBestList);
@@ -70,6 +72,8 @@ public class HomeApIController {
 
             fileWeekBestList.addAll(files);
         }
+        System.out.println("fileWeekBestList = " + fileWeekBestList);
+        System.out.println("boardList = " + boardList);
         BoardResponseDTO  responseDTO= new BoardResponseDTO();
         responseDTO.setBoardList(boardList);
         responseDTO.setFileWeekBestList(fileWeekBestList);

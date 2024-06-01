@@ -2,6 +2,8 @@ package com.JYProject.project.repository.mybatis;
 
 import com.JYProject.project.model.Reply;
 import com.JYProject.project.model.dto.ReplyDTO;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -9,13 +11,11 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
+@RequiredArgsConstructor
 public class ReplyMapperRepositoryImpl implements ReplyMapperRepository {
 
     private final ReplyMapperRepository replyMapperRepository;
-    @Autowired
-    public ReplyMapperRepositoryImpl(ReplyMapperRepository replyMapperRepository){
-       this.replyMapperRepository = replyMapperRepository;
-    }
+
     @Override
     public int insertReply(Reply reply) {
         return replyMapperRepository.insertReply(reply);
@@ -32,8 +32,8 @@ public class ReplyMapperRepositoryImpl implements ReplyMapperRepository {
     }
 
     @Override
-    public int deleteReply(Long id) {
-        return replyMapperRepository.deleteReply(id);
+    public int deleteReply(Long replyId) {
+        return replyMapperRepository.deleteReply(replyId);
     }
 
     @Override

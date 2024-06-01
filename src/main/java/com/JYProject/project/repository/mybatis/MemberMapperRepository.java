@@ -16,6 +16,8 @@ public interface MemberMapperRepository {
     int updateMember(MemberDTO memberDTO);
 
     boolean validCheckId(String loginId);
+    boolean validCheckNick(String nickname);
+    boolean validCheckEmail(String email);
     int deleteMember(Long id);
 
     List<Member> MemberAllList();

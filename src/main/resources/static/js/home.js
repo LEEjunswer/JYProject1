@@ -28,6 +28,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function createBoardCard(board, fileList) {
         let file = fileList.find(file => file.boardId === board.boardId);
         let imageUrl = file && file.fileNames ? file.fileNames : '/static/img/unnamed.jpg';
+
+        if(imageUrl.indexOf(',')  !== -1){ // 쉼표가 있으면  -1을 반환시킨다.. 왜 그러는지 찾아봐야겟다;;
+            let imageUrlParts = imageUrl.split(',');
+            imageUrl=imageUrlParts[0];
+        }
         return `
             <div class="home card w-40 h-25 bg-base-100 shadow-xl">
                 <a href="/boards/content/${board.boardId}">

@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head th:replace="~{fragments/head :: head}"/>
     <meta charset="UTF-8">
     <title>Title</title>
-</head>
 <body>
+<div th:replace="~{fragments/header :: header}"></div>
 
+<div>
+    <div class="grid w-40 h-20 rounded  place-content-center">
+        1</div>
+    <div class="grid w-40 h-20 rounded  place-content-center">
+        2</div>
+    <div class="grid w-40 h-20 rounded  place-content-center">
+        3</div>
+</div>
 </body>
 </html>

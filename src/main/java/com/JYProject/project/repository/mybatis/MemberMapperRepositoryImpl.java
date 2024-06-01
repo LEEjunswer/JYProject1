@@ -44,6 +44,17 @@ public class MemberMapperRepositoryImpl implements MemberMapperRepository {
 
         return memberMapperRepository.validCheckId(loginId);
     }
+
+    @Override
+    public boolean validCheckNick(String nickname) {
+        return memberMapperRepository.validCheckNick(nickname);
+    }
+
+    @Override
+    public boolean validCheckEmail(String email) {
+        return memberMapperRepository.validCheckEmail(email);
+    }
+
     public int deleteMember(Long id){
 
         return memberMapperRepository.deleteMember(id);

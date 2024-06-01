@@ -20,8 +20,11 @@ public class Reply  {
     private String content;
     //("등록일자")
     private LocalDateTime regDate;
+    // (  수정일자 )
+    private LocalDateTime updateDate;
     //("삭제일자")
-    private LocalDateTime deletedDate;
+    private LocalDateTime deleteDate;
+
 // 밑에는 나중에 구현 예쩡
     /*    //("좋아요")
     private Long likes;

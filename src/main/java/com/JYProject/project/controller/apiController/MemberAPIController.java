@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -31,22 +28,28 @@ public class MemberAPIController {
     private String profileUploadPath;
 
 
-    @RequestMapping(value = "members/idValidCheck", method = RequestMethod.GET)
-    public String idValidCheck(@RequestParam String loginId) {
-        MemberDTO getOneId = memberService.selectMemberDetail(loginId);
-        if (getOneId == null) {
-            return "true";
-        }
-        return "false";
+    @PostMapping(value = "/members/idValidCheck")
+    public boolean idValidCheck(@RequestParam String loginId) {
+
+
+        return  memberService.validCheckNick(loginId);
     }
 
-    @RequestMapping(value = "members/nickValidCheck", method = RequestMethod.GET)
-    public String nickValidCheck(@RequestParam String nickname, @RequestParam String loginId) {
+    @PostMapping(value = "/members/nickValidCheck")
+    public boolean nickValidCheck(@RequestParam String nickname) {
 
-        return "true";
+        return memberService.validCheckNick(nickname);
     }
+    // 이메일은 나중에 추가할 예정 인증받거나 할떄
+/*    @PostMapping(value = "/members/nickValidCheck")
+    public boolean emailValidCheck(@RequestParam String email) {
 
-    @RequestMapping(value = "members/updateProfile", method = RequestMethod.POST)
+        boolean isValidCheck = memberService.validCheckEmail(email);
+        return !isValidCheck;
+    }*/
+
+    // 나중에  밑에있는거 전부 SerivceImpl로 옮길예정
+    @PostMapping(value = "members/updateProfile")
     public ResponseEntity<Map<String, Object>> updateProfileImage(@RequestParam("loginId") String loginId, @RequestParam("profileImage") MultipartFile profileImage , HttpSession session) throws IOException {
         if (profileImage.isEmpty()) {
             throw new IllegalArgumentException("Profile image file is empty");

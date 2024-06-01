@@ -14,7 +14,9 @@ public interface MemberService {
     MemberDTO login(MemberDTO memberDTO);
 
     boolean validCheckId(String loginId);
-     int updateMember(MemberDTO memberDTO);
+    boolean validCheckNick(String nickname);
+    boolean validCheckEmail(String email);
+    int updateMember(MemberDTO memberDTO);
      int deleteMember(Long id);
      List<MemberDTO> MemberAllList();
      int selectMemberTotalCount();

@@ -97,16 +97,17 @@ public class BoardController {
 
 
 //보드게시판 제목 클릭시 상세하게 보여줄 예정
-@GetMapping("boards/content/{boardId}")
+@GetMapping("/boards/content/{boardId}")
 public String content(@PathVariable("boardId") Long boardId ,Model model,HttpSession session){
    BoardDTO board = boardService.selectBoardDetail(boardId);
 
 
    ReplyResponseDTO replyDTOList = replyService.getOneBoardReplyPaging(boardId,1,10);
-    System.out.println("replyDTOList = " + replyDTOList.toString());
- /*  List<MemberDTO> memberDTOList = memberService.get     replyDTOList.getMemberList();*/
+    System.out.println("replyDTOListMember = " + replyDTOList.getMemberList());
+
    String userId = (String) session.getAttribute(SessionConst.USER_ID);
    String nickName = (String) session.getAttribute(SessionConst.USER_NAME);
+   model.addAttribute("repliesMember", replyDTOList.getMemberList());
     model.addAttribute("replies",replyDTOList);
    model.addAttribute("board" , board);
     if (userId != null || !board.getWriter().equals(nickName)) {
