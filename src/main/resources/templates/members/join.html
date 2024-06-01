@@ -44,8 +44,10 @@
             <tr>
                 <td class="w-1/4 text-right pr-2 pb-1">이메일 :</td>
                 <td class="w-3/4 pb-1">
-                    <input name="email" type="text" class="joinInput_form w-40" placeholder="이메일">@
-                    <select name="emailaddr">
+                    <input name="email" type="hidden" value="">
+                    <input id="emailId" type="text" class="joinInput_form w-40" placeholder="이메일">@
+                    <input id="emailDomain" type="text" class="joinInput_form w-40" placeholder="예) xxxx.com">
+                    <select id="selectEmail" name="emailaddr" onchange="emailSelect()">
                         <option value="">직접입력</option>
                         <option value="gmail.com">gmail.com</option>
                         <option value="hanmail.net">hanmail.net</option>

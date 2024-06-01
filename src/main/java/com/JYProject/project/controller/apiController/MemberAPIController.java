@@ -2,6 +2,7 @@ package com.JYProject.project.controller.apiController;
 
 import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.service.MemberServiceImpl;
+import com.JYProject.project.session.SessionConst;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +41,41 @@ public class MemberAPIController {
 
         return memberService.validCheckNick(nickname);
     }
+
+    @PostMapping(value = "/members/updatePassword")
+    public ResponseEntity<Map<String, String>> changePassword(@RequestParam String password,HttpSession session){
+        Map<String, String> response = new HashMap<>();
+       String isLogin = (String) session.getAttribute(SessionConst.USER_ID);
+        if(isLogin == null){
+            response.putIfAbsent("message", "잘못된접급니다");
+            return ResponseEntity.ok(response);
+        }
+        MemberDTO changePassword = new MemberDTO();
+        MemberDTO memberDTO = memberService.selectMemberDetail(isLogin);
+        changePassword.setMemberId(memberDTO.getMemberId());
+        changePassword.setPw(password);
+        memberService.updateMember(changePassword);
+        response.putIfAbsent("message", memberDTO.getNickname()+" 비밀번호 변경이 정상적으로 되었습니다.");
+        return ResponseEntity.ok(response);
+    }
+    @PostMapping(value = "/members/updateNickname")
+    public ResponseEntity<Map<String, String>> changeNickname(@RequestParam String nickname,HttpSession session){
+        Map<String, String> response = new HashMap<>();
+        String isLogin = (String) session.getAttribute(SessionConst.USER_ID);
+        if(isLogin == null){
+            response.putIfAbsent("message", "잘못된접급니다");
+            return ResponseEntity.ok(response);
+        }
+        MemberDTO changeNickName = new MemberDTO();
+        MemberDTO memberDTO = memberService.selectMemberDetail(isLogin);
+        changeNickName.setMemberId(memberDTO.getMemberId());
+        changeNickName.setNickname(nickname);
+        memberService.updateMember(changeNickName);
+        session.setAttribute(SessionConst.USER_NAME, changeNickName.getNickname());
+        response.putIfAbsent("message", "닉네임이 "+changeNickName.getNickname()+"이 정상적으로 변경되었습니다.");
+        return ResponseEntity.ok(response);
+    }
+
     // 이메일은 나중에 추가할 예정 인증받거나 할떄
 /*    @PostMapping(value = "/members/nickValidCheck")
     public boolean emailValidCheck(@RequestParam String email) {

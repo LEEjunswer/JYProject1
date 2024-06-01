@@ -6,48 +6,64 @@
 <div th:replace="~{fragments/header :: header}"></div>
 
     <div class="login-header">
-        <h2 th:text=" ${m.loginId} + ' -  회원수정 '"></h2>
+        <h2 th:text=" ${m.nickname} + ' -  회원수정 '"></h2>
     </div>
-    <form action="/members/updateForm" method="post" class="joinForm">
-        <input type="hidden" th:value="${m.memberId}" name="memberId">
-        <div class="textForm">
-            <label for="loginId">아이디</label>
-            <!-- Disabled input field to display loginId -->
-            <input type="text" th:value="${m.loginId}" id=loginId name="loginId" size="15" disabled>
-        </div>
-        <div class="textForm">
-            <label for="pw">변경 하실 비밀번호</label>
-            <input type="password" id="pw" name="pw" size="15">
-        </div>
-        <div class="textForm">
-            <!--닉네임 나중에 중복체크할 예정-->
-            <label for="nickname">변경 하실 닉네임</label>
-            <input type="text" th:value="${m.nickname}" id="nickname" name="nickname" size="15">
-        </div>
-        <div class="textForm">
-            <label for="phone">변경 하실 휴대폰번호</label>
-            <input type="text" th:value="${m.phone}" id="phone" name="phone" size="15">
-        </div>
-        <div class="textForm">
-            <label for="email">변경 하실 이메일</label>
-            <input type="text" th:value="${m.email}" id="email" name="email" size="15">
-        </div>
-        <div class="textForm">
-            <label for="zipCode">변경 하실 우편번호</label>
-            <input type="text" th:value="${m.zipCode}" id="zipCode" name="zipCode" size="15">
-        </div>
-        <div class="textForm">
-            <label for="address">변경 하실 주소</label>
-            <input type="text" th:value="${m.address}" id="address" name="address" size="15">
-        </div>
-        <div class="textForm">
-            <label for="addressDetail">변경 하실 상세주소</label>
-            <input type="text" th:value="${m.addressDetail}" id="addressDetail" name="addressDetail" size="15">
-        </div>
-        <div class="textForm">
-            <input type="submit" value="수정하기">
-        </div>
-    </form>
+<div id="updateForm_container" >
+    <div id="update_form" >
 
+        <table class="w-full h-80" id="join_table">
+            <tr class="pb-2">
+                <td class="w-2/4 text-right pr-2">아이디 :</td>
+                <td class="w-2/4 pb-2">
+                    <input name="loginId" th:value="${m.loginId}" type="text" class="update_form w-40" disabled>
+                </td>
+            </tr>
+            <tr class="pb-1">
+                <td class="w-2/4 text-right pr-2 pb-1">이름 :</td>
+                <td class="w-2/4 pb-1">
+                    <input name="name" type="text" class="update_form w-40" th:value="${m.name}" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td class="w-2/4 text-right pr-2 pb-1">변경하실 비밀번호 :</td>
+                <td class="w-2/4 pb-1">
+                    <input name="pw" type="password" id="password" oninput="changeCheckPw()" class="joinInput_form w-40" placeholder="비밀번호 변경">
+                    <button type="button" class="btn btn-sm btn-neutral ml-2" onclick="changePassword()">비밀번호변경</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="w-2/4 text-right pr-2 pb-1">변경하실 비밀번호확인 :</td>
+                <td class="w-2/4 pb-1">
+                    <input id="passwordConfirm" type="password" class="joinInput_form w-40" oninput="changeCheckPw()" placeholder="비밀번호 확인">
+                </td>
+            </tr>
+            <tr>
+                <td class="w-2/4 text-right pr-2 pb-1">현재 닉네임 :</td>
+                <td class="w-2/4 pb-1">
+                    <input id="nickname" name="nickname" type="text" class="update_form w-40" th:value="${m.nickname}" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td class="w-2/4 text-right pr-2 pb-1">변경하실 닉네임 :</td>
+                <td class="w-2/4 pb-1">
+                    <input id="changeNick"  type="text" class="joinInput_form m w-40">
+                    <button id="changeNickBtn" type="button" class="btn btn-sm btn-neutral ml-2" onclick="nicknameChange()">닉네임중복체크</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="w-2/4 text-right pr-2 pb-1">이메일 :</td>
+                <td class="w-2/4 pb-1">
+                    <input  name="email" type="text" class="joinInput_form w-40" th:value="${m.email}" disabled>
+            </tr>
+
+        </table>
+        <div id="join_buttons" class="w-40 h-20 rounded flex justify-content-center">
+            <button onclick="window.location.href='/'" type="button" class="btn_loginForm mr-5">수정완료</button>
+            <!-- 수정완료를 이렇게 주면 밑에 버튼이 필요한지는 잘 모르겟다 ..-->
+            <button type="button" class="btn_loginForm" onclick="window.location.href='/'">메인으로</button>
+        </div>
+    </div>
+</div>
+<script src="/static/js/member/updateForm.js"></script>
 </body>
 </html>

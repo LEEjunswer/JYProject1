@@ -8,7 +8,7 @@
         <result column="pw" property="pw" />
         <result column="name" property="name" />
         <result column="nickname" property="nickname" />
-        <result column="phone" property="phone" />
+          <result column="phone" property="phone" />
         <result column="email" property="email" />
         <result column="zip_code" property="zipCode" />
         <result column="address" property="address" />
@@ -30,19 +30,22 @@
         select * from member where login_id=#{loginId}
     </select>
 
+    <!-- 일단은 비밀번호랑 닉네임만 변경가능하게 해서 이렇게 해놓았다 . sql 공부를 좀 더 해보고 변경해봐야겟다-->
     <update id="updateMember" parameterType="com.JYProject.project.model.Member">
-        update member
-        set    <if test="pw != null and pw != ''">
-        pw = #{pw},
-            </if>
-            nickname=#{nickname},
-            phone = #{phone},
-            email = #{email},
-            zip_code = #{zipCode},
-            address = #{address},
-            address_detail = #{addressDetail}
-        where member_id=#{memberId};
+        UPDATE member
+        <set>
+            <choose>
+                <when test="pw != null and pw != ''">
+                    pw = #{pw}
+                </when>
+                <when test="nickname != null and nickname != ''">
+                    nickname = #{nickname}
+                </when>
+            </choose>
+        </set>
+        where member_id = #{memberId}
     </update>
+
     <delete id="deleteMember" parameterType="Long" >
         delete from member where member_id=#{Id}
     </delete>

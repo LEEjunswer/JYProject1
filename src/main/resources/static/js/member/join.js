@@ -6,9 +6,10 @@ let nickValue = document.getElementById("nickname");
 let passwordStyle = document.getElementById('password');
 let passwordConfirmStyle= document.getElementById('passwordConfirm');
 const submitButton = document.getElementById('join_submit');
-let emailInput = document.querySelector("input[name='email']");
-let domainSelect = document.querySelector("select[name='emailaddr']");
-let selectedDomain = domainSelect.value;
+let selectElement = document.getElementById("selectEmail");
+let emailInput = document.getElementById("emailInput");
+let emailDomain = document.getElementById('emailDomain');
+let emailId = document.getElementById('emailId');
 
 
 
@@ -35,8 +36,23 @@ function checkPw(){
 
 }
 
+function emailSelect() {
+    if (selectElement.value.trim() === "") {
+        emailDomain.style.display = 'inline';
+        emailDomain.readOnly = false;
+        emailDomain.value = "";
+    }else {
+        emailDomain.style.display = 'none';
+        emailDomain.readOnly = true;
+        emailDomain.value = selectElement.value;
+    }
+
+}
+
 function formSubmitCheck(form){
     submitButton.disabled = true;
+    form.email.value = emailId.value + "@" + emailDomain.value;
+     let emailCheck = form.email.value;
     if(!form.loginId.value.trim()){
     alert("아이디를 입력해주세요");
     form.loginId.focus();
@@ -79,6 +95,11 @@ else if(!form.email.value.trim()){
         submitButton.disabled = false;
         return;
     }
+  else if(!isValidEmail(emailCheck)){
+      alert("이메일 형식이 아닙니다. 다시 확인해주세요");
+        submitButton.disabled = false;
+        return;
+    }
   /* emailCheck ===0  나중에 이메일 중보게크랑 인증번호 보내고 할 예정 */
 else if( idCheck === 0 ||nickNameCheck === 0){
     alert("아이디 or 닉네임 중복체크를 해주세요");
@@ -87,6 +108,8 @@ else if( idCheck === 0 ||nickNameCheck === 0){
 }
 form.submit();
 }
+
+
 
 
 function  idValidCheck() {
