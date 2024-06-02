@@ -17,7 +17,8 @@ public interface BoardMapperRepository {
      int deleteBoard(Long boardId);
      List<Board> boardAllList();
      int selectBoardTotalCount();
-
+    int getMyBoardCount(Long memberId);
+    Board getBoardDetail(Long id);
      int boardViewCntIncrease(Long boardId);
 
     // 밑에 리스트는 나중에 검색했을때 값 가져올 예정

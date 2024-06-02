@@ -67,34 +67,46 @@
      List<Board> boardSearchContentList(String content);-->
     <select id="boardSearchAllList" parameterType="String" resultMap="boardResultMap">
         SELECT * FROM board
-        WHERE title LIKE CONCAT('%', #{string}, '%') or content LIKE CONCAT('%',#{string},'%')
+        WHERE title  and delete_date IS NULL LIKE CONCAT('%', #{string}, '%') or content LIKE CONCAT('%',#{string},'%')
     </select>
     <select id="boardSearchWriterList" parameterType="String" resultMap="boardResultMap">
         SELECT * FROM board
-        WHERE writer LIKE CONCAT('%', #{writer}, '%')
+        WHERE writer  and delete_date IS NULL LIKE CONCAT('%', #{writer}, '%')
     </select>
     <select id="boardSearchContentList" parameterType="String" resultMap="boardResultMap">
         select * from board
-        where content LIKE CONCAT('%', #{content},'%');
+        where content  and delete_date IS NULL LIKE CONCAT('%', #{content},'%');
     </select>
     <select id="boardSearchTitleList" parameterType="String" resultMap="boardResultMap">
         SELECT * FROM board
-        WHERE title LIKE CONCAT('%', #{title}, '%')
+        WHERE title  and delete_date IS NULL LIKE CONCAT('%', #{title}, '%')
     </select>
-        <select id="boardGetCategoryList" parameterType="Integer" resultMap="boardResultMap">
+    <select id="getBoardDetail" parameterType="Long" resultMap="boardResultMap">
+        select * from board
+            where board_id=#{id} and delete_date IS NULL;
+    </select>
+
+    <select id="boardGetCategoryList" parameterType="Integer" resultMap="boardResultMap">
                     select * from board
                    <if test="categoryId != 0">
                    where  category_id=#{categoryId}
                         </if>
+            and delete_date IS NULL
                 Order By board_id Desc
                     Limit 5;
                 </select>
     <select id="getMyBoardList" parameterType="Long" resultMap="boardResultMap">
-        select * from board where member_id=#{memberId};
+        select *
+        from board
+        where member_id = #{memberId}
+          and delete_date IS NULL;
 
     </select>
 
+    <select id="getMyBoardCount" parameterType="Long" resultType="Integer">
+        select count(*) from board where member_id=#{memberId}     and delete_date IS NULL;
 
+    </select>
     <update id="incrementLikes">
         UPDATE board SET likes = likes + 1 WHERE board_id = #{boardId}
     </update>
@@ -102,9 +114,6 @@
     <update id="incrementDislikes">
         UPDATE board SET dislikes = dislikes + 1 WHERE board_id = #{boardId}
     </update>
-
-
-
     <select id="getWeekBestBoardList" parameterType="map" resultMap="boardResultMap">
         SELECT *, (`likes` - disLikes) AS LikeCount
         FROM board
@@ -112,10 +121,12 @@
             <if test="categoryId != 0">
                 category_id=#{categoryId}
                 AND reg_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+                and delete_date IS NULL
         </if>
             <if test="categoryId == 0">
                     reg_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-        </if>
+                and delete_date IS NULL
+                    </if>
         </where>
         ORDER BY LikeCount DESC
         LIMIT #{offset}, #{pageSize};
@@ -127,6 +138,7 @@
             DATE_FORMAT(reg_date, "%Y-%m-%d") = CURDATE()
             <if test="categoryId != 0">
                 AND category_id = #{categoryId}
+                and delete_date IS NULL
             </if>
         </where>
         ORDER BY LikeCount DESC

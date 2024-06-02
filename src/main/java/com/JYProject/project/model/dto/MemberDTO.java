@@ -53,7 +53,7 @@ public class MemberDTO  {
     //("등급")
     private String  Grade;
     //("포인트")
-    private Long point;
+    private int point;
     //("프로필이미지")
     private String profileImg;
 

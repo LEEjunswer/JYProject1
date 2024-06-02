@@ -14,6 +14,8 @@ public interface ReplyService {
      int updateReply(ReplyDTO replyDTO);
      int deleteReply(Long replyId);
      int replyLikesTotalCount(Long id);
+     List<ReplyDTO> getMyReplyList(Long memberId);
+     int getMyReplyCount(Long memberId);
      int replyDisLikesTotalCount(Long id);
      int getOneBoardReplyCount(Long boardId);
      ReplyResponseDTO getOneBoardReplyPaging(Long boardId, int page, int size);

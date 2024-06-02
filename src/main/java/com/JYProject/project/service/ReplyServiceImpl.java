@@ -1,6 +1,7 @@
 package com.JYProject.project.service;
 
 import com.JYProject.project.model.Reply;
+import com.JYProject.project.model.dto.BoardDTO;
 import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.model.dto.ReplyDTO;
 import com.JYProject.project.model.dto.ReplyResponseDTO;
@@ -23,6 +24,7 @@ public class ReplyServiceImpl implements ReplyService {
 
     private final ReplyMapperRepositoryImpl replyMybatisRepository;
     private  final MemberServiceImpl memberService;
+    private  final BoardServiceImpl boardService;
 
 
     @Override
@@ -36,6 +38,21 @@ public class ReplyServiceImpl implements ReplyService {
     public ReplyDTO selectOneReply(Long id){
     Reply reply  = replyMybatisRepository.selectOneReply(id);
         return convertToDTO(reply);
+    }
+
+
+    public List<BoardDTO> getBoardsFromReplies(Long memberId) {
+        List<ReplyDTO> replyList = replyMybatisRepository.getMyReplyList(memberId).stream().map(this::convertToDTO).toList();
+        List<BoardDTO> boardList = new ArrayList<>();
+
+        for (ReplyDTO reply : replyList) {
+            BoardDTO board = boardService.getBoardDetail(reply.getBoardId());
+            if (board != null) {
+                boardList.add(board);
+            }
+        }
+
+        return boardList;
     }
 
     @Override
@@ -56,6 +73,17 @@ public class ReplyServiceImpl implements ReplyService {
     public int replyLikesTotalCount(Long id) {
         return replyMybatisRepository.replyLikesTotalCount(id);
     }
+
+    @Override
+    public List<ReplyDTO> getMyReplyList(Long memberId) {
+        return replyMybatisRepository.getMyReplyList(memberId).stream().map(this ::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public int getMyReplyCount(Long memberId) {
+        return replyMybatisRepository.getMyReplyCount(memberId);
+    }
+
 
     @Override
     public int replyDisLikesTotalCount(Long id) {

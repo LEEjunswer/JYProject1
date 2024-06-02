@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/fragments/head ::head }">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}" />
+
+<div id="myReplyList-container">
+    <div class="login-header">
+        <h2 th:text=" ${session.nickname} + ' -  댓글목록 '"></h2>
+    </div>
+<div class="overflow-x-auto" id="myShelfDiv">
+    <table class="myReply table">
+        <thead>
+        <tr class="myReply-tr">
+            <th class="myReply_th text-center">번호</th>
+            <th class="myReply_th text-center">게시글</th>
+            <th class="myReply_th text-center">내용</th>
+            <th class="myReply_th text-center">작성일</th>
+            <th class="myReply_th text-center">수정</th>
+            <th class="myReply_th text-center">삭제</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${reply} " th:each="reply, stat : ${myReply}">
+            <td class="myReply_td text-center" th:text="${stat.index +1}">번호</td>
+            <td class="myReply_td text-center" th:text="${boardList[stat.index].title}">보드제목</td>
+            <td class="myReply_td text-center" th:text="${reply.content}">댓글내용</td>
+            <td class="myReply_td text-center" th:text="${#temporals.format(reply.regDate,'yyyy-MM-dd HH:mm:ss')}">작성일</td>
+            <td class="myReply_td text-center fw-bold text-decoration-underline">수정하기</td>
+            <td class="myReply_td text-center fw-bold text-decoration-underline">삭제하기</td>
+        </tr>
+        <tr th:unless="${reply} " th:each="reply : ${myReply}">
+            <td colspan="5">작성한 내 댓글이 존재하지 않습니다.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</body>
+</html>

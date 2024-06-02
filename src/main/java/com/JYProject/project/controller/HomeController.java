@@ -16,6 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +29,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Controller
 public class HomeController {
+    // 나중에 하나로 받자  내일 전부 수정예정
     private final MemberServiceImpl memberService;
     private final BoardServiceImpl boardService;
     private final FileServiceImpl fileService;
@@ -58,6 +62,7 @@ public class HomeController {
         model.addAttribute("recommendList",boardRecommendList);
         model.addAttribute("reviewList",boardReviewList);
         if (session != null && session.getAttribute(SessionConst.USER_ID) != null) {
+
             String loginId = (String) session.getAttribute(SessionConst.USER_ID);
             String nickname = (String) session.getAttribute(SessionConst.USER_NAME);
          MemberDTO memberDetail = memberService.selectMemberDetail(loginId);

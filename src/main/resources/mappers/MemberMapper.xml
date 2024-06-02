@@ -16,7 +16,7 @@
         <result column="reg_date" property="regDate" />
         <result column="last_login_date" property="lastLoginDate" />
         <result column="active" property="active" />
-        <result column="grade" property="Grade" />
+        <result column="grade" property="grade" />
         <result column="point" property="point" />
         <result column="profile" property="profileImg" />
     </resultMap>
@@ -29,7 +29,26 @@
     <select id="selectMemberDetail" parameterType="String" resultMap="memberResultMap">
         select * from member where login_id=#{loginId}
     </select>
-
+    <update id="addLoginPoint" parameterType="com.JYProject.project.model.Member">
+        update  member
+        SET point = point + #{point}
+        where member_id= #{id};
+    </update>
+    <update id="addPointLikes" parameterType="com.JYProject.project.model.Member">
+        update  member
+        SET point = point + 1
+        where member_id= #{id};
+    </update>
+    <update id="addPointDisLikes" parameterType="com.JYProject.project.model.Member">
+        update  member
+        SET point = point - 1
+        where member_id= #{id};
+    </update>
+    <update id="updateLastLogin" parameterType="com.JYProject.project.model.Member">
+        update member
+        set last_login_date = #{lastLoginDate}
+        where member_id=#{id};
+    </update>
     <!-- 일단은 비밀번호랑 닉네임만 변경가능하게 해서 이렇게 해놓았다 . sql 공부를 좀 더 해보고 변경해봐야겟다-->
     <update id="updateMember" parameterType="com.JYProject.project.model.Member">
         UPDATE member

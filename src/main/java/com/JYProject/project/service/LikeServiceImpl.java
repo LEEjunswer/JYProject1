@@ -1,9 +1,12 @@
 package com.JYProject.project.service;
 
+import com.JYProject.project.model.Board;
 import com.JYProject.project.model.Like;
+import com.JYProject.project.model.dto.BoardDTO;
 import com.JYProject.project.model.dto.LikeDTO;
 import com.JYProject.project.repository.mybatis.BoardMapperRepository;
 import com.JYProject.project.repository.mybatis.LikeMapperRepository;
+import com.JYProject.project.repository.mybatis.MemberMapperRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,14 +22,21 @@ public class LikeServiceImpl implements LikeService {
 
     private final  LikeMapperRepository likeMapperRepository;
     private  final BoardMapperRepository boardMapperRepository;
+    private  final MemberMapperRepository memberMapperRepository;
 
     @Override
     public int insertLikeBoard(LikeDTO likeDTO) {
 
+        // 이걸 좀더 수정을 해봐야 겟다;;  DTO를 한꺼번에 합치는게 더 나으려나 ;;
+       Board board =  boardMapperRepository.selectBoardDetail(likeDTO.getBoardId());
+        // 좋아요나 싫어요를 받을떄마다 포인트가 깎이거나 상승한다.
         if (likeDTO.isLikes()) {
             boardMapperRepository.incrementLikes(likeDTO.getBoardId());
+            memberMapperRepository.addPointLikes(board.getMemberId());
         } else {
             boardMapperRepository.incrementDislikes(likeDTO.getBoardId());
+            memberMapperRepository.addPointDisLikes(board.getMemberId());
+
         }
         return likeMapperRepository.insertLikeBoard(convertToEntity(likeDTO));
     }

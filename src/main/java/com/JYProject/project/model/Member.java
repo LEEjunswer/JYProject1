@@ -19,21 +19,16 @@ public class Member{
 
     //("아이디")
     private String loginId;
-
     //("비밀번호")
     private String pw;
     //("이름")
     private String name;
     //("닉네임")
     private String nickname;
-
-
     //("핸드폰번호")
     private String phone;
-
     //("이메일")
     private String email;
-
     //("우편번호")
     private String zipCode;
     //("주소")
@@ -49,7 +44,7 @@ public class Member{
     //("등급")
     private String  Grade;
     //("포인트")
-    private Long point;
+    private int point;
     //("프로필이미지")
     private String profileImg;
 

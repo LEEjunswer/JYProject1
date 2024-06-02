@@ -8,22 +8,8 @@
 <body>
 <div th:replace="~{fragments/header :: header}" />
 <div id="board-container">
-    <h2>나의 게시글 목록</h2>
-    <div id="board_header">
-        <div id="board_category">
-
-            <a href="/category/0"> 전체</a>
-            <a href="/category/1">자유</a>
-            <a href="/category/2">정보</a>
-            <a href="/category/3">추천</a>
-            <a href="/category/3">후기</a>
-            <a href="/category/3">기타</a>
-
-
-        </div>
-        <div id="board_join">
-            <a href="/boards/join">글작성</a>
-        </div>
+    <div class="login-header">
+        <h2 th:text=" ${session.nickname} + ' -  게시글 목록 '"></h2>
     </div>
     <table class="board_list">
         <colgroup>
@@ -38,7 +24,6 @@
         <tr>
             <th scope="col">글번호</th>
             <th scope="col">제목</th>
-            <th scope="col">작성자</th>
             <th scope="col">조회수</th>
             <th scope="col">추천수</th>
             <th scope="col">작성일</th>
@@ -49,7 +34,6 @@
         <tr th:if="${list}" th:each="list : ${myBoards}">
             <td th:text="${list.boardId}">글번호</td>
             <td th:text="${list.title}" th:onclick="|location.href='/boards/content/' + ${list.boardId}|">제목</td>
-            <td th:text="${list.writer}">작성자</td>
             <td th:text="${list.viewCnt}">조회수</td>
             <th th:if="${list.likes > list.dislikes}"
                 th:text="${(list.likes != null ? list.likes : 0) - (list.dislikes != null ? list.dislikes : 0)}">좋아요</th>

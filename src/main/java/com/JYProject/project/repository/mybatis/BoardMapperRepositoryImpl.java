@@ -40,6 +40,16 @@ public class BoardMapperRepositoryImpl implements BoardMapperRepository {
         }
 
         @Override
+        public int getMyBoardCount(Long memberId) {
+                return boardMapperRepository.getMyBoardCount(memberId);
+        }
+
+        @Override
+        public Board getBoardDetail(Long id) {
+                return boardMapperRepository.getBoardDetail(id);
+        }
+
+        @Override
         public int boardViewCntIncrease(Long boardId) {
                 return boardMapperRepository.boardViewCntIncrease(boardId);
         }

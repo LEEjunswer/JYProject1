@@ -15,6 +15,8 @@ public interface ReplyMapperRepository {
     int updateReply(Reply reply);
     int deleteReply(Long replyId);
     int replyLikesTotalCount(Long id);
+    int getMyReplyCount(Long memberId);
+    List<Reply> getMyReplyList(Long memberId);
     int replyDisLikesTotalCount(Long id);
     int getOneBoardReplyCount(Long boardId);
     List<Reply> getOneBoardReply(Map<String, Object> params);

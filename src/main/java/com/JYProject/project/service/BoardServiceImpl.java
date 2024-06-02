@@ -52,6 +52,16 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public int getMyBoardCount(Long memberId) {
+        return boardMybatisRepository.getMyBoardCount(memberId);
+    }
+
+    @Override
+    public BoardDTO getBoardDetail(Long id) {
+        return convertToDTO(boardMybatisRepository.getBoardDetail(id));
+    }
+
+    @Override
     public List<BoardDTO> boardSearchAllList(String string) {
         List<Board> boardList = boardMybatisRepository.boardSearchAllList(string);
         return boardList.stream().map(this::convertToDTO).collect(Collectors.toList());
@@ -87,7 +97,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<BoardDTO> getMyBoardList(Long memberId) {
-        return null;
+        return boardMybatisRepository.getMyBoardList(memberId).stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @Override

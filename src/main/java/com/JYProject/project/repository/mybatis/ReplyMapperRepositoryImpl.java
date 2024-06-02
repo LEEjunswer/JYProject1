@@ -42,6 +42,16 @@ public class ReplyMapperRepositoryImpl implements ReplyMapperRepository {
     }
 
     @Override
+    public int getMyReplyCount(Long memberId) {
+        return replyMapperRepository.getMyReplyCount(memberId);
+    }
+
+    @Override
+    public List<Reply> getMyReplyList(Long memberId) {
+        return replyMapperRepository.getMyReplyList(memberId);
+    }
+
+    @Override
     public int replyDisLikesTotalCount(Long id) {
         return replyMapperRepository.replyDisLikesTotalCount(id);
     }

@@ -5,6 +5,7 @@ import com.JYProject.project.model.dto.MemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -35,9 +36,29 @@ public class MemberMapperRepositoryImpl implements MemberMapperRepository {
         return memberMapperRepository.selectMemberDetail(loginId);
     }
 
+    @Override
+    public int addLoginPoint(Long id, int point) {
+        return memberMapperRepository.addLoginPoint(id,point);
+    }
+
     public int updateMember(MemberDTO memberDTO){
 
         return memberMapperRepository.updateMember(memberDTO);
+    }
+
+    @Override
+    public int updateLastLogin(Long id, LocalDateTime lastLoginDate) {
+        return memberMapperRepository.updateLastLogin(id,lastLoginDate);
+    }
+
+    @Override
+    public int addPointLikes(Long id) {
+        return memberMapperRepository.addPointLikes(id);
+    }
+
+    @Override
+    public int addPointDisLikes(Long id) {
+        return memberMapperRepository.addPointDisLikes(id);
     }
 
     public boolean validCheckId(String loginId){

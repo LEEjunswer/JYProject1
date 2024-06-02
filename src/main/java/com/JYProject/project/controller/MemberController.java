@@ -1,10 +1,16 @@
 package com.JYProject.project.controller;
 
+import com.JYProject.project.model.dto.BoardDTO;
 import com.JYProject.project.model.dto.MemberDTO;
+import com.JYProject.project.model.dto.ReplyDTO;
+import com.JYProject.project.service.BoardServiceImpl;
 import com.JYProject.project.service.MemberServiceImpl;
+import com.JYProject.project.service.ReplyServiceImpl;
 import com.JYProject.project.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,22 +18,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class MemberController {
 
     // RequestMappnig(/members) 줄 예정 계정 비활성화 및 회원탈퇴 구현예정  테이블 delete_member로 값 전환시킬예정 회원탈퇴 시키고
     private final MemberServiceImpl memberService;
-
-
-
-    @Autowired
-    public MemberController(MemberServiceImpl memberService) {
-        this.memberService = memberService;
-    }
-
+    // 밑에도 역시 멤버 서비스에서 한꺼번에 해야하는데 나중에 수정할예정
+    private final BoardServiceImpl boardService;
+    private final ReplyServiceImpl replyService;
 
     @GetMapping("/members/join")
     public String join(MemberDTO memberDTO){
@@ -57,8 +62,9 @@ public class MemberController {
         MemberDTO login = memberService.login(memberDTO);
 
         if (login != null) {
-            // 로그인이 성공하면 세션에 사용자 정보 저장
-            System.out.println("login ="+ login.toString());
+             // 로그인이 성공하면 세션에 사용자 정보 저장
+            // 어떻게  받아올지 고민중
+/*            model.addAttribute("message", "10포인트를 획득했습니다!");*/
             session.setAttribute(SessionConst.USER_ID, login.getLoginId());
             session.setAttribute(SessionConst.USER_NAME, login.getNickname());
             return "redirect:/";
@@ -145,7 +151,6 @@ public class MemberController {
 
     @GetMapping("/members/myPage")
     public String myPage(HttpSession httpSession, Model model){
-        System.out.println("진입");
         //인터셉터로 처리하게 했지만 계속 적어보기
         String isLogin = (String)httpSession.getAttribute(SessionConst.USER_ID);
         if(isLogin == null){
@@ -154,6 +159,11 @@ public class MemberController {
         }
 
         MemberDTO memberDTO = memberService.selectMemberDetail(isLogin);
+        int boardCount = boardService.getMyBoardCount(memberDTO.getMemberId());
+        int replyCount= replyService.getMyReplyCount(memberDTO.getMemberId());
+        System.out.println("memberDTO = " + memberDTO);
+        model.addAttribute("boardCount",boardCount);
+        model.addAttribute("replyCount", replyCount);
         model.addAttribute("m", memberDTO);
         return "/members/myPage";
     }

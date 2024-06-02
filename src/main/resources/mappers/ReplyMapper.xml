@@ -37,6 +37,14 @@
         set  delete_date = NOW()
         where reply_id=#{replyId};
     </update>
+
+    <select id="getMyReplyList" parameterType="Long" resultMap="replyResultMap">
+        select  * from reply where member_id=#{memberId}  and delete_date IS NULL;
+    </select>
+    <select id="getMyReplyCount" parameterType="Long" resultType="Integer">
+        select count(*) from reply where member_id=#{memberId}  and delete_date IS NULL;
+    </select>
+
     <select id="replyLikesTotalCount" parameterType="Long" resultType="Integer">
     select count(*),likes from reply where reply_id=#{id};
     </select>

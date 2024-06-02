@@ -13,6 +13,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,13 +50,25 @@ public class MemberServiceImpl implements  MemberService{
 
     @Override
     public MemberDTO login(MemberDTO memberDTO){
-
      Member checkLogin =   memberMybatisRepository.login(convertToEntity(memberDTO));
         if(checkLogin == null){
             return  null;
         }
+        LocalDateTime now = LocalDateTime.now();
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        LocalDate lastLoginDate = checkLogin.getLoginId() != null ? checkLogin.getLastLoginDate().toLocalDate() : null;
+        if (lastLoginDate == null || !lastLoginDate.equals(today)) {
+
+            int additionalPoints = 10; // 일단 로그인 시 10 포인트 증가
+            memberMybatisRepository.addLoginPoint(checkLogin.getMemberId(), additionalPoints);
+        }
+        memberMybatisRepository.updateLastLogin(checkLogin.getMemberId(), now);
         return convertToDTO(checkLogin);
     }
+
+
 
     @Override
     public boolean validCheckId(String loginId) {
@@ -135,6 +150,7 @@ public class MemberServiceImpl implements  MemberService{
         member.setAddressDetail(memberDTO.getAddressDetail());
         member.setPhone(memberDTO.getPhone());
         member.setGrade(memberDTO.getGrade());
+        member.setPoint(memberDTO.getPoint());
         return  member;
     }
     private MemberDTO convertToDTO(Member member){
@@ -152,6 +168,7 @@ public class MemberServiceImpl implements  MemberService{
         memberDTO.setAddressDetail(member.getAddressDetail());
         memberDTO.setPhone(member.getPhone());
         memberDTO.setGrade(member.getGrade());
+        memberDTO.setPoint(member.getPoint());
         return memberDTO;
     }
 }

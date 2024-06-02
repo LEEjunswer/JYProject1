@@ -27,6 +27,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class BoardController {
 
+    // boardService말고는 전부 Serivce에서 처리하자 ;;  나중에 한꺼번에 공부하고 수정할 예정
     private  final BoardServiceImpl boardService;
     private final MemberServiceImpl memberService;
     private final FileServiceImpl fileService;
@@ -166,13 +167,20 @@ public String delete(@PathVariable("boardId") Long boardId, HttpSession session,
     model.addAttribute("myBoards" , myBoardList);
     return "boards/myBoardList";
     }
+@GetMapping("/boards/myBoardList/{memberId}")
+public String myBoardList(@PathVariable("memberId")Long memberId ,Model model){
 
+       List<BoardDTO> boardList = boardService.getMyBoardList(memberId);
+    System.out.println("boardList = " + boardList);
+        model.addAttribute("myBoards", boardList);
+        return "/boards/myBoardList";
+}
     @PostMapping("/boards/search/{query}")
     public String searchTitle(@PathVariable("query") String query, Model model){
         System.out.println("query = " + query);
         List<BoardDTO> boardSearchTitleList = boardService.boardSearchTitleList(query);
         model.addAttribute("boardList", boardSearchTitleList);
-        return "boards/list";
+        return "/boards/list";
     }
   /*  @GetMapping("/boards/search/{detail}/{/search}")
     public String searchDetails(@PathVariable("search") String search,@PathVariable("detail") String detail,Model model ){

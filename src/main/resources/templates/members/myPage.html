@@ -5,74 +5,33 @@
     <title>Title</title>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
-
+<div class="login-header">
+    <h2 th:text=" ${m.nickname} + ' -  회원페이지 '"></h2>
+</div>
 <div id="myPage_container">
-    <div class="stats shadow h-40">
+    <table id="myPage_table">
+        <tr>
+            <th>나의 게시글수</th>
+            <th>나의 댓글수</th>
+            <th>나의 접속일</th>
+            <th>가입일</th>
+            <th>포인트</th>
+            <th>좋아요 수</th>
+            <th>싫어요 수</th>
+           <!-- <th>지식인 채택</th>  미구현-->
+        </tr>
+        <tr>
+            <td><a th:href="@{/boards/myBoardList/{memberId}(memberId=${m.memberId})}" th:text="${boardCount}+ ' 개'" >게시글 수</a></td>
+            <td> <a th:href="@{/reply/myReplyList/{memberId}(memberId=${m.memberId})}" th:text="${replyCount} + ' 개'">댓글 수</a></td>
+            <td th:text="${#temporals.format(m.lastLoginDate, 'yyyy-MM-dd HH:mm:ss')}">접속일</td>
+            <td th:text="${#temporals.format(m.regDate, 'yyyy-MM-dd HH:mm:ss')}">가입일</td>
+            <td th:text="${m.getPoint()} + ' Point'">포인트</td>
+            <td>좋아요 수</td>
+            <td>싫어요 수</td>
+            <!-- <th>지식인 채택</th>  미구현-->
+        </tr>
+    </table>
 
-        <div class="stat">
-            <div class="stat-figure text-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-            </div>
-            <div class="stat-title">나의 포인트</div>
-            <div class="stat-value text-primary" th:value="${m.point}">포인트</div>
-
-        </div>
-
-        <div class="stat">
-            <div class="stat-figure text-secondary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-            </div>
-            <div class="stat-title">Page Views</div>
-            <div class="stat-value text-secondary">2.6M</div>
-            <div class="stat-desc">21% more than last month</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-figure text-secondary">
-                <div class="avatar online">
-                    <div class="w-15 h-20 rounded-full">
-                        <img   th:if="${session.profile != null}"
-                               th:src="@{${session.profile}}"
-                               alt="img" id="checkImgOne" />
-                        <img th:unless="${session.profile != null}"
-                             th:src="@{/static/img/Basicimage.png}"
-                             alt="img"  id="checkImgTwo"/>
-                    </div>
-                </div>
-            </div>
-            <div class="stat-value">86%</div>
-            <div class="stat-title">Tasks done</div>
-            <div class="stat-desc text-secondary">31 tasks remaining</div>
-        </div>
-        <div class="stats shadow h-40">
-
-            <div class="stat">
-                <div class="stat-figure text-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                </div>
-                <div class="stat-title">Total Likes</div>
-                <div class="stat-value text-primary">25.6K</div>
-                <div class="stat-desc">21% more than last month</div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-figure text-secondary">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                </div>
-                <div class="stat-title">Page Views</div>
-                <div class="stat-value text-secondary">2.6M</div>
-                <div class="stat-desc">21% more than last month</div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-figure text-secondary">
-
-                </div>
-
-            </div>
-
-        </div>
-    </div>
 </div>
 </body>
 </html>
