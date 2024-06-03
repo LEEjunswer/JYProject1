@@ -5,7 +5,6 @@
     <resultMap id="boardResultMap" type="com.JYProject.project.model.Board">
         <id property="boardId" column="board_id"/>
         <result property="categoryId" column="category_id"/>
-        <result property="writer" column="writer"/>
         <result property="memberId" column="member_id"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
@@ -15,16 +14,22 @@
         <result property="viewCnt" column="view_cnt"/>
         <result property="likes" column="likes"/>
         <result property="dislikes" column="dislikes"/>
+        <association property="memberInfo"  javaType="com.JYProject.project.model.Member" resultMap="memberResultInfo" />
     </resultMap>
+    <resultMap id="memberResultInfo" type="com.JYProject.project.model.Member">
+        <id column="member_id" property="memberId" />
+        <result column="nickname" property="nickname" />
 
+    </resultMap>
     <!--보드 추가 -->
     <insert id="insertBoard" parameterType="com.JYProject.project.model.Board" useGeneratedKeys="true" keyProperty="boardId">
-        insert into board (category_id,writer,title,content,member_id)
-        values(#{categoryId},#{writer},#{title},#{content},#{memberId});
+        insert into board (category_id,title,content,member_id)
+        values(#{categoryId},#{title},#{content},#{memberId});
     </insert>
     <!--보드 1개의값 가져오기 -->
     <select id="selectBoardDetail" parameterType="Long" resultMap="boardResultMap">
-        select * from board where board_id=#{boardId};
+        select b.*, m.nickname
+        from board b  join member m on b.member_id = m.member_id  where b.board_id=#{boardId};
     </select>
     <!--보드 수정 -->
     <update id="updateBoard" parameterType="com.JYProject.project.model.Board">
@@ -49,7 +54,6 @@
     <select id="boardAllList" resultMap="boardResultMap">
         select  * from board
     </select>
-
     <select id="selectBoardTotalCount" resultType="Integer">
         select count(*) board;
     </select>
@@ -65,29 +69,42 @@
      List<Board> boardSearchTitleList(String title);
     List<Board> boardSearchWriterList(String writer);
      List<Board> boardSearchContentList(String content);-->
+
+
     <select id="boardSearchAllList" parameterType="String" resultMap="boardResultMap">
-        SELECT * FROM board
-        WHERE title  and delete_date IS NULL LIKE CONCAT('%', #{string}, '%') or content LIKE CONCAT('%',#{string},'%')
+        SELECT b.*, m.nickname
+        FROM board b
+                 JOIN member m ON b.member_id = m.member_id
+        WHERE b.title LIKE CONCAT('%', #{string}, '%') OR b.content LIKE CONCAT('%', #{string}, '%')
+          AND b.delete_date IS NULL
     </select>
     <select id="boardSearchWriterList" parameterType="String" resultMap="boardResultMap">
-        SELECT * FROM board
-        WHERE writer  and delete_date IS NULL LIKE CONCAT('%', #{writer}, '%')
+        SELECT  b.*, m.nickname
+                 from board b join member m on b.member_id = m.member_id
+        WHERE (m.nickname and delete_date IS NULL LIKE CONCAT('%', #{writer}, '%'))
+        and  b.delete_date is null;
     </select>
     <select id="boardSearchContentList" parameterType="String" resultMap="boardResultMap">
-        select * from board
-        where content  and delete_date IS NULL LIKE CONCAT('%', #{content},'%');
-    </select>
+        select  b.* , m.nickname
+        from board b  join member m on b.member_id = m.member_id
+        where b.content  and b.delete_date IS NULL LIKE CONCAT('%', #{content},'%')
+        and b.delete_date is null;
+</select>
     <select id="boardSearchTitleList" parameterType="String" resultMap="boardResultMap">
-        SELECT * FROM board
-        WHERE title  and delete_date IS NULL LIKE CONCAT('%', #{title}, '%')
+        SELECT b.* , m.nickname
+        from board b join member m on b.member_id = m.member_id
+        WHERE b.title  and b.delete_date IS NULL LIKE CONCAT('%', #{title}, '%')
+        and b.delete_date is null;
     </select>
     <select id="getBoardDetail" parameterType="Long" resultMap="boardResultMap">
-        select * from board
-            where board_id=#{id} and delete_date IS NULL;
+        select b.* , m.nickname
+        from board b join member m on b.member_id = m.member_id
+            where b.board_id=#{id} and delete_date IS NULL;
     </select>
 
     <select id="boardGetCategoryList" parameterType="Integer" resultMap="boardResultMap">
-                    select * from board
+                    select *
+                    from board
                    <if test="categoryId != 0">
                    where  category_id=#{categoryId}
                         </if>
@@ -96,9 +113,9 @@
                     Limit 5;
                 </select>
     <select id="getMyBoardList" parameterType="Long" resultMap="boardResultMap">
-        select *
-        from board
-        where member_id = #{memberId}
+        select b.* , m.nickname
+        from board b   join member m on b.member_id = #{memberId}
+        where b.member_id = #{memberId}
           and delete_date IS NULL;
 
     </select>
@@ -114,6 +131,8 @@
     <update id="incrementDislikes">
         UPDATE board SET dislikes = dislikes + 1 WHERE board_id = #{boardId}
     </update>
+
+    <!-- hone에서만 표현하기 떄문에 닉네임이 필요한지몰것다 LikeCount 만들엉하나;-->
     <select id="getWeekBestBoardList" parameterType="map" resultMap="boardResultMap">
         SELECT *, (`likes` - disLikes) AS LikeCount
         FROM board

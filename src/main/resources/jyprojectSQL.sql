@@ -7,7 +7,7 @@ CREATE TABLE board
 (
     `board_id`    INT   NOT NULL    AUTO_INCREMENT COMMENT '게시글no',
     `category_id` INT NOT NULL COMMENT '카테고리',
-    `writer`      varchar(50)  NOT NULL    COMMENT '작성자',
+    `writer`      varchar(50)  NOT NULL    COMMENT '작성자', /*삭제시킴*/
     `member_id`   int    NOT NULL    COMMENT '작성자',
     `title`       VARCHAR(50)      NOT NULL    COMMENT '제목',
     `content`     VARCHAR(1000)    NOT NULL    COMMENT '내용',

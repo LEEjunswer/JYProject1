@@ -111,12 +111,12 @@ public String content(@PathVariable("boardId") Long boardId ,Model model,HttpSes
    model.addAttribute("repliesMember", replyDTOList.getMemberList());
     model.addAttribute("replies",replyDTOList);
    model.addAttribute("board" , board);
-    if (userId != null || !board.getWriter().equals(nickName)) {
+/*    if (userId != null || !board.getWriter().equals(nickName)) {
 
         boardService.boardViewCntIncrease(boardId);
 
         return "boards/content";
-    }
+    }*/
 
     return "boards/content";
 }

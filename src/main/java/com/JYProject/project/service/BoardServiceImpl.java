@@ -1,7 +1,9 @@
 package com.JYProject.project.service;
 
 import com.JYProject.project.model.Board;
+import com.JYProject.project.model.Member;
 import com.JYProject.project.model.dto.BoardDTO;
+import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.repository.mybatis.BoardMapperRepositoryImpl;
 import com.JYProject.project.repository.mybatis.MemberMapperRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +32,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardDTO selectBoardDetail(Long id) {
   Board board=  boardMybatisRepository.selectBoardDetail(id);
-
+        System.out.println("board = " + board);
   return convertToDTO(board) ;
     }
 
@@ -147,7 +149,6 @@ public class BoardServiceImpl implements BoardService {
         board.setBoardId(boardDTO.getBoardId());
         board.setRegDate(boardDTO.getRegDate());
         board.setDeletedDate(boardDTO.getDeletedDate());
-        board.setWriter(boardDTO.getWriter());
         board.setCategoryId(boardDTO.getCategoryId());
         board.setDislikes(boardDTO.getDislikes());
         board.setLikes(boardDTO.getLikes());
@@ -156,6 +157,7 @@ public class BoardServiceImpl implements BoardService {
         board.setFileId(boardDTO.getFileId());
         board.setCategoryId(boardDTO.getCategoryId());
         board.setMemberId(boardDTO.getMemberId());
+        board.setMemberInfo(convertToMemberEntity(boardDTO.getMemberInfo()));
         return board;
     }
 
@@ -170,8 +172,44 @@ public class BoardServiceImpl implements BoardService {
         boardDTO.setDislikes(board.getDislikes());
         boardDTO.setCategoryId(board.getCategoryId());
         boardDTO.setMemberId(board.getMemberId());
-        boardDTO.setWriter(board.getWriter());
         boardDTO.setFileId(board.getFileId());
+        boardDTO.setMemberInfo( convertToMemberDTO(board.getMemberInfo()));
         return boardDTO;
     }
+        private Member convertToMemberEntity(MemberDTO memberDTO){
+            Member member = new Member();
+            member.setMemberId(memberDTO.getMemberId());
+            member.setLoginId(memberDTO.getLoginId());
+            member.setPw(memberDTO.getPw());
+            member.setName(memberDTO.getName());
+            member.setActive(memberDTO.getActive());
+            member.setEmail(memberDTO.getEmail());
+            member.setProfileImg(memberDTO.getProfileImg());
+            member.setLastLoginDate(memberDTO.getLastLoginDate());
+            member.setNickname(memberDTO.getNickname());
+            member.setRegDate(memberDTO.getRegDate());
+            member.setAddressDetail(memberDTO.getAddressDetail());
+            member.setPhone(memberDTO.getPhone());
+            member.setGrade(memberDTO.getGrade());
+            member.setPoint(memberDTO.getPoint());
+            return  member;
+        }
+        private MemberDTO convertToMemberDTO(Member member){
+            MemberDTO memberDTO = new MemberDTO();
+            memberDTO.setMemberId(member.getMemberId());
+            memberDTO.setLoginId(member.getLoginId());
+            memberDTO.setPw(member.getPw());
+            memberDTO.setActive(member.getActive());
+            memberDTO.setName(member.getName());
+            memberDTO.setEmail(member.getEmail());
+            memberDTO.setLastLoginDate(member.getLastLoginDate());
+            memberDTO.setProfileImg(member.getProfileImg());
+            memberDTO.setNickname(member.getNickname());
+            memberDTO.setRegDate(member.getRegDate());
+            memberDTO.setAddressDetail(member.getAddressDetail());
+            memberDTO.setPhone(member.getPhone());
+            memberDTO.setGrade(member.getGrade());
+            memberDTO.setPoint(member.getPoint());
+            return memberDTO;
+        }
 }
