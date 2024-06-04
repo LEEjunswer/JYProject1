@@ -2,6 +2,8 @@ package com.JYProject.project.controller.apiController;
 
 
 import com.JYProject.project.model.dto.FileDTO;
+import com.JYProject.project.service.FileService.FileService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,27 +15,13 @@ import java.util.*;
 
 
 @RestController
+@RequiredArgsConstructor
 public class FileAPIController{
 
-  //이미지 파일 경로
-  @Value("${upload.path}")
-  private String uploadPath;
+    FileService fileService;
 
     @PostMapping("/upload-image")
     public Map<String, String> handleFileUpload(@RequestParam("file") MultipartFile file) {
-        System.out.println("file = " + file);
-        String filename = System.currentTimeMillis() + "-" + file.getOriginalFilename();
-        try {
-            File uploadDir = new File(uploadPath);
-            if (!uploadDir.exists()) {
-                uploadDir.mkdirs();
-            }
-            file.transferTo(Paths.get(uploadPath, filename));
-            String fileUrl = "http://localhost:8082/uploads/" + filename;
-            return Collections.singletonMap("fileUrl", fileUrl);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Collections.singletonMap("error", "Failed to upload file");
-        }
+        return  fileService.uploadFile(file);
     }
 }

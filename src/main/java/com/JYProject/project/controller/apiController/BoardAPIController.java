@@ -3,21 +3,19 @@ package com.JYProject.project.controller.apiController;
 import com.JYProject.project.model.dto.BoardDTO;
 import com.JYProject.project.model.dto.LikeDTO;
 import com.JYProject.project.model.dto.MemberDTO;
-import com.JYProject.project.service.BoardServiceImpl;
-import com.JYProject.project.service.LikeServiceImpl;
-import com.JYProject.project.service.MemberServiceImpl;
+import com.JYProject.project.service.BoardService.BoardService;
+import com.JYProject.project.service.LikeService.LikeService;
+import com.JYProject.project.service.MemberService.MemberService;
 import com.JYProject.project.session.SessionConst;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,9 +23,9 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 public class BoardAPIController {
-    private final BoardServiceImpl boardService;
-    private final MemberServiceImpl memberService;
-    private final LikeServiceImpl likeService;
+    private final BoardService boardService;
+    private final LikeService likeService;
+    private  final MemberService memberService;
     @RequestMapping(value="/boards/checkLogin",method = RequestMethod.GET)
     public ResponseEntity<Boolean> checkLogin(HttpSession session) {
         String isLoggedIn = (String) session.getAttribute(SessionConst.USER_ID);

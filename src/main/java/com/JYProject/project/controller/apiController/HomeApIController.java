@@ -3,8 +3,8 @@ package com.JYProject.project.controller.apiController;
 import com.JYProject.project.model.dto.BoardDTO;
 import com.JYProject.project.model.dto.BoardResponseDTO;
 import com.JYProject.project.model.dto.FileDTO;
-import com.JYProject.project.service.BoardServiceImpl;
-import com.JYProject.project.service.FileServiceImpl;
+import com.JYProject.project.service.BoardService.BoardServiceImpl;
+import com.JYProject.project.service.FileService.FileServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

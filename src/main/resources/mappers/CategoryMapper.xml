@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.JYProject.project.repository.mybatis.CategoryMapperRepository">
+<mapper namespace="com.JYProject.project.repository.CategoryRepository.CategoryMapperRepository">
 <resultMap id="categoryMap" type="com.JYProject.project.model.Category">
 <id property="categoryId" column="category_id"/>
  <result property="categoryName" column="category_name"/>

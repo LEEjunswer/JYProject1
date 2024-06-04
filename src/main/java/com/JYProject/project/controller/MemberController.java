@@ -1,27 +1,18 @@
 package com.JYProject.project.controller;
 
-import com.JYProject.project.model.dto.BoardDTO;
 import com.JYProject.project.model.dto.MemberDTO;
-import com.JYProject.project.model.dto.ReplyDTO;
-import com.JYProject.project.service.BoardServiceImpl;
-import com.JYProject.project.service.MemberServiceImpl;
-import com.JYProject.project.service.ReplyServiceImpl;
+import com.JYProject.project.service.BoardService.BoardService;
+import com.JYProject.project.service.MemberService.MemberService;
+import com.JYProject.project.service.ReplyService.ReplyService;
 import com.JYProject.project.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -29,10 +20,10 @@ import java.util.List;
 public class MemberController {
 
     // RequestMappnig(/members) 줄 예정 계정 비활성화 및 회원탈퇴 구현예정  테이블 delete_member로 값 전환시킬예정 회원탈퇴 시키고
-    private final MemberServiceImpl memberService;
+    private final MemberService memberService;
     // 밑에도 역시 멤버 서비스에서 한꺼번에 해야하는데 나중에 수정할예정
-    private final BoardServiceImpl boardService;
-    private final ReplyServiceImpl replyService;
+    private final BoardService boardService;
+    private final ReplyService replyService;
 
     @GetMapping("/members/join")
     public String join(MemberDTO memberDTO){
@@ -100,13 +91,13 @@ public class MemberController {
         model.addAttribute("m", member);
         return "/members/updateForm";
     }
-    @PostMapping("/members/updateForm")
+    /*@PostMapping("/members/updateForm")
     public String updateForm(@ModelAttribute MemberDTO memberDTO,RedirectAttributes redirectAttributes) {
         System.out.println(memberDTO.toString());
         memberService.updateMember(memberDTO);
         redirectAttributes.addFlashAttribute("update", memberDTO.getLoginId() +"님 성공적으로 회원수정이 완료되었습니다");
         return "redirect:/";
-    }
+    }*/
 
 
     @GetMapping("/members/delete")

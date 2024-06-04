@@ -4,9 +4,9 @@ package com.JYProject.project.controller;
 import com.JYProject.project.model.dto.BoardDTO;
 import com.JYProject.project.model.dto.FileDTO;
 import com.JYProject.project.model.dto.MemberDTO;
-import com.JYProject.project.service.BoardServiceImpl;
-import com.JYProject.project.service.FileServiceImpl;
-import com.JYProject.project.service.MemberServiceImpl;
+import com.JYProject.project.service.BoardService.BoardServiceImpl;
+import com.JYProject.project.service.FileService.FileServiceImpl;
+import com.JYProject.project.service.MemberService.MemberServiceImpl;
 import com.JYProject.project.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -16,14 +16,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor

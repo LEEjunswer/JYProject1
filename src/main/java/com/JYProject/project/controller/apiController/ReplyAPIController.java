@@ -3,8 +3,10 @@ package com.JYProject.project.controller.apiController;
 import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.model.dto.ReplyDTO;
 import com.JYProject.project.model.dto.ReplyResponseDTO;
-import com.JYProject.project.service.MemberServiceImpl;
-import com.JYProject.project.service.ReplyServiceImpl;
+import com.JYProject.project.service.MemberService.MemberService;
+import com.JYProject.project.service.MemberService.MemberServiceImpl;
+import com.JYProject.project.service.ReplyService.ReplyService;
+import com.JYProject.project.service.ReplyService.ReplyServiceImpl;
 import com.JYProject.project.session.SessionConst;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -12,11 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,8 +23,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ReplyAPIController {
 
-    private final ReplyServiceImpl replyService;
-    private final MemberServiceImpl memberService;
+    private final ReplyService replyService;
+    private final MemberService memberService;
 
 
 

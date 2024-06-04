@@ -1,9 +1,8 @@
 package com.JYProject.project.controller;
 
-import com.JYProject.project.service.FileServiceImpl;
+import com.JYProject.project.service.FileService.FileServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @RequiredArgsConstructor

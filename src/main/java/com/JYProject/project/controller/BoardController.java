@@ -1,26 +1,21 @@
 package com.JYProject.project.controller;
 
 import com.JYProject.project.model.dto.*;
-import com.JYProject.project.service.BoardServiceImpl;
-import com.JYProject.project.service.FileServiceImpl;
-import com.JYProject.project.service.MemberServiceImpl;
-import com.JYProject.project.service.ReplyServiceImpl;
+import com.JYProject.project.service.BoardService.BoardService;
+import com.JYProject.project.service.FileService.FileService;
+import com.JYProject.project.service.MemberService.MemberService;
+import com.JYProject.project.service.ReplyService.ReplyService;
 import com.JYProject.project.session.SessionConst;
 import jakarta.servlet.http.HttpSession;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Controller
@@ -28,10 +23,9 @@ import java.util.Map;
 public class BoardController {
 
     // boardService말고는 전부 Serivce에서 처리하자 ;;  나중에 한꺼번에 공부하고 수정할 예정
-    private  final BoardServiceImpl boardService;
-    private final MemberServiceImpl memberService;
-    private final FileServiceImpl fileService;
-    private final ReplyServiceImpl replyService;
+    private  final BoardService boardService;
+    private final MemberService memberService;
+    private final ReplyService replyService;
 
 
 
@@ -73,21 +67,9 @@ public class BoardController {
             @ModelAttribute BoardDTO boardDTO,
             @RequestParam(value = "fileUrls") List<String> fileUrls,
             RedirectAttributes redirectAttributes) {
-        System.out.println("boardDTO = " + boardDTO);
-        System.out.println("Received fileUrls: " + fileUrls);
 
         try {
-            String contentChangeImgPath= boardDTO.getContent().replace("../uploads/", "http://localhost:8082/uploads/");
-            boardDTO.setContent(contentChangeImgPath);
-            Long getBoardId =  boardService.insertBoard(boardDTO);
-
-                FileDTO fileDTO = new FileDTO();
-                fileDTO.setBoardId(getBoardId);
-                fileDTO.setFileNameFromList(fileUrls);
-                fileDTO.setRegDate(LocalDateTime.now());
-                fileService.insertFile(fileDTO);
-
-
+            int getBoardId = boardService.insertBoard(boardDTO, fileUrls);
             redirectAttributes.addFlashAttribute("suc", "성공적으로 게시글 등록되었습니다");
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,23 +82,14 @@ public class BoardController {
 //보드게시판 제목 클릭시 상세하게 보여줄 예정
 @GetMapping("/boards/content/{boardId}")
 public String content(@PathVariable("boardId") Long boardId ,Model model,HttpSession session){
-   BoardDTO board = boardService.selectBoardDetail(boardId);
-
 
    ReplyResponseDTO replyDTOList = replyService.getOneBoardReplyPaging(boardId,1,10);
-    System.out.println("replyDTOListMember = " + replyDTOList.getMemberList());
-
    String userId = (String) session.getAttribute(SessionConst.USER_ID);
    String nickName = (String) session.getAttribute(SessionConst.USER_NAME);
+    BoardDTO board = boardService.handleBoardView(boardId,userId,nickName);
    model.addAttribute("repliesMember", replyDTOList.getMemberList());
     model.addAttribute("replies",replyDTOList);
    model.addAttribute("board" , board);
-/*    if (userId != null || !board.getWriter().equals(nickName)) {
-
-        boardService.boardViewCntIncrease(boardId);
-
-        return "boards/content";
-    }*/
 
     return "boards/content";
 }
