@@ -14,6 +14,7 @@ public interface ReplyService {
      int deleteReply(Long replyId);
      int replyLikesTotalCount(Long id);
      List<ReplyDTO> getMyReplyList(Long memberId);
+     void replyDeleteFindMemberId(Long memberId);
      int getMyReplyCount(Long memberId);
      int replyDisLikesTotalCount(Long id);
      int getOneBoardReplyCount(Long boardId);

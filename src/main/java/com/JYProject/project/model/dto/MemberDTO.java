@@ -12,32 +12,20 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class MemberDTO  {
 
-
     //("유저PK")
     private Long memberId;
-
-
     //("아이디")
     private String loginId;
-
     //("비밀번호")
     private String pw;
-
-
     //("이름")
     private String name;
-
-
     //("닉네임")
     private String nickname;
-
-
     //("핸드폰번호")
     private String phone;
-
     //("이메일")
     private String email;
-
     //("우편번호")
     private String zipCode;
     //("주소")

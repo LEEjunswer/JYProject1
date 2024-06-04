@@ -10,9 +10,16 @@
         <result property="regDate" column="reg_date"/>
         <result property="updateDate" column="update_date"/>
         <result property="deleteDate" column="delete_date"/>
-<!--        <result property="likes" column="likes"/>
+<association property="memberInfo"  javaType="com.JYProject.project.model.Member" resultMap="memberResultInfo"/>
+        <!--        <result property="likes" column="likes"/>
         <result property="disLikes" column="dislikes"/>-->
     </resultMap>
+    <resultMap id="memberResultInfo" type="com.JYProject.project.model.Member">
+        <id column="member_id" property="memberId" />
+        <result column="nickname" property="nickname" />
+
+    </resultMap>
+
     <insert id="insertReply" parameterType="com.JYProject.project.model.Reply">
        insert into reply (board_id, member_id, content) values
             (#{boardId},#{memberId},#{content})
@@ -22,7 +29,10 @@
     </select>
 
     <select id="getBoardAllReply" parameterType="Long" resultMap="replyResultMap">
-        select * from reply where board_id=#{boardId};
+        SELECT r.*, m.nickname
+        FROM reply r
+                 INNER JOIN member m ON r.member_id = m.member_id
+        WHERE r.board_id = #{boardId};
     </select>
     <!--댓글 수정 -->
     <update id="updateReply" parameterType="com.JYProject.project.model.Reply">
@@ -39,12 +49,16 @@
     </update>
 
     <select id="getMyReplyList" parameterType="Long" resultMap="replyResultMap">
-        select  * from reply where member_id=#{memberId}  and delete_date IS NULL;
+        select r.*, m.nickname
+        from reply r
+                 inner join member m on r.member_id = m.member_id
+        where r.board_id = #{boardId} and delete_date is null;
     </select>
     <select id="getMyReplyCount" parameterType="Long" resultType="Integer">
         select count(*) from reply where member_id=#{memberId}  and delete_date IS NULL;
     </select>
 
+    <!-- 밑은 아직 미구현 좀 더 공부를 하고 해보자-->
     <select id="replyLikesTotalCount" parameterType="Long" resultType="Integer">
     select count(*),likes from reply where reply_id=#{id};
     </select>
@@ -59,4 +73,10 @@
         select * from reply where board_id=#{boardId} ORDER BY reg_date DESC
         LIMIT #{offset}, #{pageSize};
     </select>
+    <!--삭제하는 것이 아닌 deleted_date로 전부 저장-->
+    <update id="replyDeleteFindMemberId" parameterType="Long">
+            update reply
+            set delete_date = now()
+    where member_id=#{memberId}  and delete_date is null;
+    </update>
 </mapper>

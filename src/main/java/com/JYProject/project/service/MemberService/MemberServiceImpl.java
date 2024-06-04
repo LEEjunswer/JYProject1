@@ -106,8 +106,9 @@ public class MemberServiceImpl implements  MemberService{
     }
 
     @Override
-    public int deleteMember(Long id) {
-        return memberMybatisRepository.deleteMember(id);
+    public int deleteMember(MemberDTO memberDTO) {
+
+        return memberMybatisRepository.deleteMember(convertToEntity(memberDTO));
     }
 
     @Override

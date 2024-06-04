@@ -14,13 +14,10 @@ public class Board {
 
     //("게시판번호")
     private Long boardId;
-
     //("글작성자 id")
     private Long memberId;
     //("카레고리번호")
     private Long categoryId;
-    //("글작성자")
-    private String writer;
     //("작성자파일")
     private Long fileId;
     //("글제목")
@@ -39,7 +36,6 @@ public class Board {
     private int likes;
     //("싫어요")
     private int dislikes;
-
     /*멤버 쿼리 조인할 때 필요하다*/
     private Member memberInfo;
 }

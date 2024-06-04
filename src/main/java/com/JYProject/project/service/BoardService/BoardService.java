@@ -17,6 +17,7 @@ public interface BoardService {
      int deleteBoard(Long boardId);
      List<BoardDTO> boardAllList();
     int getMyBoardCount(Long memberId);
+    void boardDeleteFindMemberId(Long memberId);
     BoardDTO getBoardDetail(Long id);
     List<BoardDTO> boardSearchAllList(String string);
     List<BoardDTO> boardSearchTitleList(String title);

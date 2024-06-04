@@ -8,18 +8,14 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class BoardDTO {
-
 
     //("게시판번호")
     private Long boardId;
-
     //("글작성자 id")
     private Long memberId;
     //("카레고리번호")
     private Long categoryId;
-
     //("작성자파일")
     private Long fileId;
     //("글제목")
@@ -38,6 +34,5 @@ public class BoardDTO {
     private int likes;
     //("싫어요")
     private int dislikes;
-
     private MemberDTO memberInfo;
 }

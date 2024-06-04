@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 @Mapper
 public interface MemberMapperRepository {
-
     int insertMember(Member member);
     Member getOneMemberId(Long id);
     Member login(Member member);
@@ -17,11 +16,12 @@ public interface MemberMapperRepository {
     int updateMember(Member member);
     int updateLastLogin(Long id , LocalDateTime lastLoginDate);
     int addPointLikes(Long id);
+    int updateMemberActive(Member member);
     int addPointDisLikes(Long id);
     boolean validCheckId(String loginId);
     boolean validCheckNick(String nickname);
     boolean validCheckEmail(String email);
-    int deleteMember(Long id);
+    int deleteMember(Member member);
 
     List<Member> MemberAllList();
 

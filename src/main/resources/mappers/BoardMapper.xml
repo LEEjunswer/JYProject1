@@ -163,4 +163,11 @@
         ORDER BY LikeCount DESC
         LIMIT #{offset}, #{pageSize};
     </select>
+
+<!-- 회원탈퇴시 모든 글들을 보관하기 위해 delete_date를 집어넣는다-->
+    <update id="boardDeleteFindMemberId" parameterType="Long">
+        update  board
+        set delete_date= now()
+               where member_id=#{memberId}  and delete_date is null;
+    </update>
 </mapper>

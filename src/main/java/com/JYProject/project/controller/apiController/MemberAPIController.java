@@ -86,7 +86,6 @@ public class MemberAPIController {
 
         Map<String, Object> response = new HashMap<>();
         response.put("message", "프로필 이미지 저장이 성공적으로 완료되었습니다.");
-        session.removeAttribute("profile");
         session.setAttribute("profile", relativePath);
         return ResponseEntity.ok(response);
     }

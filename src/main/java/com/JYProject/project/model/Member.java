@@ -12,11 +12,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Member{
 
-
     //("유저PK")
     private Long memberId;
-
-
     //("아이디")
     private String loginId;
     //("비밀번호")
@@ -39,7 +36,7 @@ public class Member{
     private LocalDateTime regDate;
     //("로그인일자")
     private LocalDateTime lastLoginDate;
-    //("회원 계정 비활성화 or 활성화 여부")
+    //("회원 계정 비활성화 or 활성화 여부 좀고민이다 정지나 영구정지를 먹였을떄는 탈퇴를 못하게 막아야하는데")
     private Boolean active;
     //("등급")
     private String  Grade;

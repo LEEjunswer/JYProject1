@@ -78,6 +78,11 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public void boardDeleteFindMemberId(Long memberId) {
+        boardMybatisRepository.boardDeleteFindMemberId(memberId);
+    }
+
+    @Override
     public BoardDTO getBoardDetail(Long id) {
         return convertToDTO(boardMybatisRepository.getBoardDetail(id));
     }

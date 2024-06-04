@@ -2,6 +2,7 @@ package com.JYProject.project.controller;
 
 import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.service.BoardService.BoardService;
+import com.JYProject.project.service.DeletedService.DeletedService;
 import com.JYProject.project.service.MemberService.MemberService;
 import com.JYProject.project.service.ReplyService.ReplyService;
 import com.JYProject.project.session.SessionConst;
@@ -19,12 +20,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 public class MemberController {
 
-    // RequestMappnig(/members) 줄 예정 계정 비활성화 및 회원탈퇴 구현예정  테이블 delete_member로 값 전환시킬예정 회원탈퇴 시키고
     private final MemberService memberService;
     // 밑에도 역시 멤버 서비스에서 한꺼번에 해야하는데 나중에 수정할예정
     private final BoardService boardService;
     private final ReplyService replyService;
-
+    private final DeletedService deletedService;
     @GetMapping("/members/join")
     public String join(MemberDTO memberDTO){
         return"/members/join";
@@ -49,11 +49,14 @@ public class MemberController {
     @PostMapping("members/login")
     public String login(@ModelAttribute MemberDTO memberDTO,
                         HttpSession session,
-                        RedirectAttributes redirectAttributes) {
+                        RedirectAttributes redirectAttributes,Model model) {
         MemberDTO login = memberService.login(memberDTO);
-
         if (login != null) {
-             // 로그인이 성공하면 세션에 사용자 정보 저장
+            if(!login.getActive()){
+            model.addAttribute("message","현재 회원님은 계정 비활성화 상태 or 회원탈퇴 유저입니다. 고객센터 문의 부탁드립니다");
+                return "redirect:/";
+            }
+
             // 어떻게  받아올지 고민중
 /*            model.addAttribute("message", "10포인트를 획득했습니다!");*/
             session.setAttribute(SessionConst.USER_ID, login.getLoginId());
@@ -113,7 +116,7 @@ public class MemberController {
     ,Model model){
         MemberDTO member = memberService.login(memberDTO);
         if(member != null){
-            memberService.deleteMember(member.getMemberId());
+            deletedService.getDeleteMember(member);
             session.removeAttribute("loginId");
             session.removeAttribute("nickname");
           redirectAttributes.addFlashAttribute("update", member.getLoginId()+"회원탈퇴 성공하셧습니다");

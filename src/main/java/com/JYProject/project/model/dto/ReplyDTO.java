@@ -1,5 +1,6 @@
 package com.JYProject.project.model.dto;
 
+import com.JYProject.project.model.Member;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -25,4 +26,5 @@ public class ReplyDTO  {
     //("싫어요")
     private Long dislikes;
 
+    private MemberDTO memberInfo;
 }

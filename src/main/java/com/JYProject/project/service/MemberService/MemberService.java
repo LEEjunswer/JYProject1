@@ -18,7 +18,7 @@ public interface MemberService {
     boolean validCheckEmail(String email);
     int changePassword(Long memberId, String password);
     int changeNickname(Long memberId, String nickname);
-     int deleteMember(Long id);
+     int deleteMember(MemberDTO memberDTO);
     int addPointLikes(Long id);
     int addPointDisLikes(Long id);
      List<MemberDTO> MemberAllList();

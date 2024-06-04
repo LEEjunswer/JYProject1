@@ -20,7 +20,7 @@ public interface BoardMapperRepository {
     int getMyBoardCount(Long memberId);
     Board getBoardDetail(Long id);
      int boardViewCntIncrease(Long boardId);
-
+    void boardDeleteFindMemberId(Long memberId);
     // 밑에 리스트는 나중에 검색했을때 값 가져올 예정
      List<Board> boardSearchAllList(String string);
      List<Board> boardSearchTitleList(String title);

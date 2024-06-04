@@ -56,8 +56,8 @@
                 <span id="count_review" th:text="'(' + ${replies.getTotalCount()} + ')'">(1)</span>
                 <span class="bottom-right">
                     <button type="button" id="content_list" class="btn btn-default">목록</button>
-                    <button th:if="${board.memberInfo.nickname == nickname}" type="button" id="content_modify" class="btn btn-default">수정</button>
-                    <button th:if="${board.memberInfo.nickname == nickname}" type="button" id="content_delete" class="btn btn-default">삭제</button>
+                    <button th:if="${board.memberInfo.nickname == sessin.nickname}" type="button" id="content_modify" class="btn btn-default">수정</button>
+                    <button th:if="${board.memberInfo.nickname == session.nickname}" type="button" id="content_delete" class="btn btn-default">삭제</button>
                     <!-- <button type="button" id="write" class="btn btn-default">글쓰기</button>-->
                 </span>
         </span>
@@ -70,7 +70,7 @@
         <div id="boardCommentList">
             <div class="comment card w-full bg-base-100 shadow-xl relative" th:each="reply : ${replies.getReplyList()}">
                 <div class="comment card-body block m-0">
-                        <span class="comment-span text-sm" th:text="'작성자 : ' + ${repliesMember[replyStat.index].nickname} + '       작성일 : ' +  ${#temporals.format(reply.regDate, 'yyyy-MM-dd HH:mm:ss')}">
+                        <span class="comment-span text-sm" th:text="'작성자 : ' + ${reply[replyStat.index].memberInfo.nickname} + '       작성일 : ' +  ${#temporals.format(reply.regDate, 'yyyy-MM-dd HH:mm:ss')}">
                     <!-- 여기에 작성자와 작성일 텍스트가 들어갑니다 -->
                 </span>
                     <p th:if="${reply.getDeleteDate() == null}" class="comment-value text-lg" th:text="${reply.content}">
@@ -81,7 +81,8 @@
                     삭제된 댓글입니다.
                     </p>
                 </div>
-                <div class="absolute top-0 right-0">
+
+                <div class="absolute top-0 right-0" th:if="${reply.memberInfo.nickname == session.nickname}">
                     <button class="comment-delBtn btn btn-square btn-outline" th:attr="reply-value=${reply.getReplyId()}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />

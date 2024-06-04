@@ -1,5 +1,6 @@
 package com.JYProject.project.service.ReplyService;
 
+import com.JYProject.project.model.Member;
 import com.JYProject.project.model.Reply;
 import com.JYProject.project.model.dto.BoardDTO;
 import com.JYProject.project.model.dto.MemberDTO;
@@ -83,6 +84,11 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
+    public void replyDeleteFindMemberId(Long memberId) {
+        replyMybatisRepository.replyDeleteFindMemberId(memberId);
+    }
+
+    @Override
     public int getMyReplyCount(Long memberId) {
         return replyMybatisRepository.getMyReplyCount(memberId);
     }
@@ -138,6 +144,7 @@ public class ReplyServiceImpl implements ReplyService {
         reply.setDeleteDate(replyDTO.getDeleteDate());
 /*        *//*        reply.setLikes(replyDTO.getLikes());*//*
         reply.setDislikes(replyDTO.getDislikes());*/
+        reply.setMemberInfo(convertToMemberEntity(replyDTO.getMemberInfo()));
         return  reply;
     }
     private ReplyDTO convertToDTO(Reply reply){
@@ -150,8 +157,43 @@ public class ReplyServiceImpl implements ReplyService {
         replyDTO.setDeleteDate(reply.getDeleteDate());
 /*        replyDTO.setDislikes(reply.getDislikes());
         replyDTO.setLikes(reply.getLikes());*/
+        replyDTO.setMemberInfo(convertToMemberDTO(reply.getMemberInfo()));
         return replyDTO;
-
-
+    }
+    private Member convertToMemberEntity(MemberDTO memberDTO){
+        Member member = new Member();
+        member.setMemberId(memberDTO.getMemberId());
+        member.setLoginId(memberDTO.getLoginId());
+        member.setPw(memberDTO.getPw());
+        member.setName(memberDTO.getName());
+        member.setActive(memberDTO.getActive());
+        member.setEmail(memberDTO.getEmail());
+        member.setProfileImg(memberDTO.getProfileImg());
+        member.setLastLoginDate(memberDTO.getLastLoginDate());
+        member.setNickname(memberDTO.getNickname());
+        member.setRegDate(memberDTO.getRegDate());
+        member.setAddressDetail(memberDTO.getAddressDetail());
+        member.setPhone(memberDTO.getPhone());
+        member.setGrade(memberDTO.getGrade());
+        member.setPoint(memberDTO.getPoint());
+        return  member;
+    }
+    private MemberDTO convertToMemberDTO(Member member){
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setMemberId(member.getMemberId());
+        memberDTO.setLoginId(member.getLoginId());
+        memberDTO.setPw(member.getPw());
+        memberDTO.setActive(member.getActive());
+        memberDTO.setName(member.getName());
+        memberDTO.setEmail(member.getEmail());
+        memberDTO.setLastLoginDate(member.getLastLoginDate());
+        memberDTO.setProfileImg(member.getProfileImg());
+        memberDTO.setNickname(member.getNickname());
+        memberDTO.setRegDate(member.getRegDate());
+        memberDTO.setAddressDetail(member.getAddressDetail());
+        memberDTO.setPhone(member.getPhone());
+        memberDTO.setGrade(member.getGrade());
+        memberDTO.setPoint(member.getPoint());
+        return memberDTO;
     }
 }

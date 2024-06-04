@@ -25,6 +25,7 @@ public class Reply  {
     //("삭제일자")
     private LocalDateTime deleteDate;
 
+    private Member memberInfo;
 // 밑에는 나중에 구현 예쩡
     /*    //("좋아요")
     private Long likes;

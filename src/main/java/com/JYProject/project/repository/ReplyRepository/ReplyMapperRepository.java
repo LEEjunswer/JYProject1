@@ -16,6 +16,7 @@ public interface ReplyMapperRepository {
     int deleteReply(Long replyId);
     int replyLikesTotalCount(Long id);
     int getMyReplyCount(Long memberId);
+    void replyDeleteFindMemberId(Long memberId);
     List<Reply> getMyReplyList(Long memberId);
     int replyDisLikesTotalCount(Long id);
     int getOneBoardReplyCount(Long boardId);

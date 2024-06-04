@@ -132,11 +132,9 @@
 </div>
 <script src="/static/js/home.js"></script>
 <script th:inline="javascript">
-    var updateMessage = [[${update}]];
-    if (updateMessage) {
-        alert(updateMessage);
-    }
-    /*]]>*/
+    window.onload = function() {
+        alert(message);
+    };
 </script>
 
 </body>

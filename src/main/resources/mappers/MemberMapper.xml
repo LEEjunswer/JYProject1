@@ -32,11 +32,16 @@
     <update id="addLoginPoint" parameterType="com.JYProject.project.model.Member">
         update  member
         SET point = point + #{point}
-        where member_id= #{id};
+        where member_id= #{memberId};
     </update>
     <update id="addPointLikes" parameterType="com.JYProject.project.model.Member">
         update  member
         SET point = point + 1
+        where member_id= #{memberId};
+    </update>
+    <update id="updateMemberActive" parameterType="com.JYProject.project.model.Member">
+        update  member
+        SET active = #{active}
         where member_id= #{id};
     </update>
     <update id="addPointDisLikes" parameterType="com.JYProject.project.model.Member">
@@ -65,9 +70,12 @@
         where member_id = #{memberId}
     </update>
 
-    <delete id="deleteMember" parameterType="Long" >
-        delete from member where member_id=#{Id}
-    </delete>
+    <!--딜리트멤버를 왜 삭제하지 id만뺴고 전부 날릴지 고민중 않고 업데이트를 준 이유 회원 정지거나 탈퇴했을떄는 deleteMember 테이블에 저장을 한다  join쿼리로 나중에 다체크할 예정-->
+    <update id="deleteMember" parameterType="com.JYProject.project.model.Member" >
+        update member
+            set active=#{active}
+          where member_id=#{memberId}
+    </update>
 
     <select id="MemberAllList" resultType="com.JYProject.project.model.Member">
         select *
