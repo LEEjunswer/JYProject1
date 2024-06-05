@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.JYProject.project.repository.AdminRepository.AdminEventRepository">
-    <resultMap id="adminResultMap" type="com.JYProject.project.model.Event">
+    <resultMap id="adminEventResultMap" type="com.JYProject.project.model.Event">
     <id property="eventId" column="event_id"/>
     <result property="adminBoardId" column="admin_board_id"/>
     <result property="eventTitle" column="content"/>
@@ -14,4 +14,7 @@
             insert into event(admin_board_id, content, point, start_date, end_date)
             values (#{adminBoardId},#{eventTitle},#{point},#{startDate},#{endDate});
     </insert>
+    <select id="findAdminBoardId" parameterType="Long" resultMap="adminEventResultMap">
+        select * from event where admin_board_id=#{adminBoardId}
+    </select>
 </mapper>

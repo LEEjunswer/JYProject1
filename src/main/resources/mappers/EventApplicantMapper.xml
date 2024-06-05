@@ -1,0 +1,16 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.JYProject.project.repository.EventApplicantRepository.EventApplicantMapperRepository">
+    <resultMap id="eventApplicantResultMap" type="com.JYProject.project.model.EventApplicant">
+        <id property="eventApplicantId" column="event_applicant_id"/>
+        <result property="eventId" column="event_id"/>
+        <result property="memberId" column="member_id"/>
+    </resultMap>
+    <!-- 어드민영역  작성할 수 있다.-->
+    <insert id="insertApplicant" parameterType="com.JYProject.project.model.EventApplicant">
+        insert into event_applicant(event_id, member_id)
+        values (#{eventId},#{memberId});
+    </insert>
+    <select id="findEventIdAndMemberId" resultMap="eventApplicantResultMap">
+            select * from event_applicant where event_id=#{eventId} and member_id=#{memberId};
+    </select>
+</mapper>

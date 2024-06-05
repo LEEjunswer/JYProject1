@@ -20,9 +20,7 @@ import java.util.Map;
 public class MemberAPIController {
 
     private final MemberService memberService;
-
-
-
+    
     @PostMapping(value = "/members/idValidCheck")
     public boolean idValidCheck(@RequestParam String loginId) {
 

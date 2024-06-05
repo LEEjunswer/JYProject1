@@ -21,6 +21,11 @@ public class AdminEventServiceImpl implements AdminEventService {
         return adminEventRepository.insertEvent(conventToEntity(eventDTO));
     }
 
+    @Override
+    public EventDTO findAdminBoardId(Long adminBoardId) {
+    return  convertToDTO(adminEventRepository.findAdminBoardId(adminBoardId));
+    }
+
 
     private Event conventToEntity(EventDTO eventDTO){
         Event event = new Event();

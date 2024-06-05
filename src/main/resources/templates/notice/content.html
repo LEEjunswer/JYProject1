@@ -7,7 +7,8 @@
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
 <div id="content_container">
-<input id="boardId_content" type="hidden" th:attr="data-value=${session.loginId}">
+<input id="event_applicant" type="hidden" th:attr="data-value=${session.loginId}">
+    <input id="event_point" type="hidden" th:attr="event-value=${event.point}">
 <table id="content_board">
     <thead>
     <tr id="boardContent_header">
@@ -38,23 +39,14 @@
     </tbody>
 </table>
 <div id="apply_container">
-<button id="apply-btn" class="btn-check">응모</button>
+
+<button th:if="${event}" id="apply-btn" class="btn btn-outline btn-success">응모</button>
 </div>
 <div id="content_tabs">
     <button type="button"> ㅣ 새로고침 ㅣ</button>
     <button type="button"> ㅣ 본문보기 ㅣ</button>
 </div>
-<div id="review-tabLine" class="form-group">
-    <span  class="form-inline" role="form">
-
-                <span class="bottom-right">
-                    <button type="button" id="content_list" class="btn btn-default">목록</button>
-                    <!--<button th:if="${board.memberInfo.nickname == sessin.nickname}" type="button" id="content_modify" class="btn btn-default">수정</button>
-                    <button th:if="${board.memberInfo.nickname == session.nickname}" type="button" id="content_delete" class="btn btn-default">삭제</button>-->
-                    <!-- <button type="button" id="write" class="btn btn-default">글쓰기</button>-->
-                </span>
-        </span>
-    </div>
 </div>
+<script src="/static/js/notice/content.js"></script>
 </body>
 </html>
