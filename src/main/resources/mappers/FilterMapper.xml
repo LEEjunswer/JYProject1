@@ -5,7 +5,6 @@
       <id property="filterId" column="filter_id" />
        <result property="word" column="word"/>
         <result property="creatAt" column="create_at"/>
-
     </resultMap>
     <insert id="makeFilter" parameterType="com.JYProject.project.model.Filter">
        insert into filter (word) values (#{word});
@@ -13,7 +12,7 @@
     <delete id="deleteFilter" parameterType="Long">
         delete from filter where filter_id=#{id};
     </delete>
-    <select id="getAllFilter" resultType="com.JYProject.project.model.Filter">
+    <select id="getAllFilter" resultMap="filterMap">
         select * from filter;
     </select>
 

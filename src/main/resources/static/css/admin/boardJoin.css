@@ -1,0 +1,10 @@
+#eventPop{
+    display: none;
+}
+#join_eventForm{
+    display:  flex;
+    align-items:  center;
+}
+#join_eventForm > span > input{
+ border: 1px solid black;
+}

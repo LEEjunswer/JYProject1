@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-
 public class BoardServiceImpl implements BoardService {
 
     private final BoardMapperRepository boardMybatisRepository;

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div id="content_container">
+<input id="boardId_content" type="hidden" th:attr="data-value=${session.loginId}">
+<table id="content_board">
+    <thead>
+    <tr id="boardContent_header">
+        <th id="boardContent_title">제목 </th>
+        <th id="boardContent_titleText" th:colspan="4" th:text="${notice.title}"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="content_tr">
+        <td class="content_td">
+            <span>글쓴이 :</span>
+            <span >관리자</span>
+        </td>
+        <td class="content_td">
+            <span>작성일 :</span>
+            <span th:text="${#temporals.format(notice.regDate,'yyyy-MM-dd HH:mm:ss')}">yyyy-MM-dd HH:mm:ss</span>
+        </td>
+        <td class="content_viewCnt">
+            <span>조회수 : </span>
+            <span th:text="${notice.viewCnt}">123</span>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6" id="content">
+            <p th:utext="${notice.content}">글 내용</p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div id="apply_container">
+<button id="apply-btn" class="btn-check">응모</button>
+</div>
+<div id="content_tabs">
+    <button type="button"> ㅣ 새로고침 ㅣ</button>
+    <button type="button"> ㅣ 본문보기 ㅣ</button>
+</div>
+<div id="review-tabLine" class="form-group">
+    <span  class="form-inline" role="form">
+
+                <span class="bottom-right">
+                    <button type="button" id="content_list" class="btn btn-default">목록</button>
+                    <!--<button th:if="${board.memberInfo.nickname == sessin.nickname}" type="button" id="content_modify" class="btn btn-default">수정</button>
+                    <button th:if="${board.memberInfo.nickname == session.nickname}" type="button" id="content_delete" class="btn btn-default">삭제</button>-->
+                    <!-- <button type="button" id="write" class="btn btn-default">글쓰기</button>-->
+                </span>
+        </span>
+    </div>
+</div>
+</body>
+</html>

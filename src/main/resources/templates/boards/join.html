@@ -11,7 +11,6 @@
         <tr>
             <td>
                     <input class="input_type" type="hidden" name="memberId" th:value="${memberId}">
-                    <input class="input_type" type="hidden" name="writer" th:value="${nickname}">
                     <tr id="title_tr">
                         <td class="boardJoin_td">게시글 제목 : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             <input id="title_join" class="input" type="text" name="title">
@@ -57,9 +56,6 @@
                             <input type="button" class="btn btn-outline btn-success"  value="메인으로" th:attr="onclick=|location.href='@{/boards/list}'|">
                         </td>
                     </tr>
-
-            </td>
-        </tr>
     </table>
     </form>
 </div>

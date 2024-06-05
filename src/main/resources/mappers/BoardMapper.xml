@@ -107,8 +107,12 @@
                     from board
                    <if test="categoryId != 0">
                    where  category_id=#{categoryId}
+                       and delete_date IS NULL
                         </if>
-            and delete_date IS NULL
+        <if test="categoryId == 0">
+
+            where  delete_date IS NULL
+        </if>
                 Order By board_id Desc
                     Limit 5;
                 </select>

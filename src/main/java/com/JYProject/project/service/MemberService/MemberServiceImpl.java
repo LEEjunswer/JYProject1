@@ -48,6 +48,8 @@ public class MemberServiceImpl implements  MemberService{
     @Override
     public MemberDTO login(MemberDTO memberDTO){
      Member checkLogin =   memberMybatisRepository.login(convertToEntity(memberDTO));
+
+        System.out.println("checkLogin = " + checkLogin);
         if(checkLogin == null){
             return  null;
         }
@@ -59,7 +61,10 @@ public class MemberServiceImpl implements  MemberService{
         if (lastLoginDate == null || !lastLoginDate.equals(today)) {
 
             int additionalPoints = 10; // 일단 로그인 시 10 포인트 증가
-            memberMybatisRepository.addLoginPoint(checkLogin.getMemberId(), additionalPoints);
+            MemberDTO memberDTO1 = new MemberDTO();
+            memberDTO1.setPoint(additionalPoints);
+            memberDTO1.setMemberId(memberDTO.getMemberId());
+            memberMybatisRepository.addLoginPoint(convertToEntity(memberDTO1));
         }
         memberMybatisRepository.updateLastLogin(checkLogin.getMemberId(), now);
         return convertToDTO(checkLogin);

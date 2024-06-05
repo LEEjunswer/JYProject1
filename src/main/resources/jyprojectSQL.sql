@@ -106,7 +106,7 @@ ALTER TABLE `Like` COMMENT '보드 좋아요 싫어요 했을경우 중보체크
 
 CREATE TABLE deleted_member (
 deleted_id INT ,
-loginid VARCHAR(50) NOT NULL,
+login_id VARCHAR(50) NOT NULL,
 name VARCHAR(50) NOT NULL,
 phone VARCHAR(15) NOT NULL,
 email VARCHAR(100) NOT NULL,
@@ -118,6 +118,39 @@ deleted_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 FOREIGN KEY (deleted_id) REFERENCES member(member_id)
 );
 ALTER TABLE deleted_member COMMENT '회원탈퇴시 1년동안 보관 테이블';
+
+CREATE TABLE admin_board (
+        admin_board_id int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+        member_id int NOT NULL,
+        category int NOT NULL, /* 0은 공지사항  1은 이벤트*/
+        title VARCHAR(50) NOT NULL, -- 제목
+        content VARCHAR(1000) NOT NULL, -- 내용
+        reg_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 등록일자
+        delete_date DATETIME, -- 삭제일자
+        end_date DATETIME, -- 종료일자 // 이벤트시 종료일자 이벤트만 해당
+        view_cnt INT DEFAULT 0, -- 조회수
+        FOREIGN KEY (member_id) REFERENCES member(member_id)
+);
+
+CREATE TABLE event (
+    event_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+    admin_board_id int not null,
+    content VARCHAR(100) not null,
+    point int not null ,
+    start_date DATETIME NOT NULL, -- 이벤트 시작일자
+    end_date DATETIME NOT NULL , -- 종료일자 // 이벤트시 종료일자 이벤트만 해당
+    FOREIGN KEY (admin_board_id) REFERENCES admin_board(admin_board_id)
+);
+
+
+CREATE TABLE event_applicant(
+    event_applicant_id int not null AUTO_INCREMENT PRIMARY KEY ,
+    event_id int not null,
+    member_id int not null,
+    FOREIGN KEY (event_id) REFERENCES event(event_id),
+    FOREIGN KEY (member_id) REFERENCES member(member_id)
+);
+
 
 desc filter;
 desc member;

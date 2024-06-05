@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeleteMember {
-    /*deleteMember Pk*/
+    /*deleteMember fk*/
     private Long deletedId;
     /*로그인아이디*/
     private String loginId;

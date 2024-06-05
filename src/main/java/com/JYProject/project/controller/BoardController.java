@@ -1,6 +1,7 @@
 package com.JYProject.project.controller;
 
 import com.JYProject.project.model.dto.*;
+import com.JYProject.project.service.AdminService.AdminBoardService;
 import com.JYProject.project.service.BoardService.BoardService;
 import com.JYProject.project.service.FileService.FileService;
 import com.JYProject.project.service.MemberService.MemberService;
@@ -26,7 +27,8 @@ public class BoardController {
     private  final BoardService boardService;
     private final MemberService memberService;
     private final ReplyService replyService;
-
+    /*나중에 이름을 바꾸던가 해야겟다*/
+    private final AdminBoardService adminBoardService;
 
 
     @GetMapping("/boards/list")
@@ -35,19 +37,10 @@ public class BoardController {
         model.addAttribute("list" , list);
         return "boards/list";
     }
-    //게시판 만들기 폼
+
     @GetMapping("/boards/join")
-    public String join(HttpSession session,
-                       RedirectAttributes redirectAttributes,Model model) {
-
-        /*    redirectAttributes.addFlashAttribute("error","비로그인시 글을 작성할 수 없습니다");
-            return "redirect:/home";*/
-
+    public String join(HttpSession session, Model model) {
         String loginId = (String) session.getAttribute(SessionConst.USER_ID);
-/*        if(loginId == null){
-            model.addAttribute("updateMessage", "로그인 후에 글쓰기가 가능합니다.");
-            return "redirect:/boards/list";
-        }*/
         MemberDTO  m =  memberService.selectMemberDetail(loginId);
         model.addAttribute("nickname",m.getNickname());
         model.addAttribute("memberId",m.getMemberId());
@@ -61,7 +54,28 @@ public class BoardController {
         model.addAttribute("boardList", list);
         return "/boards/list";
     }
+    
+    /*공지사항 및 이벤트 보드리스트 유저분들에게 보여주기*/
+    @GetMapping("/boards/noticeBoard/{category}")
+    public String noticeBoard(@PathVariable("category")String category,Model model){
+        if(category == null){
+    List<AdminBoardDTO>  noticeList =  adminBoardService.getAllNoticeList();
+        model.addAttribute("noticeList",noticeList);
+    return "/boards/noticeBoard";
+        }
+        int changeCategory= Integer.parseInt(category);
+        List<AdminBoardDTO> noticeList = adminBoardService.getCategoryList(changeCategory);
+        model.addAttribute("noticeList",noticeList);
+       return "/boards/noticeBoard";
+    }
 
+    /*공지사항이나 이베트 content 나중에 수정하거나 뺄 예정*/
+    @GetMapping("/boards/notice/content/{id}")
+    public String noticeContent(@PathVariable("id")Long id,Model model){
+      AdminBoardDTO adminBoardDTO=  adminBoardService.getOneNoticeDetail(id);
+        model.addAttribute("notice", adminBoardDTO);
+        return "/boards/noticeContent";
+    }
     @PostMapping("/boards/join")
     public String create(
             @ModelAttribute BoardDTO boardDTO,

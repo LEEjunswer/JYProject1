@@ -18,7 +18,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class FileAPIController{
 
-    FileService fileService;
+    private final FileService fileService;
 
     @PostMapping("/upload-image")
     public Map<String, String> handleFileUpload(@RequestParam("file") MultipartFile file) {

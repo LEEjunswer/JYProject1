@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head th:replace="~{fragments/head :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div id="boardJoin_container">
+    <form id="postForm" method="post" enctype="multipart/form-data">
+        <table id="board_join">
+            <tr>
+                <td>
+                    <input class="input_type" type="hidden" name="memberId" th:value="${memberId}">
+
+            <tr id="title_tr">
+                <td class="boardJoin_td">게시글 제목 : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input id="title_join" class="input" type="text" name="title">
+                </td>
+            </tr>
+            <tr>
+                <td class="boardJoin_td">
+                    <label>작성자 : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        <input id="input_writer" th:value="${nickname}" type="text" name="writer" disabled>
+                    </label>
+                </td>
+
+            </tr>
+
+            <tr class="boardJoin_hr">
+
+                <td class="boardJoin_td">카테고리 : &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="radio" name="category" value="0" checked>공지사항
+                    <input type="radio" name="category" value="1">이벤트
+                </td>
+            </tr>
+            <tr id="eventPop" class="boardJoin_hr">
+                <td id="join_eventForm" class="boardJoin_td">
+                  <span>  이벤트이름 : <input  type="text" id="eventTitle" name="eventTitle"> </span>
+                    <span>이벤트 포인트 : <input  type="number" id="eventPoint" name="point" min="0"></span>
+                    <span>  시작일 : <input  type="datetime-local" id="eventStartDate" name="startDate"> </span>
+                    <span>  종료일 : <input  type="datetime-local" id="eventEndDate" name="endDate"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="boardJoin_td">
+                    <hr class="boardJoin_hr">
+                    <label id="1">
+                        <textarea id="tinymceTextarea" name="content"></textarea>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td class="boardJoin_submit">
+                    <input type="submit" class="btn btn-outline btn-success gap-2" value="게시글 등록">
+                    <input type="button" class="btn btn-outline btn-success"  value="메인으로" th:attr="onclick=|location.href='@{/boards/noticeBoard}'|">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script src="/static/js/admin/adminBoardJoin.js"></script>
+</body>
+</html>

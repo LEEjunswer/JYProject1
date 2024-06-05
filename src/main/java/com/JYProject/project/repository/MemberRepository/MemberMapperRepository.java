@@ -12,7 +12,7 @@ public interface MemberMapperRepository {
     Member getOneMemberId(Long id);
     Member login(Member member);
     Member selectMemberDetail(String loginId);
-    int addLoginPoint (Long id,int point);
+    int addLoginPoint (Member member);
     int updateMember(Member member);
     int updateLastLogin(Long id , LocalDateTime lastLoginDate);
     int addPointLikes(Long id);

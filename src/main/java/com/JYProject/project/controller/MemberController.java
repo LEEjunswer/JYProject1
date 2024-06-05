@@ -53,8 +53,8 @@ public class MemberController {
         MemberDTO login = memberService.login(memberDTO);
         if (login != null) {
             if(!login.getActive()){
-            model.addAttribute("message","현재 회원님은 계정 비활성화 상태 or 회원탈퇴 유저입니다. 고객센터 문의 부탁드립니다");
-                return "redirect:/";
+                redirectAttributes.addFlashAttribute("error", "로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
+                return "redirect:/members/login";
             }
 
             // 어떻게  받아올지 고민중
