@@ -23,4 +23,6 @@ public class EventDTO {
     private LocalDateTime startDate;
     /*이벤트 종료일자*/
     private LocalDateTime endDate;
+
+    private boolean lotteryCompleted;
 }

@@ -139,6 +139,7 @@ CREATE TABLE event (
     point int not null ,
     start_date DATETIME NOT NULL, -- 이벤트 시작일자
     end_date DATETIME NOT NULL , -- 종료일자 // 이벤트시 종료일자 이벤트만 해당
+    lottery_completed  BOOLEAN default false,/*이벤트 완료시 페이지 안보여주게 하기*/
     FOREIGN KEY (admin_board_id) REFERENCES admin_board(admin_board_id)
 );
 

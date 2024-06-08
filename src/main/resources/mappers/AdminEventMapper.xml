@@ -6,6 +6,7 @@
     <result property="adminBoardId" column="admin_board_id"/>
     <result property="eventTitle" column="content"/>
     <result property="point" column="point"/>
+        <result property="lotteryCompleted" column="lottery_completed"/>
     <result property="startDate" column="start_date"/>
         <result property="endDate" column="end_date"/>
     </resultMap>
@@ -17,4 +18,15 @@
     <select id="findAdminBoardId" parameterType="Long" resultMap="adminEventResultMap">
         select * from event where admin_board_id=#{adminBoardId}
     </select>
+    <!--현재이벤트중이다-->
+    <select id="findDuringEvent" resultMap="adminEventResultMap">
+        select * from event where lottery_completed is false;
+    </select>
+
+    <update id="updateEventEnd" parameterType="Long">
+        update  event
+            set lottery_completed = true
+        where event_id=#{eventId};
+
+    </update>
 </mapper>

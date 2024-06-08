@@ -22,4 +22,7 @@ public class Event {
     private LocalDateTime startDate;
     /*이벤트 종료일자*/
     private LocalDateTime endDate;
+
+    /*이벤트 추첨완료 */
+    private boolean lotteryCompleted;
 }

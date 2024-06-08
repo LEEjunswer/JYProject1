@@ -7,6 +7,9 @@ import com.JYProject.project.repository.AdminRepository.AdminEventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class AdminEventServiceImpl implements AdminEventService {
@@ -24,6 +27,16 @@ public class AdminEventServiceImpl implements AdminEventService {
     @Override
     public EventDTO findAdminBoardId(Long adminBoardId) {
     return  convertToDTO(adminEventRepository.findAdminBoardId(adminBoardId));
+    }
+
+    @Override
+    public List<EventDTO> findDuringEvent() {
+        return adminEventRepository.findDuringEvent().stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public int updateEventEnd(Long eventId) {
+        return adminEventRepository.updateEventEnd(eventId);
     }
 
 

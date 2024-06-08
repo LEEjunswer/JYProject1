@@ -4,6 +4,18 @@
         <id property="eventApplicantId" column="event_applicant_id"/>
         <result property="eventId" column="event_id"/>
         <result property="memberId" column="member_id"/>
+        <result property="winning" column="winning"/>
+        <association property="memberInfo"  javaType="com.JYProject.project.model.Member" resultMap="memberResultInfo" />
+        <association property="eventInfo" javaType="com.JYProject.project.model.Event" resultMap="eventResultInfo"/>
+    </resultMap>
+    <resultMap id="memberResultInfo" type="com.JYProject.project.model.Member">
+        <id column="member_id" property="memberId" />
+        <result column="nickname" property="nickname" />
+        <result column="point" property="point"/>
+    </resultMap>
+    <resultMap id="eventResultInfo" type="com.JYProject.project.model.Event">
+    <id column="event_id" property="eventId" />
+    <result column="point" property="point" />
     </resultMap>
     <!-- 어드민영역  작성할 수 있다.-->
     <insert id="insertApplicant" parameterType="com.JYProject.project.model.EventApplicant">
@@ -13,4 +25,32 @@
     <select id="findEventIdAndMemberId" resultMap="eventApplicantResultMap">
             select * from event_applicant where event_id=#{eventId} and member_id=#{memberId};
     </select>
+    <update id="resultFailWinning" parameterType="Long">
+        update event_applicant SET winning = FALSE
+        where event_id=#{eventId} and winning is null;
+    </update>
+
+    <update id="updateWinningRandom" parameterType="map">
+        update event_applicant ea
+            join (
+                select event_applicant_id
+                from event_applicant
+                where event_id = #{eventId}
+                order BY RAND()
+                limit #{numWinners}
+            ) winners on ea.event_applicant_id = winners.event_applicant_id
+        set ea.winning = true;
+    </update>
+    <!--당첨자 체크-->
+    <select id="resultCheckWinner" parameterType="Long" resultMap="eventApplicantResultMap">
+    select * from event_applicant where event_id=#{eventId} and winning is true;
+    </select>
+    <!--포인트 이벤트시 당첨자들한테 포인트 지급-->
+    <update id="winningPointReward" parameterType="Long">
+    update event_applicant ea
+    join member m on ea.member_id = m.member_id
+    join event et on ea.event_id =et.event_id
+    set m.point =m.point + et.point
+    where ea.event_id =#{eventId} and winning is true;
+    </update>
 </mapper>

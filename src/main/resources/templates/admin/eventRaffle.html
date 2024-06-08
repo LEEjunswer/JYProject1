@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div id="eventRaffle-container">
+    <div class="login-header">
+        <h2>현재 진행중인 이벤트</h2>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>이벤트</th>
+                <th>당첨인원</th>
+                <th>응모포인트</th>
+                <th>시작일</th>
+                <th>종료일</th>
+                <!--밑에는 포인트이벤트인지 다른이벤트인지-->
+                <th>포인트이벤트</th>
+                <th>추첨하기</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="bg-base-200" th:each=" event, Stat : ${eventList}">
+                <input type="hidden" class="eventId_value" th:attr="data-value=${event.eventId}">
+                <th th:text="${Stat.index + 1}">번호</th>
+                <td th:text="${event.eventTitle}">이벤트내용</td>
+                <td><input type="number"  class="eventNum_input input input-bordered input-xs w-24 max-w-xs" placeholder="추첨인원 적기"> 명</td>
+                <td th:text="${event.point + ' 포인트'}">응모포인트</td>
+                <td th:text="${#temporals.format(event.startDate, 'yyyy-MM-dd-HH-mm-ss')}">시작일</td>
+                <td th:text="${#temporals.format(event.endDate, 'yyyy-MM-dd-HH-mm-ss')}">종료일</td>
+                <td>
+                    <label>
+                        <select class="eventPointCheck" name="eventPointCheck">
+                            <option value=""></option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </label>
+                </td>
+                <td><button class="eventRaffle_start btn btn-success">추첨시작</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="/static/js/admin/adminRaffle.js"></script>
+</body>
+</html>

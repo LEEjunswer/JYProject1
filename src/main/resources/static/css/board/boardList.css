@@ -1,7 +1,7 @@
 
 #board-container {
     text-align: center;
-    width: 80%;
+    width: 1280px;
 }
 #board_header {
     display: flex;

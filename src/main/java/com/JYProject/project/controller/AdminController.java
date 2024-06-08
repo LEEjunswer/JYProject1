@@ -6,6 +6,7 @@ import com.JYProject.project.model.dto.EventDTO;
 import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.service.AdminService.AdminBoardService;
 import com.JYProject.project.service.AdminService.AdminEventService;
+import com.JYProject.project.service.EventApplicantService.EventApplicantService;
 import com.JYProject.project.service.FilterService.FilterService;
 import com.JYProject.project.service.MemberService.MemberService;
 import com.JYProject.project.session.SessionConst;
@@ -13,22 +14,17 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class AdminController {
-
-    private final FilterService filterService;
     private final MemberService memberService;
     private final AdminEventService adminEventService;
     private final AdminBoardService adminBoardService;
-
+    private final EventApplicantService eventApplicantService;
     @GetMapping("/admin/adminBoardJoin")
     public String create(HttpSession session, Model model){
         String loginId = (String) session.getAttribute(SessionConst.USER_ID);
@@ -51,5 +47,27 @@ public class AdminController {
         adminBoardService.insertNotice(adminBoardDTO);
         return "redirect:/";
     }
-
+    /*이벤트중인거 가져오기*/
+    @GetMapping("/admin/raffle")
+    public String raffle(Model model){
+          List<EventDTO> eventDTOList =  adminEventService.findDuringEvent();
+        System.out.println("eventDTOList = " + eventDTOList);
+          model.addAttribute("eventList", eventDTOList);
+        return "/admin/eventRaffle";
+    }
+    //이벤트 추첨
+    @PostMapping("/admin/raffle/{people}/{eventId}/{checkPoint}")
+    public String raffleStart(@PathVariable("people")int people,@PathVariable("eventId")Long eventId,@PathVariable("checkPoint")boolean checkPoint){
+        /*포인트이벤트 X */
+        if(!checkPoint) {
+            eventApplicantService.updateWinningRandom(eventId, people);
+            eventApplicantService.resultFailWinning(eventId);
+            return "redirect:/admin/eventRaffle";
+        }
+        /*포안트이벤트 O */
+        eventApplicantService.updateWinningRandom(eventId, people);
+        eventApplicantService.resultFailWinning(eventId);
+        eventApplicantService.resultCheckWinner(eventId);
+        return "redirect:/admin/eventRaffle";
+    }
 }

@@ -15,4 +15,9 @@ public class EventApplicant {
     private Long eventId;
     /*멤버 외래키*/
     private Long memberId;
+    /*당첨자인지아닌지 처음은 null no면 false 고 True 당첨자*/
+    private boolean winning;
+
+    private Event eventInfo;
+    private Member memberInfo;
 }
