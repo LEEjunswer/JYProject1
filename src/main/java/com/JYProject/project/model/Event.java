@@ -22,7 +22,10 @@ public class Event {
     private LocalDateTime startDate;
     /*이벤트 종료일자*/
     private LocalDateTime endDate;
-
+    /*포인트 이벤트인가 아닌가*/
+    private boolean eventPoint;
+    /* 이벤트 포인트시 값을 입력받고 그 값을 당첨시 포인트를 준다 */
+    private int pointReward;
     /*이벤트 추첨완료 */
     private boolean lotteryCompleted;
 }

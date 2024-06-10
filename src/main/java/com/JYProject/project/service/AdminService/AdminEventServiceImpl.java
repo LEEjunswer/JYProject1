@@ -26,7 +26,9 @@ public class AdminEventServiceImpl implements AdminEventService {
 
     @Override
     public EventDTO findAdminBoardId(Long adminBoardId) {
-    return  convertToDTO(adminEventRepository.findAdminBoardId(adminBoardId));
+     EventDTO eventDTO = convertToDTO(adminEventRepository.findAdminBoardId(adminBoardId));
+        System.out.println("eventDTO = " + eventDTO);
+     return eventDTO;
     }
 
     @Override
@@ -39,6 +41,11 @@ public class AdminEventServiceImpl implements AdminEventService {
         return adminEventRepository.updateEventEnd(eventId);
     }
 
+    @Override
+    public EventDTO findByEventId(Long eventId) {
+        return convertToDTO(adminEventRepository.findByEventId(eventId));
+    }
+
 
     private Event conventToEntity(EventDTO eventDTO){
         Event event = new Event();
@@ -48,6 +55,9 @@ public class AdminEventServiceImpl implements AdminEventService {
         event.setPoint(eventDTO.getPoint());
         event.setStartDate(eventDTO.getStartDate());
         event.setEndDate(eventDTO.getEndDate());
+        event.setLotteryCompleted(eventDTO.isLotteryCompleted());
+        event.setEventPoint(eventDTO.isEventPoint());
+        event.setPointReward(eventDTO.getPointReward());
         return event;
     }
     private EventDTO convertToDTO(Event event){
@@ -58,6 +68,9 @@ public class AdminEventServiceImpl implements AdminEventService {
         eventDTO.setPoint(event.getPoint());
         eventDTO.setStartDate(event.getStartDate());
         eventDTO.setEndDate(event.getEndDate());
+        eventDTO.setLotteryCompleted(event.isLotteryCompleted());
+        eventDTO.setEventPoint(event.isEventPoint());
+        eventDTO.setPointReward(event.getPointReward());
         return eventDTO;
     }
 }

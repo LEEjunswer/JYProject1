@@ -17,5 +17,6 @@ public interface EventApplicantMapperRepository {
     /*밑에는 이벤트 당첨자 리스트 가져오기*/
     List<EventApplicant> resultCheckWinner(Long eventId);
     void winningPointReward(Long eventId);
-
+    /* 응모자 가져오기*/
+    int findByEventIdCount(Long eventId);
 }

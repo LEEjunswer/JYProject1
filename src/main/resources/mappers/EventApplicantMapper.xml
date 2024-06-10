@@ -16,6 +16,7 @@
     <resultMap id="eventResultInfo" type="com.JYProject.project.model.Event">
     <id column="event_id" property="eventId" />
     <result column="point" property="point" />
+        <result column="pointReward" property="point_reward" />
     </resultMap>
     <!-- 어드민영역  작성할 수 있다.-->
     <insert id="insertApplicant" parameterType="com.JYProject.project.model.EventApplicant">
@@ -45,12 +46,16 @@
     <select id="resultCheckWinner" parameterType="Long" resultMap="eventApplicantResultMap">
     select * from event_applicant where event_id=#{eventId} and winning is true;
     </select>
+    <select id="findByEventIdCount" parameterType="Long" resultType="Integer">
+        select COUNT(*) from event_applicant where event_id=#{eventId};
+    </select>
     <!--포인트 이벤트시 당첨자들한테 포인트 지급-->
     <update id="winningPointReward" parameterType="Long">
     update event_applicant ea
     join member m on ea.member_id = m.member_id
     join event et on ea.event_id =et.event_id
-    set m.point =m.point + et.point
+    set m.point =m.point + et.point_reward
     where ea.event_id =#{eventId} and winning is true;
     </update>
+
 </mapper>

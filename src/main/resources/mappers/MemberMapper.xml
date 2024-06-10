@@ -110,4 +110,9 @@
             set profile =#{profileImg}
                 where login_id =#{loginId};
     </update>
+    <update id="addApplicantEvent" parameterType="com.JYProject.project.model.Member">
+        update  member
+        SET point = point - #{point}
+        where member_id= #{memberId};
+    </update>
 </mapper>

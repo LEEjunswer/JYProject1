@@ -106,6 +106,8 @@ else if( idCheck === 0 ||nickNameCheck === 0){
     submitButton.disabled = false;
     return;
 }
+    let nickValue = document.getElementById("nickname").value;
+alert(nickValue+ "님 회원가입을 축하합니다.");
 form.submit();
 }
 

@@ -1,10 +1,18 @@
 #eventPop{
     display: none;
 }
+#input_pointReward{
+    display: none;
+    text-align: center;
+    align-items: center;
+}
 #join_eventForm{
     display:  flex;
     align-items:  center;
 }
 #join_eventForm > span > input{
  border: 1px solid black;
+}
+#pointReward{
+    border: 1px solid black;
 }

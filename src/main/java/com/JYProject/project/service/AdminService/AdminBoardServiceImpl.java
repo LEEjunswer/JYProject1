@@ -17,13 +17,16 @@ import java.util.stream.Collectors;
 public class AdminBoardServiceImpl implements AdminBoardService {
 
     private  final AdminBoardRepository adminBoardRepository;
-    private final FileService fileService;
+
     @Override
     public Long insertNotice(AdminBoardDTO adminBoardDTO) {
         String contentChangeImgPath= adminBoardDTO.getContent().replace("../uploads/", "http://localhost:8082/uploads/");
         adminBoardDTO.setContent(contentChangeImgPath);
 
-        return adminBoardRepository.insertNotice(convertToEntity(adminBoardDTO));
+        AdminBoard adminBoard = convertToEntity(adminBoardDTO);
+        adminBoardRepository.insertNotice(adminBoard);
+        adminBoardDTO.setAdminBoardId(adminBoard.getAdminBoardId());
+        return adminBoardDTO.getAdminBoardId();
     }
 
     @Override
@@ -54,7 +57,7 @@ public class AdminBoardServiceImpl implements AdminBoardService {
     return  adminBoard;
     }
 
-    public AdminBoardDTO convertToDTO(AdminBoard adminBoard) {
+    private AdminBoardDTO convertToDTO(AdminBoard adminBoard) {
         AdminBoardDTO adminBoardDTO = new AdminBoardDTO();
         adminBoardDTO.setAdminBoardId(adminBoard.getAdminBoardId());
         adminBoardDTO.setContent(adminBoard.getContent());

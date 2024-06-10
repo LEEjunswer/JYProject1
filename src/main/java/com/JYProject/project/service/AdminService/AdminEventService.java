@@ -12,4 +12,5 @@ public interface AdminEventService {
     EventDTO findAdminBoardId(Long adminBoardId);
     List<EventDTO> findDuringEvent();
     int updateEventEnd(Long eventId);
+    EventDTO findByEventId(Long eventId);
 }

@@ -2,20 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.JYProject.project.repository.AdminRepository.AdminBoardRepository">
     <resultMap id="adminBoardResultMap" type="com.JYProject.project.model.AdminBoard">
-        <id property="adminBoardId" column="admin_board_id"/>
-        <result property="category" column="category"/>
-        <result property="title" column="title"/>
-        <result property="content" column="content"/>
-        <result property="viewCnt" column="view_cnt"/>
-        <result property="regDate" column="reg_date"/>
-        <result property="deleteDate" column="delete_date"/>
-        <result property="endDate" column="end_date"/>
-    </resultMap>
-    <!--어드민영역 공지사항 및  게시글을 작성할 수 있다. 관리자가 만약에 많을경우 member_id를 줘서 누군지 찾아야하기떄문-->
-    <insert id="insertNotice" parameterType="com.JYProject.project.model.AdminBoard" useGeneratedKeys="true" keyProperty="adminBoardId">
-            insert into admin_board(member_id, category, title, content)
-                values(#{memberId},#{category},#{title},#{content})
-    </insert>
+            <id property="adminBoardId" column="admin_board_id"/>
+            <result property="category" column="category"/>
+            <result property="title" column="title"/>
+            <result property="content" column="content"/>
+            <result property="viewCnt" column="view_cnt"/>
+            <result property="regDate" column="reg_date"/>
+            <result property="deleteDate" column="delete_date"/>
+            <result property="endDate" column="end_date"/>
+        </resultMap>
+        <!--어드민영역 공지사항 및  게시글을 작성할 수 있다. 관리자가 만약에 많을경우 member_id를 줘서 누군지 찾아야하기떄문-->
+        <insert id="insertNotice" parameterType="com.JYProject.project.model.AdminBoard" useGeneratedKeys="true" keyProperty="adminBoardId">
+                insert into admin_board(member_id, category, title, content)
+                    values(#{memberId},#{category},#{title},#{content})
+        </insert>
     <select id="getAllNoticeList" resultMap="adminBoardResultMap">
         select * from admin_board
     </select>

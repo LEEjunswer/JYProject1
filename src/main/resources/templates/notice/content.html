@@ -7,8 +7,7 @@
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
 <div id="content_container">
-<input id="event_applicant" type="hidden" th:attr="data-value=${session.loginId}">
-    <input id="event_point" type="hidden" th:attr="event-value=${event.point}">
+
 <table id="content_board">
     <thead>
     <tr id="boardContent_header">
@@ -38,12 +37,16 @@
     </tr>
     </tbody>
 </table>
-<div id="apply_container">
-
-<button th:if="${event}" id="apply-btn" class="btn btn-outline btn-success">응모</button>
+<div th:if="${event}" id="apply_container">
+    <input id="event_point"  class="d-none" type="hidden" th:attr="event-value=${event.point}">
+    <input id="myPoint"  class="d-none"  type="hidden" th:attr="data-myPoint=${myPoint}">
+    <input id="event_id" class="d-none" type="hidden" th:attr="data-value=${event.eventId}">
+    <input id="data_id" class="d-none" type="hidden" th:attr="data-id=${session.loginId}">
+    <button th:if="${applied != 'applied'}" id="apply-btn" class="btn btn-outline btn-success">응모</button>
+    <button th:if="${applied == 'applied'}" class="btn" disabled="disabled">응모완료</button>
 </div>
 <div id="content_tabs">
-    <button type="button"> ㅣ 새로고침 ㅣ</button>
+    <button type="button" id="refresh-btn"> ㅣ 새로고침 ㅣ</button>
     <button type="button"> ㅣ 본문보기 ㅣ</button>
 </div>
 </div>

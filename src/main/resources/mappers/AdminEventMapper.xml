@@ -6,17 +6,22 @@
     <result property="adminBoardId" column="admin_board_id"/>
     <result property="eventTitle" column="content"/>
     <result property="point" column="point"/>
+        <result property="eventPoint" column="event_point"/>
+        <result property="pointReward" column="point_reward"/>
         <result property="lotteryCompleted" column="lottery_completed"/>
     <result property="startDate" column="start_date"/>
         <result property="endDate" column="end_date"/>
     </resultMap>
     <!-- 어드민영역  작성할 수 있다.-->
     <insert id="insertEvent" parameterType="com.JYProject.project.model.Event">
-            insert into event(admin_board_id, content, point, start_date, end_date)
-            values (#{adminBoardId},#{eventTitle},#{point},#{startDate},#{endDate});
+            insert into event(admin_board_id, content, point, start_date, end_date,event_point,point_reward)
+            values (#{adminBoardId},#{eventTitle},#{point},#{startDate},#{endDate},#{eventPoint},#{pointReward});
     </insert>
     <select id="findAdminBoardId" parameterType="Long" resultMap="adminEventResultMap">
-        select * from event where admin_board_id=#{adminBoardId}
+        select * from event where admin_board_id=#{adminBoardId};
+    </select>
+    <select id="findByEventId" parameterType="Long" resultMap="adminEventResultMap">
+        select * from event where event_id=#{eventId};
     </select>
     <!--현재이벤트중이다-->
     <select id="findDuringEvent" resultMap="adminEventResultMap">

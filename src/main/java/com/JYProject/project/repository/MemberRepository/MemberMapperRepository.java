@@ -28,5 +28,5 @@ public interface MemberMapperRepository {
     int selectMemberTotalCount();
     boolean checkIdAndPw(Member member);
     void updateProfileImg(String loginId , String profileImg);
-
+    int addApplicantEvent(Member member);
 }

@@ -11,4 +11,5 @@ public interface AdminEventRepository {
     Event findAdminBoardId(Long adminBoardId);
     List<Event> findDuringEvent();
     int updateEventEnd(Long eventId);
+    Event findByEventId(Long eventId);
 }

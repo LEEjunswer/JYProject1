@@ -25,5 +25,5 @@ public interface MemberService {
      int selectMemberTotalCount();
      boolean checkIdAndPw(MemberDTO memberDTO);
     void updateProfileImage(String loginId, MultipartFile profileImage) throws  IOException;
-
+    int addApplicantEvent(MemberDTO memberDTO);
 }

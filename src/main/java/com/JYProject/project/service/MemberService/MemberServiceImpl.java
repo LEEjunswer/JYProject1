@@ -157,6 +157,10 @@ public class MemberServiceImpl implements  MemberService{
         memberMybatisRepository.updateProfileImg(loginId, profileImg);
     }
 
+    @Override
+    public int addApplicantEvent(MemberDTO memberDTO) {
+        return memberMybatisRepository.addApplicantEvent(convertToEntity(memberDTO));
+    }
 
 
     private Member convertToEntity(MemberDTO memberDTO){

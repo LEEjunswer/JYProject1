@@ -3,18 +3,44 @@ const boardTitle = document.getElementById("title_join");
 const eventPop = document.getElementById('eventPop');
 const uploadedImageUrls = [];
 let radioButtons = document.querySelectorAll('input[name="category"]');
+let isEventPoints = document.querySelectorAll('input[name="isEventPoint"]');
 let startDateField = document.getElementById('eventStartDate');
 let endDateField = document.getElementById('eventEndDate');
 let eventTitle =document.getElementById('eventTitle');
 let eventPoint = document.getElementById('eventPoint');
+let inputPointReward =document.getElementById('input_pointReward');
+let pointReward =document.getElementById('pointReward');
+let inputPointSpan = document.getElementById('inputPoint_span');
 let eventPointValue  ;
+let eventPointRewardValue;
+let isEventPointCheck ="false";
+let isEventPoint =false;
+isEventPoints.forEach(function(radioButton) {
+    radioButton.addEventListener('change', function() {
+        if (this.value === "1") {
+            isEventPointCheck ="false";
+            inputPointSpan.style.display = 'none';
+            isEventPoint= false;
+        } else {
+            isEventPoint= true;
+            isEventPointCheck="true";
+            inputPointSpan.style.display = 'inline-block';
+        }
+    });
+});
+pointReward.addEventListener('input',()=>{
+    if(pointReward.value < 0){
+        alert("0이하는 사용이 안됩니다.");
+        pointReward.value=0;
+    }
+    eventPointRewardValue=pointReward.value;
+})
 eventPoint.addEventListener('input',() =>{
     if(eventPoint.value < 0){
         alert("음수를 사용하실 수 없습니다");
         eventPoint.value = 0;
     }
     eventPointValue=eventPoint.value;
-    console.log(eventPointValue);
 })
 
 startDateField.min = getCurrentDateTime();
@@ -36,9 +62,13 @@ radioButtons.forEach(function(radioButton) {
     radioButton.addEventListener('change', function() {
         if (this.value === "1") {
             eventPop.style.display = 'block';
+            inputPointReward.style.display='block';
+            isEventPointCheck="true";
         } else {
-
             eventPop.style.display = 'none';
+            inputPointReward.style.display = 'none';
+            isEventPointCheck="false";
+            pointReward=0;
         }
     });
 });
@@ -122,21 +152,23 @@ function handleSubmit(event) {
         alert("내용을 입력해주세요.");
         return;
     }
+    eventPointValue = eventPointValue !== undefined ? eventPointValue : 0;
+    eventPointRewardValue = eventPointRewardValue !== undefined ? eventPointRewardValue : 0;
+
     formData.set("startDate",  startDateField.value);
     formData.set("eventTitle", eventTitle.value);
     formData.set("endDate", endDateField.value);
     formData.set("point",  eventPointValue);
-
+    formData.set("eventPoint",  isEventPointCheck);
+    formData.set("pointReward",eventPointRewardValue);
 
     fetch('/admin/boardJoin', {
         method: 'POST',
         body: formData
     })
         .then(response => {
-
                 alert('게시글 등록에 성공했습니다.');
-                window.location.href = '/';
-
+                window.location.href='/admin/raffle';
         })
         .catch(error => {
             console.error('게시글 등록 중 오류 발생:', error);
