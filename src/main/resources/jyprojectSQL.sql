@@ -59,8 +59,8 @@ CREATE TABLE reply
     reg_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일자',
     update_date DATETIME, -- 수정일자
     delete_date DATETIME, -- 삭제일자
-    likes INT DEFAULT 0, -- 좋아요 수
-    dislikes INT DEFAULT 0, -- 싫어요 수
+   /* likes INT DEFAULT 0, -- 좋아요 수
+    dislikes INT DEFAULT 0, -- 싫어요 수*/
 
     FOREIGN KEY (member_id) REFERENCES Member(member_id),
     FOREIGN KEY (Board_id) REFERENCES Board(board_id)
@@ -153,8 +153,40 @@ CREATE TABLE event_applicant(
     FOREIGN KEY (event_id) REFERENCES event(event_id),
     FOREIGN KEY (member_id) REFERENCES member(member_id)
 );
+CREATE TABLE question (
+    question_id int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+    board_id int not null, /*카테고리가 6질문*/
+    member_id int NOT NULL,
+    question_point int not null, /*내공자 포인트*/
+    reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    adoption_date timestamp null, /*채택됐다는걸 불리언 or 타임스탬프으로 고민하다가 타임스탬프로 진행시켰다. */
+    delete_date timestamp null,
+    FOREIGN KEY (board_id) REFERENCES  board(board_id),
+    FOREIGN KEY (member_id) REFERENCES member(member_id)
+);
 
+CREATE TABLE adopter (
+    adopter_id int AUTO_INCREMENT PRIMARY KEY,
+    question_id int NOT NULL,
+    member_id int NOT NULL, /*채택자 멤버 아이디*/
+    reply_id int not null,
+    adoption_point int not null,  /*채택된 포인트*/
+    reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    delete_date timestamp null,
 
+    FOREIGN KEY (question_id) REFERENCES question(question_id),
+    FOREIGN KEY (member_id) REFERENCES member(member_id),
+    Foreign Key (reply_id) REFERENCES  reply(reply_id)
+);
+
+/*1.자유 2.정보 3.추천 4.후기 5.기타 6.질문
+insert into category(category_name) values("자유");
+insert into category(category_name) values("정보");
+insert into category(category_name) values("추천");
+insert into category(category_name) values("후기");
+insert into category(category_name) values("기타");
+insert into category(category_name) values("질문");
+어드민영역 insert into member (login_id,pw,nickname,name,email) values("admin","admin","admin","admin","adminmoa.com");*/
 desc filter;
 desc member;
 desc file;

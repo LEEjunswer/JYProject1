@@ -43,12 +43,14 @@ public class NoticeController {
     @GetMapping("/notice/content/{id}")
     public String noticeContent(@PathVariable("id")Long id, Model model, HttpSession session){
          String userId  = (String) session.getAttribute(SessionConst.USER_ID);
+        adminBoardService.boardViewCntIncrease(id);
 
         /*이벤트 체크여부 이벤트가 있을시 같이 넘겨주고 응모를 할수 있게만든다*/
         if(adminEventService.findAdminBoardId(id) != null) {
         EventDTO eventDTO = adminEventService.findAdminBoardId(id);
         if (userId != null) {
             MemberDTO memberDTO= memberService.selectMemberDetail(userId);
+
             if (eventApplicantService.findEventIdAndMemberId(eventDTO.getEventId(), memberDTO.getMemberId()) != null) {
                 model.addAttribute("applied", "applied");
             }

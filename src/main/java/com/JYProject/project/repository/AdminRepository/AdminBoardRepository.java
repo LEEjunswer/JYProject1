@@ -12,4 +12,5 @@ public interface AdminBoardRepository {
     List<AdminBoard> getCategoryList(int category);
     AdminBoard getOneNoticeDetail(Long id);
     List<AdminBoard> getAllNoticeList();
+    int boardViewCntIncrease(Long adminBoardId);
 }

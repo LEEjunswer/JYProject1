@@ -57,7 +57,7 @@ public class AdminController {
         return "/admin/eventRaffle";
     }
     //이벤트 추첨
-    @PostMapping("/admin/raffle/{people}/{eventId}/{checkPoint}")
+    @PostMapping("/admin/raffle/{people}/{eventId}")
     public String raffleStart(@PathVariable("people")int people,@PathVariable("eventId")Long eventId){
        EventDTO eventDTO= adminEventService.findByEventId(eventId);
         /*밑에는 나중에 한꺼번에 줄여보자 위랑*/

@@ -27,7 +27,6 @@ public class AdminEventServiceImpl implements AdminEventService {
     @Override
     public EventDTO findAdminBoardId(Long adminBoardId) {
      EventDTO eventDTO = convertToDTO(adminEventRepository.findAdminBoardId(adminBoardId));
-        System.out.println("eventDTO = " + eventDTO);
      return eventDTO;
     }
 

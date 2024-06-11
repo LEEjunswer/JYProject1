@@ -12,4 +12,5 @@ public interface AdminBoardService {
     List<AdminBoardDTO> getCategoryList(int category);
     AdminBoardDTO getOneNoticeDetail(Long id);
     List<AdminBoardDTO> getAllNoticeList();
+    int boardViewCntIncrease(Long id);
 }

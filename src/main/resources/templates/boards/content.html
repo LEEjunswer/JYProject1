@@ -56,7 +56,7 @@
                 <span id="count_review" th:text="'(' + ${replies.getTotalCount()} + ')'">(1)</span>
                 <span class="bottom-right">
                     <button type="button" id="content_list" class="btn btn-default">목록</button>
-                    <button th:if="${board.memberInfo.nickname == sessin.nickname}" type="button" id="content_modify" class="btn btn-default">수정</button>
+                    <button th:if="${board.memberInfo.nickname == session.nickname}" type="button" id="content_modify" class="btn btn-default">수정</button>
                     <button th:if="${board.memberInfo.nickname == session.nickname}" type="button" id="content_delete" class="btn btn-default">삭제</button>
                     <!-- <button type="button" id="write" class="btn btn-default">글쓰기</button>-->
                 </span>

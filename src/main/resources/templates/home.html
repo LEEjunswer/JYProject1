@@ -30,12 +30,12 @@
             <div th:each="board, boardStat : ${boards}" class="home card w-40 h-25 bg-base-100 shadow-xl">
                 <a th:href="@{/boards/content/{boardId}(boardId=${board.boardId})}">
                     <figure class="homeFull">
-                        <img th:if="${boardStat.index < files.size() and files[boardStat.index].getFirstFileName() != null }"
-                             th:src="@{${files[boardStat.index].getFirstFileName()}}"
-                             alt="img" />
-                        <img th:unless="${boardStat.index < files.size() and files[boardStat.index].getFirstFileName() != null }"
+                        <img th:if="${boardStat.index < files.size()} and ${files[boardStat.index] != null} and ${#strings.length(files[boardStat.index].firstFileName) > 0}"
+                             th:src="@{${files[boardStat.index].firstFileName}}"
+                             alt="Cimg" />
+                        <img th:unless="${boardStat.index < files.size()} and ${files[boardStat.index] != null} and ${#strings.length(files[boardStat.index].firstFileName) > 0}"
                              th:src="@{/static/img/unnamed.jpg}"
-                             alt="img" />
+                             alt="notImg" />
                     </figure>
                 <div class="home card-body">
                     <p th:text="${board.getTitle()}">제목</p>

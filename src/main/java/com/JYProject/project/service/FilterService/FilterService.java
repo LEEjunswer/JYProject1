@@ -6,10 +6,9 @@ import java.util.List;
 
 public interface FilterService {
 
-    public int makeFilter(FilterDTO filterDTO);
+    int makeFilter(FilterDTO filterDTO);
 
-    public int deleteFilter(Long id);
-    public List<FilterDTO> getAllFilter();
-
-    public FilterDTO getOneFilter(Long id);
+    int deleteFilter(Long id);
+    List<FilterDTO> getAllFilter();
+    FilterDTO getOneFilter(Long id);
 }

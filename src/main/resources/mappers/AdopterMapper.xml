@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.JYProject.project.repository.AdopterRepository.AdopterMapperRepository">
+    <resultMap id="adopterResultMap" type="com.JYProject.project.model.Adopter">
+        <id property="adopterId" column="adopter_id"/>
+        <result property="memberId" column="member_id"/>
+        <result property="questionId" column="question_id"/>
+        <result property="adoptionPoint" column="adoption_point"/>
+        <result property="regDate" column="reg_date"/>
+        <result property="deleteDate" column="delete_date"/>
+    </resultMap>
+</mapper>

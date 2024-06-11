@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public interface BoardService {
 
-     int insertBoard(BoardDTO boardDTO ,List<String> fileUrls)throws Exception;
+     Long insertBoard(BoardDTO boardDTO ,List<String> fileUrls)throws Exception;
      BoardDTO selectBoardDetail(Long boardId);
      BoardDTO handleBoardView(Long boardId, String userId, String nickName);
      int updateBoard(BoardDTO boardDTO);

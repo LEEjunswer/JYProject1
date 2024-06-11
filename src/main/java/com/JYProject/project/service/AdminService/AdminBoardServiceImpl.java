@@ -44,6 +44,11 @@ public class AdminBoardServiceImpl implements AdminBoardService {
         return adminBoardRepository.getAllNoticeList().stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
+    @Override
+    public int boardViewCntIncrease(Long id) {
+        return adminBoardRepository.boardViewCntIncrease(id);
+    }
+
     private AdminBoard convertToEntity(AdminBoardDTO adminBoardDTO){
     AdminBoard adminBoard = new AdminBoard();
     adminBoard.setAdminBoardId(adminBoardDTO.getAdminBoardId());

@@ -22,7 +22,11 @@
     <select id="getOneNoticeDetail" parameterType="Long" resultMap="adminBoardResultMap">
         select * from admin_board where admin_board_id=#{id};
     </select>
-
+    <update id="boardViewCntIncrease" parameterType="Long">
+        update admin_board
+        set view_cnt = view_cnt+1
+        where admin_board_id=#{adminBoardId};
+    </update>
     <select id="getCategoryList" parameterType="int" resultMap="adminBoardResultMap">
         select * from admin_board where category=#{category};
     </select>

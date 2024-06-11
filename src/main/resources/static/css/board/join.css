@@ -4,6 +4,12 @@
 
     height: 600px;
 }
+#question_point{
+    display: none;
+}
+#questionPoint{
+    border:  1px solid blue;
+}
 #title_join{
     height: 20px;
     border: 1px solid black;

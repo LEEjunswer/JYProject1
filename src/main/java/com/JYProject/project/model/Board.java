@@ -27,7 +27,7 @@ public class Board {
     //("수정일자")
     private LocalDateTime updateDate;
     //("삭제일자 처음에는 Null")
-    private LocalDateTime deletedDate;
+    private LocalDateTime deleteDate;
     //("글내용")
     private String content;
     //("조회수")

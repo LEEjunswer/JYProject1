@@ -103,19 +103,19 @@
     </select>
 
     <select id="boardGetCategoryList" parameterType="Integer" resultMap="boardResultMap">
-                    select *
-                    from board
-                   <if test="categoryId != 0">
-                   where  category_id=#{categoryId}
-                       and delete_date IS NULL
-                        </if>
-        <if test="categoryId == 0">
-
-            where  delete_date IS NULL
+        select b.*, m.nickname
+        from board b
+        join member m on b.member_id = m.member_id
+        <if test="categoryId != 0">
+            where b.category_id = #{categoryId}
+            and b.delete_date IS NULL
         </if>
-                Order By board_id Desc
-                    Limit 5;
-                </select>
+        <if test="categoryId == 0">
+            where b.delete_date IS NULL
+        </if>
+        Order By b.board_id Desc
+        Limit 5;
+    </select>
     <select id="getMyBoardList" parameterType="Long" resultMap="boardResultMap">
         select b.* , m.nickname
         from board b   join member m on b.member_id = #{memberId}
@@ -144,10 +144,14 @@
             <if test="categoryId != 0">
                 category_id=#{categoryId}
                 AND reg_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+                AND category_id != 6
+
                 and delete_date IS NULL
         </if>
             <if test="categoryId == 0">
                     reg_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+                AND category_id != 6
+
                 and delete_date IS NULL
                     </if>
         </where>
@@ -159,6 +163,7 @@
         FROM board
         <where>
             DATE_FORMAT(reg_date, "%Y-%m-%d") = CURDATE()
+            AND category_id != 6
             <if test="categoryId != 0">
                 AND category_id = #{categoryId}
                 and delete_date IS NULL

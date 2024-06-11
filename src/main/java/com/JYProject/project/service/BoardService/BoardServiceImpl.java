@@ -26,16 +26,17 @@ public class BoardServiceImpl implements BoardService {
 
 
     @Override
-    public int insertBoard(BoardDTO boardDTO, List<String> fileUrls) throws Exception {
+    public Long insertBoard(BoardDTO boardDTO, List<String> fileUrls) throws Exception {
         String contentChangeImgPath= boardDTO.getContent().replace("../uploads/", "http://localhost:8082/uploads/");
         boardDTO.setContent(contentChangeImgPath);
-
+        Board board = convertToEntity(boardDTO);
+         boardMybatisRepository.insertBoard(board);
         FileDTO fileDTO = new FileDTO();
-        fileDTO.setBoardId(boardDTO.getBoardId());
+        fileDTO.setBoardId(board.getBoardId());
         fileDTO.setFileNameFromList(fileUrls);
         fileDTO.setRegDate(LocalDateTime.now());
         fileService.insertFile(fileDTO);
-        return boardMybatisRepository.insertBoard(convertToEntity(boardDTO));
+        return board.getBoardId() ;
     }
 
     @Override
@@ -157,12 +158,12 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void incrementLikes(Long boardId) {
-
+        boardMybatisRepository.incrementLikes(boardId);
     }
 
     @Override
     public void incrementDislikes(Long boardId) {
-
+    boardMybatisRepository.incrementDislikes(boardId);
     }
 
     private Board convertToEntity(BoardDTO boardDTO) {
@@ -171,12 +172,12 @@ public class BoardServiceImpl implements BoardService {
         board.setContent(boardDTO.getContent());
         board.setBoardId(boardDTO.getBoardId());
         board.setRegDate(boardDTO.getRegDate());
-        board.setDeletedDate(boardDTO.getDeletedDate());
+        board.setDeleteDate(boardDTO.getDeleteDate());
         board.setCategoryId(boardDTO.getCategoryId());
         board.setDislikes(boardDTO.getDislikes());
         board.setLikes(boardDTO.getLikes());
         board.setFileId(boardDTO.getFileId());
-        board.setDeletedDate(board.getDeletedDate());
+        board.setDeleteDate(board.getDeleteDate());
         board.setFileId(boardDTO.getFileId());
         board.setCategoryId(boardDTO.getCategoryId());
         board.setMemberId(boardDTO.getMemberId());
@@ -188,7 +189,7 @@ public class BoardServiceImpl implements BoardService {
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setTitle(board.getTitle());
         boardDTO.setContent(board.getContent());
-        boardDTO.setDeletedDate(board.getDeletedDate());
+        boardDTO.setDeleteDate(board.getDeleteDate());
         boardDTO.setRegDate(board.getRegDate());
         boardDTO.setBoardId(board.getBoardId());
         boardDTO.setLikes(board.getLikes());
@@ -196,10 +197,13 @@ public class BoardServiceImpl implements BoardService {
         boardDTO.setCategoryId(board.getCategoryId());
         boardDTO.setMemberId(board.getMemberId());
         boardDTO.setFileId(board.getFileId());
-        boardDTO.setMemberInfo( convertToMemberDTO(board.getMemberInfo()));
+        boardDTO.setMemberInfo(convertToMemberDTO(board.getMemberInfo()));
         return boardDTO;
     }
         private Member convertToMemberEntity(MemberDTO memberDTO){
+            if(memberDTO == null){
+                return null;
+            }
             Member member = new Member();
             member.setMemberId(memberDTO.getMemberId());
             member.setLoginId(memberDTO.getLoginId());
@@ -218,6 +222,9 @@ public class BoardServiceImpl implements BoardService {
             return  member;
         }
         private MemberDTO convertToMemberDTO(Member member){
+            if(member == null){
+                 return  null;
+            }
             MemberDTO memberDTO = new MemberDTO();
             memberDTO.setMemberId(member.getMemberId());
             memberDTO.setLoginId(member.getLoginId());

@@ -1,9 +1,9 @@
 package com.JYProject.project.controller;
 
 import com.JYProject.project.model.dto.*;
-import com.JYProject.project.service.AdminService.AdminBoardService;
 import com.JYProject.project.service.BoardService.BoardService;
 import com.JYProject.project.service.MemberService.MemberService;
+import com.JYProject.project.service.QuestionSerivce.QuestionService;
 import com.JYProject.project.service.ReplyService.ReplyService;
 import com.JYProject.project.session.SessionConst;
 import jakarta.servlet.http.HttpSession;
@@ -25,19 +25,20 @@ public class BoardController {
     private  final BoardService boardService;
     private final MemberService memberService;
     private final ReplyService replyService;
-
+    private final QuestionService questionService;
 
     @GetMapping("/boards/list")
     public String list(Model model){
         List<BoardDTO> list = boardService.boardAllList();
         model.addAttribute("list" , list);
-        return "boards/list";
+        return "/boards/list";
     }
 
     @GetMapping("/boards/join")
     public String join(HttpSession session, Model model) {
         String loginId = (String) session.getAttribute(SessionConst.USER_ID);
         MemberDTO  m =  memberService.selectMemberDetail(loginId);
+        model.addAttribute("myPoint",m.getPoint());
         model.addAttribute("nickname",m.getNickname());
         model.addAttribute("memberId",m.getMemberId());
         return"/boards/join";
@@ -59,7 +60,8 @@ public class BoardController {
             RedirectAttributes redirectAttributes) {
 
         try {
-            int getBoardId = boardService.insertBoard(boardDTO, fileUrls);
+
+            Long getBoardId = boardService.insertBoard(boardDTO, fileUrls);
             redirectAttributes.addFlashAttribute("suc", "성공적으로 게시글 등록되었습니다");
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,7 +83,7 @@ public String content(@PathVariable("boardId") Long boardId ,Model model,HttpSes
     model.addAttribute("replies",replyDTOList);
    model.addAttribute("board" , board);
 
-    return "boards/content";
+    return "/boards/content";
 }
 
 @GetMapping("/boards/update/{boardId}")
@@ -91,11 +93,11 @@ public String updateForm(@PathVariable("boardId") Long boardId,  Model model
     MemberDTO log = (MemberDTO)session.getAttribute("log");
     if(log == null){
         redirectAttributes.addFlashAttribute("error", "비상적인 접근입니다 로그인부터 해주세요");
-        return "home";
-    }else{
+        return "/home";
+    }else {
         BoardDTO board = boardService.selectBoardDetail(boardId);
         model.addAttribute("board" , board);
-        return "boards/update";
+        return "/boards/update";
     }
 }
 @PostMapping("/boards/update")
@@ -111,7 +113,7 @@ public String delete(@PathVariable("boardId") Long boardId, HttpSession session,
     MemberDTO log = (MemberDTO)session.getAttribute("log");
     if(log == null){
         redirectAttributes.addFlashAttribute("error", "잘못된 접근입니다");
-        return "home";
+        return "/home";
     }else{
         int check =  boardService.deleteBoard(boardId);
         return "redirect:/boards/list";
@@ -122,13 +124,13 @@ public String delete(@PathVariable("boardId") Long boardId, HttpSession session,
     public String getMyBoardList(@PathVariable("loginId")String loginId,Model model ){
     if(loginId == null){
 
-        return "home";
+        return "/home";
     }
 
     MemberDTO memberDTO = memberService.selectMemberDetail(loginId);
     List<BoardDTO>  myBoardList  =  boardService.getMyBoardList(memberDTO.getMemberId());
     model.addAttribute("myBoards" , myBoardList);
-    return "boards/myBoardList";
+    return "/boards/myBoardList";
     }
 @GetMapping("/boards/myBoardList/{memberId}")
 public String myBoardList(@PathVariable("memberId")Long memberId ,Model model){
@@ -159,6 +161,6 @@ public String myBoardList(@PathVariable("memberId")Long memberId ,Model model){
         }
 
         model.addAttribute("boardList",boardList);
-        return "boards/list";
+        return "/boards/list";
     }*/
 }
