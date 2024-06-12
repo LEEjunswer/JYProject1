@@ -22,7 +22,7 @@ public interface MemberMapperRepository {
     boolean validCheckNick(String nickname);
     boolean validCheckEmail(String email);
     int deleteMember(Member member);
-
+    int getChooseAdopt(Member member);
     List<Member> MemberAllList();
 
     int selectMemberTotalCount();

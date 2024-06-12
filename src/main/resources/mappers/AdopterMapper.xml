@@ -9,4 +9,8 @@
         <result property="regDate" column="reg_date"/>
         <result property="deleteDate" column="delete_date"/>
     </resultMap>
+    <insert id="insertAdopt" parameterType="com.JYProject.project.model.Adopter">
+        insert into adopter (question_id, member_id, reply_id, adoption_point)
+        values (#{questionId},#{memberId},#{replyId},#{adoptionPoint});
+    </insert>
 </mapper>

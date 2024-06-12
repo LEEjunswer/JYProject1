@@ -40,7 +40,10 @@
     border: lightgray solid 1px;
 }
 #board_category{
-    width: 300px;
+    text-align: left;
+    width: 500px;
+    display: inline-block;
+    font-size: 14px;
     margin-left:0;
 }
 #search-bar{

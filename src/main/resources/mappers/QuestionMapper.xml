@@ -7,11 +7,66 @@
         <result property="memberId" column="member_id"/>
         <result property="questionPoint" column="question_point"/>
         <result property="regDate" column="reg_date"/>
-        <result property="adoptionDay" column="adoption_day"/>
+        <result property="adoptionDate" column="adoption_date"/>
         <result property="deleteDate" column="delete_date"/>
+        <association property="boardInfo" javaType="com.JYProject.project.model.Board" resultMap="boardResultMap" />
+        <association property="memberInfo" javaType="com.JYProject.project.model.Member" resultMap="memberResultInfo" />
+    </resultMap>
+    <resultMap id="boardResultMap" type="com.JYProject.project.model.Board">
+        <id property="boardId" column="board_id"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="memberId" column="member_id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="regDate" column="reg_date"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="deleteDate" column="delete_date"/>
+        <result property="viewCnt" column="view_cnt"/>
+        <association property="memberInfo" javaType="com.JYProject.project.model.Member" resultMap="memberResultInfo" />
+    </resultMap>
+    <resultMap id="memberResultInfo" type="com.JYProject.project.model.Member">
+        <id column="member_id" property="memberId" />
+        <result column="nickname" property="nickname" />
     </resultMap>
     <insert id="insertQuestion" parameterType="com.JYProject.project.model.Question">
         insert into question(board_id, member_id, question_point) values (#{boardId},#{memberId},#{questionPoint});
     </insert>
- <!--   <select></select>-->
+    <select id="findByAllListOrderByDesc" parameterType="map" resultMap="questionResultMap">
+            select q.*, b.*, m.nickname
+            from question q join board b on q.board_id = b.board_id
+                            join member m on q.member_id = m.member_id
+            ORDER BY b.reg_date DESC
+            LIMIT #{offset}, #{pageSize};
+    </select>
+    <select id="findByAdoptListOrderByDesc" parameterType="map" resultMap="questionResultMap">
+        select q.*, b.*, m.nickname
+        from question q join board b on q.board_id = b.board_id
+                        join member m on q.member_id = m.member_id
+        where q.adoption_date is not null ORDER BY b.reg_date DESC
+        LIMIT #{offset}, #{pageSize};
+    </select>
+    <select id="findByNotAdoptedListOrderByDesc" parameterType="map" resultMap="questionResultMap">
+        select q.*, b.*, m.nickname
+        from question q join board b on q.board_id = b.board_id
+                        join member m on q.member_id = m.member_id
+        where q.adoption_date is null  ORDER BY b.reg_date DESC
+        LIMIT #{offset}, #{pageSize};
+    </select>
+    <select id="findByMyQuestionList">
+
+    </select>
+    <select id="getOneDetail" parameterType="long" resultMap="questionResultMap">
+        select q.*, b.*, m.nickname
+        from question q join board b on q.board_id = b.board_id
+                        join member m on q.member_id = m.member_id
+            where q.question_id = #{questionId};
+    </select>
+    <select id="myQuestionCount" parameterType="Long" resultMap="questionResultMap">
+        select count(*) from question where member_id =#{memberId};
+    </select>
+    <update id="questionChoose" parameterType="Long">
+        update question
+        set adoption_date= now()
+        where question_id=#{questionId}
+    </update>
 </mapper>

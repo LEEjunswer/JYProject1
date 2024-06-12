@@ -139,6 +139,11 @@ public class MemberServiceImpl implements  MemberService{
     }
 
     @Override
+    public int getChooseAdopt(MemberDTO memberDTO) {
+        return memberMybatisRepository.getChooseAdopt(convertToEntity(memberDTO));
+    }
+
+    @Override
     public boolean checkIdAndPw(MemberDTO memberDTO) {
         Member member   = convertToEntity(memberDTO);
         return memberMybatisRepository.checkIdAndPw(member);

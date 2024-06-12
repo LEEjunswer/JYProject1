@@ -1,8 +1,10 @@
 package com.JYProject.project.service.BoardService;
 
 import com.JYProject.project.model.Board;
+import com.JYProject.project.model.Category;
 import com.JYProject.project.model.Member;
 import com.JYProject.project.model.dto.BoardDTO;
+import com.JYProject.project.model.dto.CategoryDTO;
 import com.JYProject.project.model.dto.FileDTO;
 import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.repository.BoardRepository.BoardMapperRepository;
@@ -177,11 +179,10 @@ public class BoardServiceImpl implements BoardService {
         board.setDislikes(boardDTO.getDislikes());
         board.setLikes(boardDTO.getLikes());
         board.setFileId(boardDTO.getFileId());
-        board.setDeleteDate(board.getDeleteDate());
-        board.setFileId(boardDTO.getFileId());
-        board.setCategoryId(boardDTO.getCategoryId());
+        board.setViewCnt(boardDTO.getViewCnt());
         board.setMemberId(boardDTO.getMemberId());
         board.setMemberInfo(convertToMemberEntity(boardDTO.getMemberInfo()));
+        board.setCategoryInfo(convertToCategoryEntity(boardDTO.getCategoryInfo()));
         return board;
     }
 
@@ -196,8 +197,10 @@ public class BoardServiceImpl implements BoardService {
         boardDTO.setDislikes(board.getDislikes());
         boardDTO.setCategoryId(board.getCategoryId());
         boardDTO.setMemberId(board.getMemberId());
+        boardDTO.setViewCnt(board.getViewCnt());
         boardDTO.setFileId(board.getFileId());
         boardDTO.setMemberInfo(convertToMemberDTO(board.getMemberInfo()));
+        boardDTO.setCategoryInfo(convertToCategoryDTO(board.getCategoryInfo()));
         return boardDTO;
     }
         private Member convertToMemberEntity(MemberDTO memberDTO){
@@ -242,4 +245,18 @@ public class BoardServiceImpl implements BoardService {
             memberDTO.setPoint(member.getPoint());
             return memberDTO;
         }
+    private Category convertToCategoryEntity(CategoryDTO categoryDTO){
+        Category category = new Category();
+        category.setCategoryId(categoryDTO.getCategoryId());
+        category.setCategoryName(categoryDTO.getCategoryName());
+        category.setRegDate(categoryDTO.getRegDate());
+        return  category;
+    }
+    private CategoryDTO convertToCategoryDTO(Category category){
+        CategoryDTO categoryDTO = new CategoryDTO();
+        categoryDTO.setCategoryId(category.getCategoryId());
+        categoryDTO.setCategoryName(category.getCategoryName());
+        categoryDTO.setRegDate(category.getRegDate());
+        return  categoryDTO;
+    }
 }

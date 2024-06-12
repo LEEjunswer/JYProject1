@@ -4,18 +4,53 @@ let currentPage = 0;
 const pageSize = 10;
 const boardCommentList = document.getElementById('boardCommentList');
 let getComments =document.getElementsByClassName('comment-value');
+const question = document.getElementById('question_id').getAttribute('data-value');
+
+if(document.getElementsByClassName('adopt-btn')){
+    let adopterButtons = document.getElementsByClassName('adopt-btn');
+    for (let i = 0 ; i< adopterButtons.length; i++){
+        let adopterButton = adopterButtons[i];
+        let replyId = adopterButton.getAttribute('reply-value');
+        adopterButton.addEventListener('click', ()=>{
+            adopt(replyId,question);
+        })
+    }
+}
+function adopt(commentId,ds) {
+    const data = {
+        replyId : commentId,
+        questionId : ds
+    };
+
+    fetch(`/adopter/choose`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            window.location.reload();
+        })
+        .catch(error => console.error('Error:', error));
+}
+
 if(document.getElementsByClassName('comment-delBtn')) {
     let deleteButtons = document.getElementsByClassName('comment-delBtn');
-        for(let i = 0 ; i<deleteButtons.length; i++){
-            let deleteButton = deleteButtons[i];
-            let replyId =    deleteButton.getAttribute('reply-value');
-             deleteButton.addEventListener('click' ,()=>{
-                 deleteComment(replyId)
-            });
+    for(let i = 0 ; i<deleteButtons.length; i++){
+        let deleteButton = deleteButtons[i];
+        let replyId =    deleteButton.getAttribute('reply-value');
+        deleteButton.addEventListener('click' ,()=>{
+            deleteComment(replyId)
+        });
 
     }
 
 }
+
+
 if(document.getElementsByClassName('comment-updateBtn')){
     let updateButtons = document.getElementsByClassName('comment-updateBtn');
     for(let i = 0; i<updateButtons.length; i++){
@@ -33,7 +68,7 @@ if(document.getElementsByClassName('comment-updateBtn')){
                 getComment.style.backgroundColor = "white";
                 updateButton.textContent = '수정';
             }
-            });
+        });
 
     }
 }
@@ -72,7 +107,7 @@ function displayComments(data) {
         commentTitle.className='text-sm';
         commentTitle.textContent = `작성자 : ${comment.replyDTO.memberId}, 작성일 : ${comment.replyDTO.regDate} `;
         const commentP = document.createElement('p');
-        commentP.className= 'text-lg';
+        commentP.className= 'text-md';
         commentP.textContent = comment.comment;
         commentHeaderElement.appendChild(commentTitle);
         commentHeaderElement.appendChild(commentP);
@@ -163,8 +198,8 @@ function reviewContentJoin(){
     }) .then(response => response.json())
         .then(data => {
 
-                alert(data.message);
-                window.location.reload();
+            alert(data.message);
+            window.location.reload();
         })
 
         .catch(error => {
@@ -185,13 +220,13 @@ function deleteComment(commentId) {
         },
         body: JSON.stringify(data)
     })
-    /*    .then(response => {
-            if (response.redirected) {
-                window.location.href = response.url;
-            } else {
-                return response.json();
-            }
-        })*/
+        /*    .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    return response.json();
+                }
+            })*/
         .then(response => response.json())
         .then(data => {
 
@@ -238,12 +273,12 @@ function updateComment(commentId, commentChange) {
 // 댓글 닫기 클릭시 기능
 function closeReview(){
     let closeButton = document.getElementById("close_review");
-        if(closeButton.textContent === 'ㅣ 댓글닫기 ㅣ'){
-            closeButton.textContent = "ㅣ 댓글열기 ㅣ";
-            boardCommentContainer.style.display = 'none';
-        }else{
-            closeButton.textContent = 'ㅣ 댓글닫기 ㅣ';
-            boardCommentContainer.style.display = 'block';
-        }
+    if(closeButton.textContent === 'ㅣ 댓글닫기 ㅣ'){
+        closeButton.textContent = "ㅣ 댓글열기 ㅣ";
+        boardCommentContainer.style.display = 'none';
+    }else{
+        closeButton.textContent = 'ㅣ 댓글닫기 ㅣ';
+        boardCommentContainer.style.display = 'block';
+    }
 }
 

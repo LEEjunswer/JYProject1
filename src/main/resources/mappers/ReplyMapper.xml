@@ -24,14 +24,14 @@
        insert into reply (board_id, member_id, content) values
             (#{boardId},#{memberId},#{content})
     </insert>
-    <select id="selectOneReply" parameterType="Long" resultType="com.JYProject.project.model.Reply">
+    <select id="selectOneReply" parameterType="Long" resultMap="replyResultMap">
     select  * from reply where reply_id=#{id}
     </select>
 
     <select id="getBoardAllReply" parameterType="Long" resultMap="replyResultMap">
         SELECT r.*, m.nickname
         FROM reply r
-                 INNER JOIN member m ON r.member_id = m.member_id
+                  join member m ON r.member_id = m.member_id
         WHERE r.board_id = #{boardId};
     </select>
     <!--댓글 수정 -->
@@ -51,7 +51,7 @@
     <select id="getMyReplyList" parameterType="Long" resultMap="replyResultMap">
         select r.*, m.nickname
         from reply r
-                 inner join member m on r.member_id = m.member_id
+                  join member m on r.member_id = m.member_id
         where r.board_id = #{boardId} and delete_date is null;
     </select>
     <select id="getMyReplyCount" parameterType="Long" resultType="Integer">
@@ -70,7 +70,10 @@
         select count(*) from reply where board_id = #{boardId};
     </select>
     <select id="getOneBoardReply" parameterType="map" resultMap="replyResultMap">
-        select * from reply where board_id=#{boardId} ORDER BY reg_date DESC
+        select r.*, m.nickname
+        from reply r
+        join member m on r.member_id = m.member_id
+        where board_id=#{boardId} ORDER BY reg_date DESC
         LIMIT #{offset}, #{pageSize};
     </select>
     <!--삭제하는 것이 아닌 deleted_date로 전부 저장-->

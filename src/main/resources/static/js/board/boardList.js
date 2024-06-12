@@ -1,8 +1,12 @@
-function onSearch(form){
-    form.preventDefault();
-    if(!form.search.value.trim()>1){
-        alert("두글자 이상 검색어 입력해주세요");
-         return;   
+function onSearch(event) {
+    event.preventDefault();
+    const form = event.target.closest('form');
+    const searchValue = form.search.value.trim();
+
+    if (searchValue.length < 2) {
+        alert("두 글자 이상 검색어를 입력해주세요");
+        return;
     }
+
     form.submit();
 }

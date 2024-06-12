@@ -22,7 +22,7 @@ public class AdminController {
     private final AdminEventService adminEventService;
     private final AdminBoardService adminBoardService;
     private final EventApplicantService eventApplicantService;
-
+    private final FilterService filterService;
     @GetMapping("/admin/adminBoardJoin")
     public String create(HttpSession session, Model model){
         String loginId = (String) session.getAttribute(SessionConst.USER_ID);
@@ -56,6 +56,13 @@ public class AdminController {
           model.addAttribute("eventList",eventDTOList);
         return "/admin/eventRaffle";
     }
+    @GetMapping("/admin/filter")
+    public String filter(Model model){
+    List<FilterDTO> filterList= filterService.getAllFilter();
+
+            model.addAttribute("filters",filterList);
+            return "/admin/filter";
+        }
     //이벤트 추첨
     @PostMapping("/admin/raffle/{people}/{eventId}")
     public String raffleStart(@PathVariable("people")int people,@PathVariable("eventId")Long eventId){

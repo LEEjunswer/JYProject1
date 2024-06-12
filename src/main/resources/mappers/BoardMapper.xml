@@ -15,11 +15,15 @@
         <result property="likes" column="likes"/>
         <result property="dislikes" column="dislikes"/>
         <association property="memberInfo"  javaType="com.JYProject.project.model.Member" resultMap="memberResultInfo" />
+        <association property="categoryInfo"  javaType="com.JYProject.project.model.Category" resultMap="categoryResultInfo" />
     </resultMap>
     <resultMap id="memberResultInfo" type="com.JYProject.project.model.Member">
         <id column="member_id" property="memberId" />
         <result column="nickname" property="nickname" />
-
+    </resultMap>
+    <resultMap id="categoryResultInfo" type="com.JYProject.project.model.Category">
+    <id column="category_id" property="categoryId" />
+    <result column="category_name" property="categoryName" />
     </resultMap>
     <!--보드 추가 -->
     <insert id="insertBoard" parameterType="com.JYProject.project.model.Board" useGeneratedKeys="true" keyProperty="boardId">
@@ -28,8 +32,9 @@
     </insert>
     <!--보드 1개의값 가져오기 -->
     <select id="selectBoardDetail" parameterType="Long" resultMap="boardResultMap">
-        select b.*, m.nickname
-        from board b  join member m on b.member_id = m.member_id  where b.board_id=#{boardId};
+        select b.*,c.*, m.nickname
+        from board b  join member m on b.member_id = m.member_id
+        join category c on b.category_id =c.category_id where b.board_id=#{boardId};
     </select>
     <!--보드 수정 -->
     <update id="updateBoard" parameterType="com.JYProject.project.model.Board">
@@ -51,9 +56,10 @@
     where board_id=#{boardId};
 
     </update>
-    <select id="boardAllList" resultMap="boardResultMap">
-        select  * from board
-    </select>
+    <!--질문게시판은 따로 뻇다-->
+        <select id="boardAllList" resultMap="boardResultMap">
+            select  * from board where category_id != 6;
+        </select>
     <select id="selectBoardTotalCount" resultType="Integer">
         select count(*) board;
     </select>
@@ -72,9 +78,10 @@
 
 
     <select id="boardSearchAllList" parameterType="String" resultMap="boardResultMap">
-        SELECT b.*, m.nickname
+        SELECT b.*, c.*,m.nickname
         FROM board b
                  JOIN member m ON b.member_id = m.member_id
+                join category c on b.category_id = c.category_id
         WHERE b.title LIKE CONCAT('%', #{string}, '%') OR b.content LIKE CONCAT('%', #{string}, '%')
           AND b.delete_date IS NULL
     </select>
@@ -85,43 +92,48 @@
         and  b.delete_date is null;
     </select>
     <select id="boardSearchContentList" parameterType="String" resultMap="boardResultMap">
-        select  b.* , m.nickname
+        select  b.*,c.* , m.nickname
         from board b  join member m on b.member_id = m.member_id
+                      join category c on b.category_id = c.category_id
         where b.content  and b.delete_date IS NULL LIKE CONCAT('%', #{content},'%')
         and b.delete_date is null;
 </select>
     <select id="boardSearchTitleList" parameterType="String" resultMap="boardResultMap">
-        SELECT b.* , m.nickname
+        SELECT b.* ,c.*, m.nickname
         from board b join member m on b.member_id = m.member_id
+        join category c on b.category_id = c.category_id
         WHERE b.title  and b.delete_date IS NULL LIKE CONCAT('%', #{title}, '%')
         and b.delete_date is null;
     </select>
     <select id="getBoardDetail" parameterType="Long" resultMap="boardResultMap">
-        select b.* , m.nickname
+        select b.*,c.* , m.nickname
         from board b join member m on b.member_id = m.member_id
+                    join category c on b.category_id= c.category_id
             where b.board_id=#{id} and delete_date IS NULL;
     </select>
-
+<!--offset을 안줫구나 ;;-->
     <select id="boardGetCategoryList" parameterType="Integer" resultMap="boardResultMap">
-        select b.*, m.nickname
+        select b.*,c.*, m.nickname
         from board b
         join member m on b.member_id = m.member_id
+        join category c on b.category_id= c.category_id
         <if test="categoryId != 0">
             where b.category_id = #{categoryId}
             and b.delete_date IS NULL
         </if>
         <if test="categoryId == 0">
-            where b.delete_date IS NULL
+            where b.category_id != 6
+            and b.delete_date IS NULL
         </if>
         Order By b.board_id Desc
         Limit 5;
     </select>
     <select id="getMyBoardList" parameterType="Long" resultMap="boardResultMap">
-        select b.* , m.nickname
+        select b.* ,c.*, m.nickname
         from board b   join member m on b.member_id = #{memberId}
+        join category c on b.category_id = c.category_id
         where b.member_id = #{memberId}
           and delete_date IS NULL;
-
     </select>
 
     <select id="getMyBoardCount" parameterType="Long" resultType="Integer">

@@ -115,4 +115,10 @@
         SET point = point - #{point}
         where member_id= #{memberId};
     </update>
+    <!--밑에거는 위에 addLoginPoint랑 중복될꺼같아서 따로 주는게 나으려나 ;; -->
+    <update id="getChooseAdopt" parameterType="com.JYProject.project.model.Member">
+        update  member
+        SET point = point + #{point}
+        where member_id= #{memberId};
+    </update>
 </mapper>

@@ -67,9 +67,7 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Override
     public int deleteReply(Long replyId) {
-        System.out.println("replyId 1층 = " + replyId);
         int  check=replyMybatisRepository.deleteReply(replyId);
-        
         return check;
     }
 
@@ -161,39 +159,21 @@ public class ReplyServiceImpl implements ReplyService {
         return replyDTO;
     }
     private Member convertToMemberEntity(MemberDTO memberDTO){
+        if(memberDTO == null){
+            return null;
+        }
         Member member = new Member();
         member.setMemberId(memberDTO.getMemberId());
-        member.setLoginId(memberDTO.getLoginId());
-        member.setPw(memberDTO.getPw());
-        member.setName(memberDTO.getName());
-        member.setActive(memberDTO.getActive());
-        member.setEmail(memberDTO.getEmail());
-        member.setProfileImg(memberDTO.getProfileImg());
-        member.setLastLoginDate(memberDTO.getLastLoginDate());
         member.setNickname(memberDTO.getNickname());
-        member.setRegDate(memberDTO.getRegDate());
-        member.setAddressDetail(memberDTO.getAddressDetail());
-        member.setPhone(memberDTO.getPhone());
-        member.setGrade(memberDTO.getGrade());
-        member.setPoint(memberDTO.getPoint());
         return  member;
     }
     private MemberDTO convertToMemberDTO(Member member){
+        if(member == null){
+            return null;
+        }
         MemberDTO memberDTO = new MemberDTO();
         memberDTO.setMemberId(member.getMemberId());
-        memberDTO.setLoginId(member.getLoginId());
-        memberDTO.setPw(member.getPw());
-        memberDTO.setActive(member.getActive());
-        memberDTO.setName(member.getName());
-        memberDTO.setEmail(member.getEmail());
-        memberDTO.setLastLoginDate(member.getLastLoginDate());
-        memberDTO.setProfileImg(member.getProfileImg());
         memberDTO.setNickname(member.getNickname());
-        memberDTO.setRegDate(member.getRegDate());
-        memberDTO.setAddressDetail(member.getAddressDetail());
-        memberDTO.setPhone(member.getPhone());
-        memberDTO.setGrade(member.getGrade());
-        memberDTO.setPoint(member.getPoint());
         return memberDTO;
     }
 }

@@ -38,4 +38,5 @@ public class Board {
     private int dislikes;
     /*멤버 쿼리 조인할 때 필요하다*/
     private Member memberInfo;
+    private Category categoryInfo;
 }

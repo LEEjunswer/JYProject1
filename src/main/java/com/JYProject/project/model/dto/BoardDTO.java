@@ -35,4 +35,5 @@ public class BoardDTO {
     //("싫어요")
     private int dislikes;
     private MemberDTO memberInfo;
+    private CategoryDTO categoryInfo;
 }

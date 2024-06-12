@@ -50,6 +50,7 @@ public class ReplyAPIController {
         replyDTO1.setBoardId(idx);
         replyDTO1.setMemberId(m.getMemberId());
         replyDTO1.setContent(replyDTO.getContent());
+        System.out.println("replyDTO1 = " + replyDTO1);
         int check = replyService.insertReply(replyDTO1);
 
         if (check > 0) {

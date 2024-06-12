@@ -18,4 +18,6 @@ public class Question {
     private LocalDateTime regDate;
     private LocalDateTime  adoptionDate;
     private LocalDateTime deleteDate;
+    private Board boardInfo;
+    private Member memberInfo;
 }

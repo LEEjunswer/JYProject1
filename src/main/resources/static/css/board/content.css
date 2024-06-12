@@ -2,45 +2,104 @@
     height: 80vh;
     margin: 0 auto;
     width: 1280px;
-
 }
 
-#content_board{
-    border:  1px solid black;
-    border-bottom: none;
+#content_board {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    border: none;
     min-height: 600px;
     overflow: auto;
-    width: 100%;
 }
+
+#content_board thead tr {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+}
+
+#content_board th, #content_board td {
+    padding: 12px 15px;
+}
+
+#boardContent_header {
+    background-color: #fafafa;
+    height: 60px;
+    font-size: 16px;
+}
+
+
+#boardContent_titleText {
+    text-align: center;
+
+
+}
+
+#content {
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    width: 100%;
+    margin-top: 10px;
+    min-height: 600px;
+    overflow: auto;
+    box-sizing: border-box;
+}
+#content_tr {
+    background-color: #fafafa;
+    border-bottom: 1px solid #ddd;
+    height: 60px;
+
+}
+
+.content_td {
+    width: 60%;
+    text-align: left;
+}
+.content_viewCnt {
+    width: 40%;
+    padding: 20px;
+    text-align: right;
+}
+.content_viewCnt span {
+    margin-right: 10px;
+    display: inline-block;
+}
+
+
 #content_tabs button {
     float: right;
     margin-left: 5px;
 }
-.contentLine{
+
+.contentLine {
     border: 2px solid grey;
     border-radius: 25% 25%;
 }
 
-#likesAndDislikes{
+#likesAndDislikes {
     margin-top: 0;
     display: flex;
     justify-content: center;
     text-align: center;
     height: 60px;
     width: 100%;
-    border: 1px solid black;
-    border-top: none;
+    border-bottom: 2px solid lightslategrey;
 }
-.like, .disLikes {
 
+.like, .disLikes {
     margin: 0 10px;
 }
-#contentInput{
+
+#contentInput {
     margin-bottom: 0;
     width: 100%;
     border: 1px solid pink;
 }
-.btn-register{
+
+.btn-register {
     border: none;
     display: inline-block;
     padding: 10px 10px;
@@ -53,59 +112,22 @@
     margin-top: 0;
     float: right;
 }
-#content_tr{
-    height: 60px;
-}
-.content_td{
 
-    border: 1px solid black;
-}
-.content_viewCnt{
-    border: 1px solid black;
-}
-.content_viewCnt span {
-    display: inline-block;
-}
-#content_thead {
-    width: 100%;
-
-}
-#boardContent_header{
-    height: 60px;
-}
-#boardContent_title{
-        flex: 1;
-    border: 1px solid black;
-}
-#boardContent_titleText{
-    flex: 5;
-    border: 1px solid black
-}
-
-#content{
-    display: block;
-     margin-top: 10px;
-    min-height: 600px;
-    overflow: auto;
-}
-.like-img {
+.like-img, .dislike-img {
     width: 40px;
     height: 40px;
 }
 
-.dislike-img {
-    width: 40px;
-    height: 40px;
-}
 .bottom-right {
     float: right;
     margin-bottom: 10px;
 }
-#review-tabLine{
+
+#review-tabLine {
     margin-bottom: 20px;
 }
-/*  밑은 댓글 css 영역 */
 
+/* 댓글 영역 */
 #boardCommentWrite {
     margin-top: 20px;
 }
@@ -126,31 +148,31 @@
     cursor: pointer;
     transition: background-color 0.3s;
 }
-#boardCommentContainer{
-    margin-top: 50px;
-}
+
 #boardCommentWrite button:hover {
     background-color: #0056b3;
 }
 
-.pagingComment:hover{
-    background-color: #2e9cdf;
-    color: #ffffff;
+#boardCommentContainer {
+    margin-top: 50px;
 }
-.pagingComment{
+
+.pagingComment {
     margin-left: 3px;
     padding: 0;
-    width:  30px;
+    width: 30px;
     height: 30px;
     line-height: 30px;
-    -moz-border-radius: 100%;
-    -webkit-border-radius: 100%;
     border-radius: 100%;
+    transition: background-color 0.3s;
 }
-.pagingComment :active{
+
+.pagingComment:hover, .pagingComment:active {
     background-color: #2e9cdf;
+    color: #ffffff;
     cursor: pointer;
 }
+
 .comment-span {
     display: block !important;
     margin-bottom: 0.5rem !important;

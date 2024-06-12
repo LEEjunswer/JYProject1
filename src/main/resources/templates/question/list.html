@@ -11,8 +11,9 @@
     <div id="board_header">
         <div id="board_category">
 
-            <a href="/category/0">미채택질문</a>
-            <a href="/category/1">채택된질문</a>
+            <a href="/question/list/0">ㅣ 전체 ㅣ</a>
+            <a href="/question/list/1">ㅣ 미채택 ㅣ</a>
+            <a href="/question/list/2">ㅣ 채택 ㅣ</a>
         </div>
         <div id="list_join">
             <button id="list_joinForm" class="btn btn-outline btn-accent" onclick="location.href='/boards/join'">글작성</button>
@@ -20,7 +21,6 @@
     </div>
     <table class="board_list">
         <colgroup>
-            <col width="10%"/>
             <col width="50%"/>
             <col width="10%"/>
             <col width="10%"/>
@@ -29,7 +29,6 @@
         </colgroup>
         <thead>
         <tr>
-            <th scope="col">글번호</th>
             <th scope="col">제목</th>
             <th scope="col">작성자</th>
             <th scope="col">조회수</th>
@@ -40,26 +39,24 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:if="${list}" th:each="list : ${boardList}">
-            <td th:text="${list.boardId}">글번호</td>
-            <td th:text="${list.title}" th:onclick="|location.href='/boards/content/' + ${list.boardId}|">제목</td>
-            <td th:text="${list.writer}">작성자</td>
-            <td th:text="${list.viewCnt}">조회수</td>
-            <th th:if="${list.likes > list.dislikes}"
-                th:text="${(list.likes != null ? list.likes : 0) - (list.dislikes != null ? list.dislikes : 0)}">좋아요</th>
-            <th th:unless="${list.likes > list.dislikes}"
-                th:text="-${(list.dislikes != null ? list.dislikes : 0) - (list.likes != null ? list.likes : 0)}">싫어요</th>
-            <td th:text="${#temporals.format(list.getRegDate(),'yyyy-MM-dd HH:mm:ss')}">
+        <tr th:if="${list}" th:each="vo : ${list}">
+            <td th:text="${vo.getBoardInfo().title}" th:onclick="|location.href='/question/content/' + ${vo.questionId}|">제목</td>
+            <td th:text="${vo.memberInfo.nickname}">작성자</td>
+            <td th:text="${vo.getBoardInfo().viewCnt}">조회수</td>
+            <td th:text="${vo.questionPoint}">질문포인트</td>
+            <td th:if="${vo.adoptionDate == null}">미채택</td>
+            <td th:unless="${vo.adoptionDate == null}">채택</td>
+            <td th:text="${#temporals.format(vo.getRegDate(),'yyyy-MM-dd HH:mm:ss')}">
                 작성일
             </td>
         </tr>
-        <tr th:unless="${list} " th:each="list : ${boardList}">
+        <tr th:unless="${list} " th:each="vo : ${list}">
             <td colspan="6">조회된 결과가 없습니다.</td>
         </tr>
         </tbody>
     </table>
     <div id="search-bar" class="search">
-        <form action="/boards/search" method="get">
+        <form action="/question/search" method="post">
             <label>
                 <select id="list_select" name="choice">
                     <option value="0">전체</option>

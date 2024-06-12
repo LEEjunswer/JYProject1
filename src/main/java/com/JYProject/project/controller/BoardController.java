@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -25,11 +26,11 @@ public class BoardController {
     private  final BoardService boardService;
     private final MemberService memberService;
     private final ReplyService replyService;
-    private final QuestionService questionService;
 
     @GetMapping("/boards/list")
     public String list(Model model){
         List<BoardDTO> list = boardService.boardAllList();
+        System.out.println("list = " + list);
         model.addAttribute("list" , list);
         return "/boards/list";
     }
@@ -147,9 +148,9 @@ public String myBoardList(@PathVariable("memberId")Long memberId ,Model model){
         model.addAttribute("boardList", boardSearchTitleList);
         return "/boards/list";
     }
-  /*  @GetMapping("/boards/search/{detail}/{/search}")
-    public String searchDetails(@PathVariable("search") String search,@PathVariable("detail") String detail,Model model ){
-        List<BoardDTO> boardList = new ArrayList<>();
+    @GetMapping("/boards/search")
+    public String searchDetails(@RequestParam("search") String search,@RequestParam("detail") String detail,Model model ){
+        List<BoardDTO> boardList ;
         if(detail.equals("0")){
         boardList = boardService.boardSearchAllList(search);
         }else if(detail.equals("1")){
@@ -162,5 +163,5 @@ public String myBoardList(@PathVariable("memberId")Long memberId ,Model model){
 
         model.addAttribute("boardList",boardList);
         return "/boards/list";
-    }*/
+    }
 }

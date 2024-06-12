@@ -93,7 +93,7 @@ ALTER TABLE filter COMMENT '욕설을 제한하기 위한 필터 테이블';
 
 
 
-CREATE TABLE `Like` (
+CREATE TABLE likes (
 Like_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 Member_id INT,
 Board_id INT,
@@ -102,7 +102,7 @@ is_likes TINYINT(1),  /*불리언값 싫어요는 false 좋아요는 true*/
 FOREIGN KEY (Member_id) REFERENCES Member(member_id),
 FOREIGN KEY (Board_id) REFERENCES Board(board_id)
 );
-ALTER TABLE `Like` COMMENT '보드 좋아요 싫어요 했을경우 중보체크';
+ALTER TABLE likes COMMENT '보드 좋아요 싫어요 했을경우 중보체크';
 
 CREATE TABLE deleted_member (
 deleted_id INT ,
