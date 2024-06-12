@@ -246,6 +246,9 @@ public class BoardServiceImpl implements BoardService {
             return memberDTO;
         }
     private Category convertToCategoryEntity(CategoryDTO categoryDTO){
+        if(categoryDTO == null){
+            return  null;
+        }
         Category category = new Category();
         category.setCategoryId(categoryDTO.getCategoryId());
         category.setCategoryName(categoryDTO.getCategoryName());
@@ -253,6 +256,9 @@ public class BoardServiceImpl implements BoardService {
         return  category;
     }
     private CategoryDTO convertToCategoryDTO(Category category){
+            if(category == null ){
+                return  null;
+            }
         CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setCategoryId(category.getCategoryId());
         categoryDTO.setCategoryName(category.getCategoryName());

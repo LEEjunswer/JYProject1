@@ -11,23 +11,19 @@
 <table id="content_board">
     <thead>
     <tr id="boardContent_header">
-        <th id="boardContent_title">제목 </th>
         <th id="boardContent_titleText" th:colspan="4" th:text="${notice.title}"></th>
     </tr>
     </thead>
     <tbody>
     <tr id="content_tr">
         <td class="content_td">
-            <span>글쓴이 :</span>
-            <span >관리자</span>
-        </td>
-        <td class="content_td">
-            <span>작성일 :</span>
-            <span th:text="${#temporals.format(notice.regDate,'yyyy-MM-dd HH:mm:ss')}">yyyy-MM-dd HH:mm:ss</span>
+            <span>글쓴이 : 관리자</span>
         </td>
         <td class="content_viewCnt">
-            <span>조회수 : </span>
-            <span th:text="${notice.viewCnt}">123</span>
+
+            <span th:text="${#temporals.format(notice.regDate,'yyyy-MM-dd HH:mm:ss')}">yyyy-MM-dd HH:mm:ss</span>
+            <span th:text="'응모포인트 : '+${event.point}">응모포인트</span>
+            <span th:text="'조회수 : '+${notice.viewCnt}">123</span>
         </td>
     </tr>
     <tr>

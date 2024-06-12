@@ -77,8 +77,8 @@
                     </button>
                 </div>
                 <div class="absolute top-0 right-0" th:if="${reply.getMemberInfo().nickname == session.nickname}">
-                    <button class="comment-delBtn btn btn-square btn-outline h-8 w-8" th:attr="reply-value=${reply.getReplyId()}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button class="comment-delBtn btn btn-square btn-outline" th:attr="reply-value=${reply.getReplyId()}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
