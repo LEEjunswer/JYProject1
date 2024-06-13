@@ -16,7 +16,9 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -136,6 +138,22 @@ public class MemberServiceImpl implements  MemberService{
     public int selectMemberTotalCount() {
 
         return memberMybatisRepository.selectMemberTotalCount();
+    }
+
+    @Override
+    public int updateMemberActive(Long memberId, boolean check) {
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setMemberId(memberId);
+        memberDTO.setActive(check);
+        return memberMybatisRepository.updateMemberActive(convertToEntity(memberDTO));
+    }
+
+    @Override
+    public List<MemberDTO> getAllMemberListPaging(int page, int pageSize) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("offset", (page - 1) * pageSize);
+        params.put("pageSize",pageSize);
+        return memberMybatisRepository.getAllMemberListPaging(params).stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @Override

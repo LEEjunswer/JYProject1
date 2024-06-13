@@ -3,9 +3,11 @@ package com.JYProject.project.controller;
 import com.JYProject.project.model.dto.*;
 import com.JYProject.project.service.AdminService.AdminBoardService;
 import com.JYProject.project.service.AdminService.AdminEventService;
+import com.JYProject.project.service.BoardService.BoardService;
 import com.JYProject.project.service.EventApplicantService.EventApplicantService;
 import com.JYProject.project.service.FilterService.FilterService;
 import com.JYProject.project.service.MemberService.MemberService;
+import com.JYProject.project.service.ReplyService.ReplyService;
 import com.JYProject.project.session.SessionConst;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,6 +27,8 @@ public class AdminController {
     private final AdminBoardService adminBoardService;
     private final EventApplicantService eventApplicantService;
     private final FilterService filterService;
+    private final BoardService boardService;
+    private final ReplyService replyService;
     @GetMapping("/admin/adminBoardJoin")
     public String create(HttpSession session, Model model){
         String loginId = (String) session.getAttribute(SessionConst.USER_ID);
@@ -36,8 +42,6 @@ public class AdminController {
     public String join(@ModelAttribute AdminBoardDTO adminBoardDTO,
                         @ModelAttribute EventDTO eventDTO){
         /*이벤트 공지사항*/
-        System.out.println("adminBoardDTO = " + adminBoardDTO);
-        System.out.println("eventDTO = " + eventDTO);
         if(adminBoardDTO.getCategory() == 1){
             adminEventService.insertEvent(eventDTO,adminBoardDTO);
             return "redirect:/";
@@ -81,5 +85,15 @@ public class AdminController {
         eventApplicantService.resultCheckWinner(eventId);
         eventApplicantService.winningPointReward(eventId);
         return "redirect:/admin/raffle";
+    }
+    @GetMapping("/admin/memberList")
+    public String getMemberList(Model model,@RequestParam(defaultValue = "1") int page,@RequestParam(defaultValue = "10") int pageSize ){
+        List<MemberDTO> memberList =memberService.getAllMemberListPaging(page,pageSize);
+        List<Integer> boardCounts = boardService.getUsersBoardCount(memberList);
+        List<Integer> replyCounts = replyService.getUsersReplyCount(memberList);
+        model.addAttribute("replyCount", replyCounts);
+        model.addAttribute("boardCount",boardCounts);
+        model.addAttribute("member",memberList);
+        return "/admin/memberList";
     }
 }

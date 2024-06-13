@@ -1,6 +1,7 @@
 package com.JYProject.project.service.ReplyService;
 
 import com.JYProject.project.model.dto.BoardDTO;
+import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.model.dto.ReplyDTO;
 import com.JYProject.project.model.dto.ReplyResponseDTO;
 
@@ -18,6 +19,7 @@ public interface ReplyService {
      int getMyReplyCount(Long memberId);
      int replyDisLikesTotalCount(Long id);
      int getOneBoardReplyCount(Long boardId);
+     List<Integer> getUsersReplyCount(List<MemberDTO> memberDTO);
      List<BoardDTO> getBoardsFromReplies(Long memberId);
      ReplyResponseDTO getOneBoardReplyPaging(Long boardId, int page, int size);
 }

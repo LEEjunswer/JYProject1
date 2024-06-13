@@ -3,6 +3,7 @@ package com.JYProject.project.service.BoardService;
 import com.JYProject.project.model.Board;
 import com.JYProject.project.model.dto.BoardDTO;
 import com.JYProject.project.model.dto.FileDTO;
+import com.JYProject.project.model.dto.MemberDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public interface BoardService {
     List<BoardDTO> boardSearchTitleList(String title);
     List<BoardDTO> boardSearchWriterList(String writer);
     List<BoardDTO> boardSearchContentList(String content);
-
+    List<Integer> getUsersBoardCount(List<MemberDTO> memberDTO);
      int selectBoardTotalCount();
 
      int getLikesTotalCount(Long boardId);

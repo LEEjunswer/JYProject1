@@ -42,7 +42,7 @@
     <update id="updateMemberActive" parameterType="com.JYProject.project.model.Member">
         update  member
         SET active = #{active}
-        where member_id= #{id};
+        where member_id= #{memberId};
     </update>
     <update id="addPointDisLikes" parameterType="com.JYProject.project.model.Member">
         update  member
@@ -115,7 +115,11 @@
         SET point = point - #{point}
         where member_id= #{memberId};
     </update>
-    <!--밑에거는 위에 addLoginPoint랑 중복될꺼같아서 따로 주는게 나으려나 ;; -->
+    <select id="getAllMemberListPaging" parameterType="map" resultMap="memberResultMap">
+        select * from member
+        order by reg_date desc
+        limit ${offset}, ${pageSize};
+    </select>
     <update id="getChooseAdopt" parameterType="com.JYProject.project.model.Member">
         update  member
         SET point = point + #{point}

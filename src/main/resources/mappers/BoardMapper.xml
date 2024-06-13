@@ -122,7 +122,7 @@
             and b.delete_date IS NULL
         </if>
         <if test="categoryId == 0">
-            where b.category_id != 6
+            where b.category != 6
             and b.delete_date IS NULL
         </if>
         Order By b.board_id Desc

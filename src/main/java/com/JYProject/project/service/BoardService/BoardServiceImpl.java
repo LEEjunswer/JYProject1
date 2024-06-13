@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -112,6 +113,22 @@ public class BoardServiceImpl implements BoardService {
         List<Board> boardList=boardMybatisRepository.boardSearchContentList(content);
         return boardList.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
+
+        @Override
+        public List<Integer> getUsersBoardCount(List<MemberDTO> memberDTO) {
+          if(memberDTO == null){
+              return null;
+          }
+            List<Long> memberIdList = memberDTO.stream()
+                    .map(MemberDTO::getMemberId)
+                    .toList();
+            List<Integer> boardCountList = new ArrayList<>();
+            for (Long memberId : memberIdList) {
+                Integer boardCount = boardMybatisRepository.getMyBoardCount(memberId);
+                boardCountList.add(boardCount);
+            }
+            return boardCountList;
+        }
 
     @Override
     public int selectBoardTotalCount() {

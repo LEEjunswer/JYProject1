@@ -103,6 +103,22 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
+    public List<Integer> getUsersReplyCount(List<MemberDTO> memberDTO) {
+        if(memberDTO == null){
+            return null;
+        }
+        List<Long> memberIdList = memberDTO.stream()
+                .map(MemberDTO::getMemberId)
+                .toList();
+        List<Integer> replyCountList = new ArrayList<>();
+        for (Long memberId : memberIdList) {
+            Integer replyCount = replyMybatisRepository.getMyReplyCount(memberId);
+            replyCountList.add(replyCount);
+        }
+        return replyCountList;
+    }
+
+    @Override
     public ReplyResponseDTO getOneBoardReplyPaging(Long boardId, int page, int size) {
         if (page < 1) {
             page = 1;
@@ -114,7 +130,6 @@ public class ReplyServiceImpl implements ReplyService {
         params.put("pageSize", size);
 
         List<ReplyDTO> replyList = replyMybatisRepository.getOneBoardReply(params).stream().map(this::convertToDTO).collect(Collectors.toList());
-        System.out.println("replyList = " + replyList);
         int totalRecords = replyMybatisRepository.getOneBoardReplyCount(boardId);
         int totalPages = (int) Math.ceil((double) totalRecords / size);
         List<MemberDTO> memberList = new ArrayList<>();

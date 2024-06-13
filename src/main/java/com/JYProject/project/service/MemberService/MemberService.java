@@ -23,6 +23,8 @@ public interface MemberService {
     int addPointDisLikes(Long id);
      List<MemberDTO> MemberAllList();
      int selectMemberTotalCount();
+     int updateMemberActive(Long memberId,boolean check);
+     List<MemberDTO> getAllMemberListPaging(int page, int pageSize);
      int getChooseAdopt(MemberDTO memberDTO);
      boolean checkIdAndPw(MemberDTO memberDTO);
     void updateProfileImage(String loginId, MultipartFile profileImage) throws  IOException;

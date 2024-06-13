@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+
 @Mapper
 public interface MemberMapperRepository {
     int insertMember(Member member);
@@ -24,7 +26,7 @@ public interface MemberMapperRepository {
     int deleteMember(Member member);
     int getChooseAdopt(Member member);
     List<Member> MemberAllList();
-
+    List<Member> getAllMemberListPaging(Map<String,Object> params);
     int selectMemberTotalCount();
     boolean checkIdAndPw(Member member);
     void updateProfileImg(String loginId , String profileImg);
