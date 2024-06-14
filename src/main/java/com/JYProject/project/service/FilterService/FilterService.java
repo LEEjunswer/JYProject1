@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface FilterService {
 
-    int makeFilter(FilterDTO filterDTO);
+    int makeFilter(String word);
 
-    int deleteFilter(Long id);
+    int deleteFilter(String word);
     List<FilterDTO> getAllFilter();
     FilterDTO getOneFilter(Long id);
 }

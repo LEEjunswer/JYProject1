@@ -126,7 +126,7 @@ public class ReplyServiceImpl implements ReplyService {
         int offset = (page - 1);
         Map<String, Object> params = new HashMap<>();
         params.put("boardId", boardId);
-        params.put("offset", offset);
+        params.put("offset", (offset) * size);
         params.put("pageSize", size);
 
         List<ReplyDTO> replyList = replyMybatisRepository.getOneBoardReply(params).stream().map(this::convertToDTO).collect(Collectors.toList());

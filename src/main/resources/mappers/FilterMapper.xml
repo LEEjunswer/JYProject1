@@ -4,11 +4,14 @@
     <resultMap id="filterMap" type="com.JYProject.project.model.Filter">
       <id property="filterId" column="filter_id" />
        <result property="word" column="word"/>
-        <result property="creatAt" column="create_at"/>
+        <result property="createAt" column="create_at"/>
     </resultMap>
     <insert id="makeFilter" parameterType="com.JYProject.project.model.Filter">
        insert into filter (word) values (#{word});
     </insert>
+    <select id="findByWord" parameterType="String" resultMap="filterMap">
+        select * from filter where word=#{word};
+    </select>
     <delete id="deleteFilter" parameterType="Long">
         delete from filter where filter_id=#{id};
     </delete>

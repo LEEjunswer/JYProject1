@@ -11,7 +11,7 @@ public class FilterDTO {
 
 
     //("필터번호")
-    private Long id;
+    private Long filterId;
 
     //("필터할단어")
     private String word;

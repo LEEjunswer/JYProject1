@@ -33,7 +33,7 @@ public class HomeApIController {
         int offset = (page - 1 );
         Map<String, Object> params = new HashMap<>();
         params.put("categoryId" , categoryId);
-        params.put("offset",offset);
+        params.put("offset", (offset) * pageSize);
         params.put("pageSize",pageSize);
         System.out.println("weekParams = " + params);
         List<BoardDTO> boardList = boardService.getWeekBestBoardList(params);

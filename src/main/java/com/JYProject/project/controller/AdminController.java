@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,13 +59,7 @@ public class AdminController {
           model.addAttribute("eventList",eventDTOList);
         return "/admin/eventRaffle";
     }
-    @GetMapping("/admin/filter")
-    public String filter(Model model){
-    List<FilterDTO> filterList= filterService.getAllFilter();
 
-            model.addAttribute("filters",filterList);
-            return "/admin/filter";
-        }
     //이벤트 추첨
     @PostMapping("/admin/raffle/{people}/{eventId}")
     public String raffleStart(@PathVariable("people")int people,@PathVariable("eventId")Long eventId){
@@ -96,4 +89,14 @@ public class AdminController {
         model.addAttribute("member",memberList);
         return "/admin/memberList";
     }
+    @GetMapping("/admin/filter")
+    public String getFilterList(Model model) {
+        List<FilterDTO> filterList =filterService.getAllFilter();
+        List<String> filterWords = filterList.stream()
+                .map(FilterDTO::getWord)
+                .toList();
+        model.addAttribute("filters",filterWords);
+        return "/admin/filterList";
+    }
+
 }

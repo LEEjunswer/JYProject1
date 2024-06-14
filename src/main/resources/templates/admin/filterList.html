@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head th:replace="~{fragments/head :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div id="boardJoin_container">
+<div class="login-header">
+    <h2>필터 관리페이지</h2>
+    <br>
+    <hr>
+    <textarea id="filterTextArea" readonly></textarea>
+    <br>
+    <input type="text" id="newFilterWord" placeholder="등록할 필터 입력">
+    <button onclick="addContent()" class="btn btn-xs btn-outline btn-success">추가하기</button>
+    &nbsp;&nbsp; <input type="text" id="deleteFilterWord" placeholder="삭제할 필터 입력">
+    <button onclick="deleteContent()" class="btn btn-xs btn-outline btn-warning">삭제하기</button>
+</div>
+
+</div>
+<script th:inline="javascript">
+
+    var filters =[[${filters}]];
+
+</script>
+<script src="/static/js/admin/filterList.js"></script>
+</body>
+</html>

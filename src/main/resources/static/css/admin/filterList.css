@@ -1,0 +1,16 @@
+#filterTextArea{
+    width: 400px;
+    height: 300px;
+    resize: none;
+    border: solid 1px red;
+    overflow-y: scroll;
+}
+#newFilterWord{
+    border: 1px solid black;
+}
+#deleteFilterWord{
+    border:  1px solid black;
+}
+#filtersJson{
+    display: none;
+}

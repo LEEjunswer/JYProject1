@@ -1,5 +1,6 @@
 package com.JYProject.project.repository.FilterRepository;
 
+import com.JYProject.project.model.Filter;
 import com.JYProject.project.model.dto.FilterDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -8,10 +9,11 @@ import java.util.List;
 @Mapper
 public interface FilterMapperRepository {
 
-    public int makeFilter(FilterDTO filterDTO);
+     int makeFilter(Filter Filter);
 
-    public int deleteFilter(Long id);
-    public List<FilterDTO> getAllFilter();
+     int deleteFilter(Long id);
+     List<Filter> getAllFilter();
 
-    public FilterDTO getOneFilter(Long id);
+     Filter getOneFilter(Long id);
+     Filter findByWord(String word);
 }
