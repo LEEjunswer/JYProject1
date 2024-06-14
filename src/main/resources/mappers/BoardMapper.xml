@@ -128,6 +128,23 @@
         Order By b.board_id Desc
         Limit 5;
     </select>
+    <select id="boardGetCategoryListPaging" parameterType="map" resultMap="boardResultMap">
+        select b.*,c.*, m.nickname
+        from board b
+        join member m on b.member_id = m.member_id
+        join category c on b.category_id= c.category_id
+        <if test="categoryId != 0">
+            where b.category_id = #{categoryId}
+            and b.delete_date IS NULL
+        </if>
+        <if test="categoryId == 0">
+            where b.category_id != 6
+            and b.delete_date IS NULL
+        </if>
+        Order By b.board_id Desc
+        LIMIT #{offset}, #{pageSize};
+    </select>
+
     <select id="getMyBoardList" parameterType="Long" resultMap="boardResultMap">
         select b.* ,c.*, m.nickname
         from board b   join member m on b.member_id = #{memberId}

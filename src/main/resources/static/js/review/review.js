@@ -4,6 +4,7 @@ let currentPage = 0;
 const pageSize = 10;
 const boardCommentList = document.getElementById('boardCommentList');
 let getComments =document.getElementsByClassName('comment-value');
+let loginCheck = document.getElementById('loginCheck').getAttribute('data-value');
 if(document.getElementsByClassName('comment-delBtn')) {
     let deleteButtons = document.getElementsByClassName('comment-delBtn');
         for(let i = 0 ; i<deleteButtons.length; i++){
@@ -41,6 +42,7 @@ if(document.getElementsByClassName('comment-updateBtn')){
 
 fetchComments(boardId, currentPage,pageSize);
 function fetchComments(boardId, page,size) {
+
     fetch(`/review/content/paging?boardId=${boardId}&page=${page}&size=${size}`, {
         method: "POST",
         headers: {
@@ -49,9 +51,11 @@ function fetchComments(boardId, page,size) {
     })
         .then(response => response.json())
         .then(data => {
-            if (data.content && data.content.length > 0) {
+            console.log(data);
+            if (data) {
                 currentPage = page;
                 displayComments(data);
+            console.log("진입갑체크");
             }
             createPagingBoardComment(data.totalPages, data.number,boardId)
 
@@ -61,23 +65,33 @@ function fetchComments(boardId, page,size) {
 
 function displayComments(data) {
     const list = document.getElementById('boardCommentList');
-    const boardCommentId = document.getElementById('boardCommentId').getAttribute('id-value');
+    const boardCommentId = document.getElementById('boardId_content').getAttribute('data-value');
     list.innerHTML = '';  // Clear previous comments
-    data.content.forEach(comment => {
+    data.replyList.forEach(comment => {
+        const date = new Date(comment.regDate);
+        const formattedDate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 ${date.getHours()}시 ${date.getMinutes()}분`;
+
+        console.log(comment);
         const commentCardElement = document.createElement('div');
-        commentCardElement.className='card w-140 bg-base-100 shadow-xl mb-2 relative';
+        commentCardElement.className='comment card w-full bg-base-100 shadow-xl relative';
         const commentHeaderElement = document.createElement('div');
-        commentHeaderElement.className='card-body item-center text-left';
+        commentHeaderElement.className='comment card-body block m-0';
         const commentTitle = document.createElement('span');
-        commentTitle.className='text-sm';
-        commentTitle.textContent = `작성자 : ${comment.replyDTO.memberId}, 작성일 : ${comment.replyDTO.regDate} `;
+        commentTitle.className='comment-span text-sm';
+        commentTitle.textContent = `작성자 : ${comment.memberInfo.nickname}  작성일 : ${formattedDate} `;
         const commentP = document.createElement('p');
-        commentP.className= 'text-lg';
-        commentP.textContent = comment.comment;
+        commentP.className= 'comment-value text-md';
+        if(comment.deleteDate === null) {
+            commentP.textContent = comment.content;
+        }
+        if(comment.deleteDate !== null) {
+            commentP.textContent = "삭제된 게시글입니다.";
+            commentP.className='text-red-800';
+        }
         commentHeaderElement.appendChild(commentTitle);
         commentHeaderElement.appendChild(commentP);
         commentCardElement.appendChild(commentHeaderElement);
-        if (boardCommentId === comment.memberDTO.name || boardCommentRole === 'ROLE_ADMIN' || boardCommentRole === 'ROLE_MANAGER') {
+        if (loginCheck === comment.memberInfo.nickname || loginCheck === "admin" ) {
             const flexDiv = document.createElement('div');
             flexDiv.className = 'absolute top-0 right-0';
             const deleteButton = document.createElement('button');
@@ -131,18 +145,17 @@ function createPagingBoardComment(totalPages, currentPage, boardId) {
     pagingButtonDiv.innerHTML = '';
 
     for (let i = 0; i < totalPages; i++) {
-        var pageButton = document.createElement('button');
+        let pageButton = document.createElement('button');
         pageButton.className = "pagingComment";
         pageButton.textContent = i + 1;
-        (function (page) {
-            pageButton.onclick = function () {
-                fetchComments(boardId, page, 10);
-            };
-        })(i);
+
+        pageButton.onclick = function () {
+            fetchComments(boardId, i+1, 10);
+        };
+
         pagingButtonDiv.appendChild(pageButton);
     }
 }
-
 
 // 뼈대만 작성중 예외처리
 function reviewContentJoin(){
@@ -217,13 +230,6 @@ function updateComment(commentId, commentChange) {
         },
         body: JSON.stringify(data)
     })
-        /*.then(response => {
-            if (response.redirected) {
-                window.location.href = response.url;
-            } else {
-                return response.json();
-            }
-        })*/
         .then(response => response.json())
         .then(data => {
 

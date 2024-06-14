@@ -36,7 +36,7 @@ public interface BoardMapperRepository {
      List<Board> boardGetCategoryList(int categoryId);
 
      List<Board> getWeekBestBoardList(Map<String, Object> params);
-
+    List<Board> boardGetCategoryListPaging(Map<String, Object>params);
      List<Board> getDailyBestBoardList(Map<String, Object> params);
 
   void incrementLikes(Long boardId);

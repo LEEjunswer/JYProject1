@@ -35,7 +35,7 @@ public interface BoardService {
      int getDisLikesTotalCount(Long boardId);
 
      List<BoardDTO>boardGetCategoryList(int categoryId);
-
+    List<BoardDTO> boardGetCategoryListPaging(int categoryId,int page, int size);
      List<BoardDTO>getWeekBestBoardList(Map<String, Object> params);
 
      List<BoardDTO>getDailyBestBoardList(Map<String,Object> params);

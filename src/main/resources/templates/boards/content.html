@@ -62,6 +62,7 @@
         <textarea id="contentInput" rows="4" placeholder="타인의 권리를 침해하거나 명예를 훼손하는 댓글은 운영원칙 및 관련 법률에 제재를 받을 수 있습니다."></textarea>
         <button type="button" class="review btn-register" onclick="reviewContentJoin()" style="float:right">댓글등록</button>
     </div>
+    <!--솔직히 밑에는이제 없어도 된다 ..-->
     <div id="boardCommentContainer">
         <div id="boardCommentList">
             <div class="comment card w-full bg-base-100 shadow-xl relative" th:each="reply : ${replies.getReplyList()}">
@@ -98,6 +99,7 @@
         </div>
     </div>
 </div>
+<input type="hidden" id="loginCheck" th:attr="data-value=${session.nickname}">
 <script src="/static/js/board/content.js"></script>
 <script src="/static/js/review/review.js"></script>
 

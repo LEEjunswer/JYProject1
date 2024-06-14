@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,7 +26,6 @@ public class BoardServiceImpl implements BoardService {
 
     private final BoardMapperRepository boardMybatisRepository;
     private final FileService fileService;
-    private final MemberService memberService;
 
 
     @Override
@@ -160,6 +160,16 @@ public class BoardServiceImpl implements BoardService {
     List<Board>  boardList=   boardMybatisRepository.boardGetCategoryList(categoryId);
 
        return boardList.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BoardDTO> boardGetCategoryListPaging(int categoryId, int page, int size) {
+        int offset = (page - 1);
+        Map<String, Object> params = new HashMap<>();
+        params.put("categoryId",categoryId);
+        params.put("offset", (offset) * size);
+        params.put("pageSize", size);
+        return boardMybatisRepository.boardGetCategoryListPaging(params).stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
