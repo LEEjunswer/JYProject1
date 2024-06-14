@@ -91,11 +91,8 @@ public class AdminController {
     }
     @GetMapping("/admin/filter")
     public String getFilterList(Model model) {
-        List<FilterDTO> filterList =filterService.getAllFilter();
-        List<String> filterWords = filterList.stream()
-                .map(FilterDTO::getWord)
-                .toList();
-        model.addAttribute("filters",filterWords);
+        List<String> filterList =filterService.getAllWord();
+        model.addAttribute("filters",filterList);
         return "/admin/filterList";
     }
 

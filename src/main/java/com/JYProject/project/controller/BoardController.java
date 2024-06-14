@@ -2,6 +2,7 @@ package com.JYProject.project.controller;
 
 import com.JYProject.project.model.dto.*;
 import com.JYProject.project.service.BoardService.BoardService;
+import com.JYProject.project.service.FilterService.FilterService;
 import com.JYProject.project.service.MemberService.MemberService;
 import com.JYProject.project.service.QuestionSerivce.QuestionService;
 import com.JYProject.project.service.ReplyService.ReplyService;
@@ -9,13 +10,17 @@ import com.JYProject.project.session.SessionConst;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -26,6 +31,7 @@ public class BoardController {
     private  final BoardService boardService;
     private final MemberService memberService;
     private final ReplyService replyService;
+    private final FilterService filterService;
 
     @GetMapping("/boards/list")
     public String list(Model model){
@@ -39,6 +45,8 @@ public class BoardController {
     public String join(HttpSession session, Model model) {
         String loginId = (String) session.getAttribute(SessionConst.USER_ID);
         MemberDTO  m =  memberService.selectMemberDetail(loginId);
+        List<String> filters = filterService.getAllWord();
+        model.addAttribute("filters",filters);
         model.addAttribute("myPoint",m.getPoint());
         model.addAttribute("nickname",m.getNickname());
         model.addAttribute("memberId",m.getMemberId());
@@ -55,20 +63,27 @@ public class BoardController {
     
 
     @PostMapping("/boards/join")
-    public String create(
+    public ResponseEntity<Map<String,String>> create(
             @ModelAttribute BoardDTO boardDTO,
             @RequestParam(value = "fileUrls") List<String> fileUrls,
             RedirectAttributes redirectAttributes) {
-
+        Map<String, String> response = new HashMap<>();
         try {
-
+            List<String> filter = filterService.getAllWord();
+            for (String word : filter) {
+                if (boardDTO.getContent().contains(word)) {
+                    response.put("message", "게시글에 차단된 단어가 포함되어 있습니다: " + word);
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+                }
+            }
             Long getBoardId = boardService.insertBoard(boardDTO, fileUrls);
-            redirectAttributes.addFlashAttribute("suc", "성공적으로 게시글 등록되었습니다");
+            response.put("message", "성공적으로 게시글 등록되었습니다");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (Exception e) {
             e.printStackTrace();
-            redirectAttributes.addFlashAttribute("error", "게시글 등록에 실패했습니다.");
+            response.put("message", "게시글 등록에 실패했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
-        return "redirect:/boards/list";
     }
 
 

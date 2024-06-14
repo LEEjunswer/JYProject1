@@ -40,6 +40,14 @@ public class FilterServiceImpl implements  FilterService{
     }
 
     @Override
+    public List<String> getAllWord() {
+        List<Filter> filters = filterMybatisRepository.getAllFilter();
+        return filters.stream()
+                .map(Filter::getWord)
+                .toList();
+    }
+
+    @Override
     public FilterDTO getOneFilter(Long id) {
 
         return  convertToDTO(filterMybatisRepository.getOneFilter(id));

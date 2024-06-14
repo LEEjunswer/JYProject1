@@ -10,5 +10,6 @@ public interface FilterService {
 
     int deleteFilter(String word);
     List<FilterDTO> getAllFilter();
+    List<String> getAllWord();
     FilterDTO getOneFilter(Long id);
 }

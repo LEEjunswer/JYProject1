@@ -166,12 +166,13 @@ function handleSubmit(event) {
             method: 'POST',
             body: formData
         })
-            .then(response => {
-                if (response.ok) {
-                    alert("게시글 등록에 성공했습니다.");
+            .then(response => response.json().then(data => ({ status: response.status, body: data })))
+            .then(({ status, body }) => {
+                if (status === 200) {
+                    alert(body.message);
                     window.location.href = '/';
                 } else {
-                    alert('게시글 등록에 실패했습니다.');
+                    alert(body.message);
                 }
             })
             .catch(error => {
