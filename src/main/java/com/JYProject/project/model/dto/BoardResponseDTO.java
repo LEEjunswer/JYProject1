@@ -15,4 +15,5 @@ public class BoardResponseDTO {
     private List<FileDTO> fileWeekBestList;
     private int totalPages;
     private int currentPage;
+    private int totalCount;
 }

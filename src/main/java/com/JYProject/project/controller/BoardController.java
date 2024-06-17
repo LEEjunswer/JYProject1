@@ -56,8 +56,8 @@ public class BoardController {
     @GetMapping("/category/{category}")
     public String choiceCategory(@PathVariable("category") int categoryId,Model model){
         System.out.println(categoryId);
-      List<BoardDTO> list =  boardService.boardGetCategoryListPaging(categoryId,1,10);
-        model.addAttribute("boardList", list);
+      BoardResponseDTO list =  boardService.boardGetCategoryListPaging(categoryId,1,10);
+        model.addAttribute("boardList", list.getBoardList());
         return "/boards/list";
     }
     

@@ -55,7 +55,6 @@ function fetchComments(boardId, page,size) {
             if (data) {
                 currentPage = page;
                 displayComments(data);
-            console.log("진입갑체크");
             }
             createPagingBoardComment(data.totalPages, data.number,boardId)
 

@@ -2,6 +2,7 @@ package com.JYProject.project.service.BoardService;
 
 import com.JYProject.project.model.Board;
 import com.JYProject.project.model.dto.BoardDTO;
+import com.JYProject.project.model.dto.BoardResponseDTO;
 import com.JYProject.project.model.dto.FileDTO;
 import com.JYProject.project.model.dto.MemberDTO;
 
@@ -35,7 +36,7 @@ public interface BoardService {
      int getDisLikesTotalCount(Long boardId);
 
      List<BoardDTO>boardGetCategoryList(int categoryId);
-    List<BoardDTO> boardGetCategoryListPaging(int categoryId,int page, int size);
+    BoardResponseDTO boardGetCategoryListPaging(int categoryId, int page, int size);
      List<BoardDTO>getWeekBestBoardList(Map<String, Object> params);
 
      List<BoardDTO>getDailyBestBoardList(Map<String,Object> params);

@@ -41,7 +41,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:if="${list}" th:each="list : ${boardList}">
+        <tr th:if="${boardList}" th:each="list : ${boardList}">
             <td th:text="${list.getCategoryInfo().categoryName}">카테고리</td>
             <td th:text="${list.title}" th:onclick="|location.href='/boards/content/' + ${list.boardId}|">제목</td>
             <td th:text="${list.memberInfo.nickname}">작성자</td>
@@ -53,12 +53,16 @@
             <td th:text="${#temporals.format(list.getRegDate(),'yyyy-MM-dd HH:mm:ss')}">
                 작성일
             </td>
+                <input type="hidden" id="categoryId" th:attr="data-value=${list.categoryId}"/>
         </tr>
-        <tr th:unless="${list} " th:each="list : ${boardList}">
+        <tr th:unless="${boardList} " th:each="list : ${boardList}">
             <td colspan="6">조회된 결과가 없습니다.</td>
         </tr>
         </tbody>
     </table>
+    <div id="pagingBoard" class="pagingQueryDiv flex justify-center">
+
+    </div>
     <div id="search-bar" class="search">
         <form action="/boards/search" method="get">
             <label>

@@ -32,10 +32,7 @@ public class ReplyAPIController {
 
     //댓글작성 페이징
     @PostMapping(value="/review/content/paging")
-    public ResponseEntity<ReplyResponseDTO> PagingBoardReview(@RequestParam Long boardId, @RequestParam(defaultValue = "1")int page, @RequestParam(defaultValue = "10")int  size){
-        System.out.println("boardId = " + boardId);
-        System.out.println("boardId = " + boardId);
-        System.out.println("진입체크");
+    public ResponseEntity<ReplyResponseDTO> pagingBoardReview(@RequestParam Long boardId, @RequestParam(defaultValue = "1")int page, @RequestParam(defaultValue = "10")int  size){
         ReplyResponseDTO response = replyService.getOneBoardReplyPaging(boardId, page, size);
         System.out.println("response = " + response);
         return ResponseEntity.ok().body(response);

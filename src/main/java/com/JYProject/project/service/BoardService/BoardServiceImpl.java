@@ -3,10 +3,7 @@ package com.JYProject.project.service.BoardService;
 import com.JYProject.project.model.Board;
 import com.JYProject.project.model.Category;
 import com.JYProject.project.model.Member;
-import com.JYProject.project.model.dto.BoardDTO;
-import com.JYProject.project.model.dto.CategoryDTO;
-import com.JYProject.project.model.dto.FileDTO;
-import com.JYProject.project.model.dto.MemberDTO;
+import com.JYProject.project.model.dto.*;
 import com.JYProject.project.repository.BoardRepository.BoardMapperRepository;
 import com.JYProject.project.service.FileService.FileService;
 import com.JYProject.project.service.MemberService.MemberService;
@@ -163,13 +160,27 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardDTO> boardGetCategoryListPaging(int categoryId, int page, int size) {
+    public BoardResponseDTO boardGetCategoryListPaging(int categoryId, int page, int size) {
         int offset = (page - 1);
         Map<String, Object> params = new HashMap<>();
         params.put("categoryId",categoryId);
         params.put("offset", (offset) * size);
         params.put("pageSize", size);
-        return boardMybatisRepository.boardGetCategoryListPaging(params).stream().map(this::convertToDTO).collect(Collectors.toList());
+        List<BoardDTO> boardDTOS = boardMybatisRepository.boardGetCategoryListPaging(params).stream().map(this::convertToDTO).collect(Collectors.toList());
+        int totalRecords =boardMybatisRepository.selectBoardTotalCategoryCount(categoryId);
+        int totalPages= (int) Math.ceil((double) totalRecords /size);
+        List<FileDTO> fileList = new ArrayList<>();
+        for(BoardDTO board : boardDTOS){
+            FileDTO fileDTO = fileService.getOneFile(board.getBoardId());
+            fileList.add(fileDTO);
+        }
+        BoardResponseDTO boardResponseList = new BoardResponseDTO();
+        boardResponseList.setBoardList(boardDTOS);
+        boardResponseList.setFileWeekBestList(fileList);
+        boardResponseList.setCurrentPage(page);
+        boardResponseList.setTotalPages(totalRecords);
+        boardResponseList.setTotalPages(totalPages);
+        return boardResponseList;
     }
 
     @Override

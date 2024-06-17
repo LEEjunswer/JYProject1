@@ -1,6 +1,7 @@
 package com.JYProject.project.controller.apiController;
 
 import com.JYProject.project.model.dto.BoardDTO;
+import com.JYProject.project.model.dto.BoardResponseDTO;
 import com.JYProject.project.model.dto.LikeDTO;
 import com.JYProject.project.model.dto.MemberDTO;
 import com.JYProject.project.service.BoardService.BoardService;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -23,6 +25,9 @@ public class BoardAPIController {
     private final BoardService boardService;
     private final LikeService likeService;
     private  final MemberService memberService;
+
+
+
     @RequestMapping(value="/boards/checkLogin",method = RequestMethod.GET)
     public ResponseEntity<Boolean> checkLogin(HttpSession session) {
         String isLoggedIn = (String) session.getAttribute(SessionConst.USER_ID);
@@ -31,6 +36,13 @@ public class BoardAPIController {
         } else {
             return ResponseEntity.ok(false);
         }
+    }
+
+    @PostMapping("/boards/list/paging")
+    public  ResponseEntity<BoardResponseDTO> pagingBoardCategory(@RequestParam int categoryId, @RequestParam(defaultValue = "1") int page , @RequestParam(defaultValue = "10")int pageSize){
+        BoardResponseDTO boardList = boardService.boardGetCategoryListPaging(categoryId,page,pageSize);
+        System.out.println("boardList = " + boardList);
+        return ResponseEntity.ok().body(boardList);
     }
 
     @RequestMapping(value = "/boards/disLikes" , method = RequestMethod.POST)

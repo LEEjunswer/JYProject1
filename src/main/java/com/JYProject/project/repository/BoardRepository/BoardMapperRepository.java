@@ -35,6 +35,8 @@ public interface BoardMapperRepository {
 
      List<Board> boardGetCategoryList(int categoryId);
 
+     int selectBoardTotalCategoryCount(int categoryId);
+
      List<Board> getWeekBestBoardList(Map<String, Object> params);
     List<Board> boardGetCategoryListPaging(Map<String, Object>params);
      List<Board> getDailyBestBoardList(Map<String, Object> params);
