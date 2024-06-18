@@ -16,6 +16,9 @@
     height: 5px;
     padding: 2px;
 }
+.list_regDate{
+    font-size: 12px;
+}
 .board_list {
     width: 100%;
     border-collapse: collapse;

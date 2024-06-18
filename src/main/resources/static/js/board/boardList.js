@@ -11,6 +11,22 @@ function onSearch(event) {
     form.submit();
 }
 
+
+let currentPage = 1;
+const pageSize = 10;
+
+
+fetchBoards(0, currentPage, pageSize);
+const categoryLinks = document.querySelectorAll('#board_category a');
+categoryLinks.forEach(link => {
+    link.addEventListener('click', (event) => {
+        event.preventDefault();
+        const categoryId = event.target.getAttribute('data-category');
+        fetchBoards(categoryId, currentPage, pageSize);
+    });
+});
+
+
 function createPagingBoard(totalPages, currentPage, categoryId) {
     const pagingButtonDiv = document.getElementById('pagingBoard');
     pagingButtonDiv.innerHTML = '';
@@ -20,9 +36,6 @@ function createPagingBoard(totalPages, currentPage, categoryId) {
         pageButton.className = "pagingComment";
         pageButton.textContent = i + 1;
 
-        if (i + 1 === currentPage) {
-            pageButton.disabled = true;
-        }
 
         pageButton.onclick = function () {
             fetchBoards(categoryId, i + 1, 10);
@@ -45,8 +58,8 @@ function fetchBoards(categoryId, page, size) {
             if (data) {
                 currentPage = page;
                 displayComments(data);
-                createPagingBoard(data.totalPages, data.number + 1, categoryId);
             }
+            createPagingBoard(data.totalPages, data.number, categoryId);
         })
         .catch(error => console.error('Error:', error));
 }
@@ -55,12 +68,12 @@ function displayComments(data) {
     const tbody = document.querySelector('.board_list tbody');
     tbody.innerHTML = '';
 
-    if (data.content && data.content.length > 0) {
-        data.content.forEach(list => {
+    if (data.boardList && data.boardList.length > 0) {
+        data.boardList.forEach(list => {
             const tr = document.createElement('tr');
 
             const categoryTd = document.createElement('td');
-            categoryTd.textContent = list.getCategoryInfo().categoryName;
+            categoryTd.textContent = list.categoryInfo.categoryName;
             tr.appendChild(categoryTd);
 
             const titleTd = document.createElement('td');
@@ -75,18 +88,23 @@ function displayComments(data) {
             const viewCntTd = document.createElement('td');
             viewCntTd.textContent = list.viewCnt;
             tr.appendChild(viewCntTd);
-
             const likesTd = document.createElement('td');
-            if (list.likes > list.dislikes) {
-                likesTd.textContent = list.likes != null ? list.likes : 0 - (list.dislikes != null ? list.dislikes : 0);
+            const likes = list.likes != null ? list.likes : 0;
+            const dislikes = list.dislikes != null ? list.dislikes : 0;
+
+            if (likes > dislikes) {
+                likesTd.textContent = likes - dislikes;
             } else {
-                likesTd.textContent = `-${list.dislikes != null ? list.dislikes : 0 - (list.likes != null ? list.likes : 0)}`;
+                likesTd.textContent = -(dislikes - likes);
             }
             tr.appendChild(likesTd);
 
             const regDateTd = document.createElement('td');
-            regDateTd.textContent = new Date(list.getRegDate()).toISOString().substring(0, 19).replace('T', ' ');
-            tr.appendChild(regDateTd);
+            regDateTd.style.fontSize = '12px';
+            const date = new Date(list.regDate);
+            const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
+            regDateTd.textContent =  `${formattedDate}`;
+                tr.appendChild(regDateTd);
 
             tbody.appendChild(tr);
         });
@@ -100,6 +118,4 @@ function displayComments(data) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    fetchBoards(0, 1, 10);
-});
+
